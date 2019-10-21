@@ -50,9 +50,9 @@ Base de datos utilizada para guardar los datos de los usuarios
 
 Base de datos utilizada para guardar los ordenadores portátiles que los usuarios han puesto en venta.
 
-### Base de datos de Transaciones
+### Base de datos de transacciones
 
-Base de datos para almacenar todas las transaciones producidas en el sistema.
+Base de datos para almacenar todas las transacciones producidas en el sistema.
 
 ## Tecnologías utilizadas
 
