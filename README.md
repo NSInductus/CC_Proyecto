@@ -14,9 +14,9 @@ Como solución se creará un servicio ficticio para que el cliente pueda tanto c
 
 ## Arquitectura
 
-La arquitectura será una arquitectura basada en microservicios, a priori contaremos con 4 microservicios: microservicio de gestión de usuarios, microservicio de gestión de ordenadores portátiles, microservicio de transacciones compra/venta y por último microservicio de estadísticas. Estan conectados como se ve en la siguiente imagen:
+La arquitectura será una arquitectura basada en microservicios, a priori contaremos con 4 microservicios: microservicio de gestión de usuarios, microservicio de gestión de ordenadores portátiles, microservicio de transacciones compra/venta y por último microservicio de estadísticas. Estan conectados como se puede ver en la siguiente imagen: 
 
-![](docs/img/DiagramaArquitectura.png)
+![](docs/img/DiagramaArquitecturaActualizado.png)
 
 ### Microservicio de gestión de usuarios
 
