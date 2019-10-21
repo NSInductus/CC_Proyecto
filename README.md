@@ -34,6 +34,10 @@ Este microservicio se encarga de las transacciones necesarias del servicio, tend
 
 Microservicio que se encargara de mostrar y recolectar las estadísticas de las transacciones producidas.
 
+### Microservicio LOG
+
+Microservicio LOG para conectar todos los microservicios anteriores.
+
 ## Bases de datos
 
 Se utilizarán en nuestro sistema 3 bases de datos: base de datos de usuario, base de datos de ordenadores portátiles y base de datos de transacciones.
@@ -55,7 +59,10 @@ Base de datos para almacenar todas las transaciones producidas en el sistema.
 
 Para implementar los microservicios se seleccionará minuciosamente el lenguaje de cada uno de los microservicios aunque la primera idea es implementarlos en python o en java.
 Las bases de datos utilizadas serán bases de datos no relacionales, que podrían utilizar MongoDB.
-Para la comunicación entre microservicios utilizaremos RabbitMQ.
+Para la comunicación entre microservicios utilizaremos un broker, concretamente RabbitMQ.
+Para la implementación de la Aplicación se utilizarán framework como Django o Flask.
+
+Todas estas especificaciones de tecnologías a utilizar están abiertas a cambios que puedan surgir durante el desarrollo del proyecto.
 
 ## Licencia
 
