@@ -14,7 +14,9 @@ Después se ha configurado git para que aparezcan mis datos en los commit, ponie
 
 Se ha añadido una foto del estudiante, así como su nombre completo, ciudad y universidad, el perfil a quedado como se ve en la siguiente imagen:
 
-![](docs/img/PerfilActualizado.png)
+![](img/PerfilActualizado.png)
+
+PerfilActualizado.png
 
 # Creación de de clave SSH
 
