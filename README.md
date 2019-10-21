@@ -14,7 +14,7 @@ Como solución se creará un servicio ficticio para que el cliente pueda tanto c
 
 ## Arquitectura
 
-La arquitectura será una arquitectura basada en microservicios, a priori contaremos con 4 microservicios: microservicio de gestión de usuarios, microservicio de gestión de ordenadores portátiles, microservicio de transacciones compra/venta y por último microservicio de estadísticas. Estan conectados como se ve en la siguiente imagen.
+La arquitectura será una arquitectura basada en microservicios, a priori contaremos con 4 microservicios: microservicio de gestión de usuarios, microservicio de gestión de ordenadores portátiles, microservicio de transacciones compra/venta y por último microservicio de estadísticas. Estan conectados como se ve en la siguiente imagen:
 
 ![](docs/img/DiagramaArquitectura.png)
 
@@ -44,7 +44,7 @@ Base de datos utilizada para guardar los datos de los usuarios
 
 ### Base de datos de ordenadores portátiles
 
-Base de datos utilizada para guardar los ordenadores portátiles de los usuarios
+Base de datos utilizada para guardar los ordenadores portátiles que los usuarios han puesto en venta.
 
 ### Base de datos de Transaciones
 
