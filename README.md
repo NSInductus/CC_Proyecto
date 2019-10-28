@@ -4,7 +4,7 @@ Proyecto para desarrollar en la asignatura de Cloud Computing correspondiente al
 
 ## Descripción del problema
 
-Hoy día todos sabemos de la importancia de los ordenadores y de internet, prácticamente toda familia tiene más de un ordenador en casa.
+Hoy día todos sabemos de la importancia de los ordenadores y de Internet, prácticamente toda familia tiene más de un ordenador en casa.
 En los últimos años, los ordenadores portátiles han ganado mucho terreno a los ordenadores de sobremesa, por poder tener un ordenador con las mismas características que un ordenador de sobremesa sumado a su gran comodidad a la hora de ser trasportado.
 Los estudiantes de universidad necesitan el ordenador sea cuál sea la carrera que estén estudiando aunque solo lo necesiten para descargar apuntes y escribir en archivos de texto. Los ordenadores portátiles nuevos con unas características decentes para que les puedan servir fuera de la universidad para algo más que para descargar apuntes no suelen ser baratos, si a esto le sumamos que normalmente los estudiantes tienen problemas de dinero, estos pueden llegar a tener dificultades para conseguir un ordenador portátil medio decente.
 
@@ -14,43 +14,57 @@ Como solución se creará un servicio ficticio para que el cliente pueda tanto c
 
 ## Arquitectura
 
-La arquitectura será una arquitectura basada en microservicios, a priori contaremos con 4 microservicios: microservicio de gestión de usuarios, microservicio de gestión de ordenadores portátiles, microservicio de transacciones compra/venta y por último microservicio de estadísticas. Estan conectados como se puede ver en la siguiente imagen: 
+La arquitectura será una arquitectura basada en microservicios, contaremos con microservicios que se conectarán entre sí para cumplir con las funcionalidades que ofrece la aplicación. Para resumir la arquitectura de nuestro proyecto se ha realizado el siguiente diagrama, donde se puede ver como están conectados los diferentes servicios, microservicios y bases de datos:
 
 ![](docs/img/DiagramaArquitecturaActualizado.png)
 
-### Microservicio de gestión de usuarios
+### Servicios
 
-Este microservicio servirá para la administración de los usuarios de nuestro servicio, tendrá funcionalidad para agregar usuarios, borrar usuarios, actualizar usuarios, modificar usuarios, cargar saldo de usuarios, gastar saldo de usuarios y logear a los usuarios.
+Nuestro sistema tendrá los siguientes servicios: servicio de gestión de usuarios, servicio LOG y servicio ETCD.
 
-### Microservicio de gestión de ordenadores portatiles
+#### Servicio de gestión de usuarios
 
-Este microservicio servirá para la administración de los ordenadores portátiles de nuestro servicio, tendrá funcionalidad para agregar un ordenador portítil, eliminar un ordenador portatil y de buscar un ordenador portátil a través de una serie de características.
+Este servicio servirá para la administración de los usuarios de nuestro servicio, deberá de tener funcionalidad para agregar usuarios, borrar usuarios, actualizar usuarios, modificar usuarios, cargar saldo de usuarios, gastar saldo de usuarios y logear a los usuarios. Esto será algo externo a nuestro problema.
 
-### Microservicio de transacciones de compra/venta/devolución
+#### Servicio LOG
+
+Servicio LOG para conectar todos los microservicios de la aplicación.
+
+#### Servicio ETCD
+
+Servicio que se utilizará para especificar las configuraciones de los distintos microservicios.
+
+
+### Microservicios
+
+Nuestro sistema tendrá los siguientes microservicios: microservicio de gestión de ordenadores portátiles, microservicio de transacciones de compra/venta/devolución y microservicio de estadísticas.
+
+#### Microservicio de gestión de ordenadores portátiles
+
+Este microservicio servirá para la administración de los ordenadores portátiles de nuestro servicio, tendrá funcionalidad para agregar un ordenador portátil, eliminar un ordenador portátil y de buscar un ordenador portátil a través de una serie de características.
+
+#### Microservicio de transacciones de compra/venta/devolución
 
 Este microservicio se encarga de las transacciones necesarias del servicio, tendrá la funcionalidad de vender ordenador portátil, comprar ordenador portátil y devolver ordenador portátil.
 
-### Microservicio de estadísticas
+#### Microservicio de estadísticas
 
 Microservicio que se encargara de mostrar y recolectar las estadísticas de las transacciones producidas.
 
-### Microservicio LOG
+### Bases de datos
 
-Microservicio LOG para conectar todos los microservicios anteriores.
+Se utilizarán en nuestro sistema las siguientes bases de datos: base de datos de usuario, base de datos de ordenadores portátiles y base de datos de transacciones.
 
-## Bases de datos
+#### Base de datos de usuarios
 
-Se utilizarán en nuestro sistema 3 bases de datos: base de datos de usuario, base de datos de ordenadores portátiles y base de datos de transacciones.
+Base de datos utilizada para almacenar los datos de usuario.
 
-### Base de datos de usuarios
 
-Base de datos utilizada para guardar los datos de los usuarios
-
-### Base de datos de ordenadores portátiles
+#### Base de datos de ordenadores portátiles
 
 Base de datos utilizada para guardar los ordenadores portátiles que los usuarios han puesto en venta.
 
-### Base de datos de transacciones
+#### Base de datos de transacciones
 
 Base de datos para almacenar todas las transacciones producidas en el sistema.
 
