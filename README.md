@@ -1,6 +1,6 @@
 # Proyecto de Cloud Computing
 
-Proyecto para desarrollar en la asignatura de Cloud Computing correspondiente al Máster Profesionalizante de Ingeniería Informática.
+Proyecto para desarrollar en la asignatura de Cloud Computing correspondiente al Máster de Ingeniería Informática.
 
 ## Descripción del problema
 
@@ -10,7 +10,7 @@ Los estudiantes de universidad necesitan el ordenador sea cuál sea la carrera q
 
 ## Descripción de la solución
 
-Como solución se creará un servicio ficticio para que el cliente pueda tanto comprar como vender unicamente ordenadores portátiles. Esto facilitará la vida a las personas que quieran encontrar un ordenador decente por una cantidad no muy alta de dinero. El cliente podrá comprar los ordenadores a través de monedas virtuales que se podrán adquirir con dinero real, una vez comprado el ordenador se mandará a la dirección del cliente comprador. El cliente comprador podrá probar el ordenador durante unos 5 días y si no le convence podrá devolverlo mediante la aplicación, de forma que irán a recogerlo de forma totalmente gratuita.
+Como solución se creará un servicio ficticio para que el cliente pueda tanto comprar como vender unicamente ordenadores portátiles. Esto facilitará la vida a las personas que quieran encontrar un ordenador decente por una cantidad no muy alta de dinero. El cliente podrá comprar los ordenadores a través de monedas virtuales que se podrán adquirir con dinero real, una vez comprado el ordenador se mandará a la dirección del cliente comprador. El cliente comprador podrá probar el ordenador durante unos 5 días y si no le convence podrá devolverlo mediante la aplicación, de forma que irán a recogerlo de forma totalmente gratuita. En definitiva el proyecto tratará de la creación de un backend para un servicio de venta de portátiles.
 
 ## Arquitectura
 
@@ -71,10 +71,11 @@ Base de datos para almacenar todas las transacciones producidas en el sistema.
 ## Tecnologías utilizadas
 
 
-Para implementar los microservicios se seleccionará minuciosamente el lenguaje de cada uno de los microservicios aunque la primera idea es implementarlos en python o en java.
+Para implementar los microservicios se seleccionará minuciosamente el lenguaje de cada uno de los microservicios aunque la primera idea es implementarlos en python.
+Se utilizará Travis CI como servicio de integración continua.
 Las bases de datos utilizadas serán bases de datos no relacionales, que podrían utilizar MongoDB.
-Para la comunicación entre microservicios utilizaremos un broker, concretamente RabbitMQ.
-Para la implementación de la Aplicación se utilizarán framework como Django o Flask.
+En principio para la comunicación entre microservicios utilizaremos un broker, concretamente RabbitMQ.
+Para la implementación de la Aplicación se utilizarán framework como Flask.
 
 Todas estas especificaciones de tecnologías a utilizar están abiertas a cambios que puedan surgir durante el desarrollo del proyecto.
 
