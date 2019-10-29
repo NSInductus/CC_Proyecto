@@ -79,6 +79,10 @@ Para la implementación de la Aplicación se utilizarán framework como Flask.
 
 Todas estas especificaciones de tecnologías a utilizar están abiertas a cambios que puedan surgir durante el desarrollo del proyecto.
 
+## Historias de usuarios
+
+Las historias de usuario se pueden ver aqui.
+
 ## Licencia
 
 Este proyecto está licenciado bajo la licencia GNU General Public License v3.0.
