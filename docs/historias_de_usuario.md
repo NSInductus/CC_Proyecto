@@ -48,7 +48,7 @@
 
 * [Devolver portátil:](https://github.com/NSInductus/CC_Proyecto/issues/18) Como usuario quiero poder devolver un portátil anteriormente comprado, si el portátil no me ha convencido después de un periodo de pruebas.
 
-  * Quiero especificar las causas por las que no quiero quedarme con el ordenador portátil después del periodo de prueba.
+  * Quiero especificar las causas por las que no quiero quedarme con el ordenador portátil después de testearlo durante el periodo de prueba.
 
 
 ## Microservicio de estadísticas
