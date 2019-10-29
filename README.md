@@ -81,7 +81,7 @@ Todas estas especificaciones de tecnologías a utilizar están abiertas a cambio
 
 ## Historias de usuarios
 
-Las historias de usuario se pueden ver aqui.
+Las historias de usuario se pueden ver [aquí](docs/historias_de_usuario.md)
 
 ## Licencia
 
