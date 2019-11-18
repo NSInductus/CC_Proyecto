@@ -33,7 +33,7 @@ Este microservicio servirá para la administración de los ordenadores portátil
 
 Este microservicio se encarga de las transacciones necesarias del servicio, tendrá la funcionalidad de vender ordenador portátil, comprar ordenador portátil y devolver ordenador portátil.
 
-#### Microservicio de estadísticas
+### Microservicio de estadísticas
 
 Microservicio que se encargara de mostrar y recolectar las estadísticas de las transacciones producidas.
 
