@@ -6,7 +6,7 @@ class Portatiles:
         return len(self.lista_portatiles)
 
     def agregarPortatil(self, marca, modelo, DNIvendedor, precio):
-        portatil = {marca=marca;modelo=modelo;DNIvendedor=DNIvendedor;precio=precio}
+        portatil = {"marca":marca,"modelo":modelo,"DNIvendedor":DNIvendedor,"precio":precio}
         self.lista_portatiles.append(portatil)
         id = numeroPortatilesEnVenta(self)
         return id
