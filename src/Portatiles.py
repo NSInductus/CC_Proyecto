@@ -11,24 +11,52 @@ class Portatiles:
         self.lista_portatiles.append(portatil)
         return id_venta
 
-    def indiceEnListaIDventa(self, id_venta):
-        indice = False
+    def existeEnListaIDventa(self, id_venta):
         for i, portatil in enumerate(self.lista_portatiles):
             if portatil.get("IDventa") == id_venta:
-                return i
-        return indice
+                return True
+        return False
+
+    def indiceEnListaIDventa(self, id_venta):
+        existe = self.existeEnListaIDventa(id_venta)
+        if existe != False:
+            for i, portatil in enumerate(self.lista_portatiles):
+                if portatil.get("IDventa") == id_venta:
+                    return i
+        return False
 
     def eliminarPortatilPorIdVenta(self, id_venta):
-        indice = self.indiceEnListaIDventa(id_venta)
-        if indice != False:
+        existe = self.existeEnListaIDventa(id_venta)
+        if existe != False:
+            indice = self.indiceEnListaIDventa(id_venta)
             del(self.lista_portatiles[indice])
             return True
         else:
             return False
 
+    def modificarPortatil(self, id_venta, marca="", modelo="", precio=""):
+        existe = self.existeEnListaIDventa(id_venta)
+        if existe != False:
+            indice = self.indiceEnListaIDventa(id_venta)
+            portatil = self.seleccionarPortatil(id_venta)
+            if marca == "":
+                marca = portatil.get("marca")
+            if modelo == "":
+                modelo = portatil.get("modelo")
+            if precio == "":
+                precio = portatil.get("precio")
+            dni = portatil.get("DNIvendedor")
+            self.eliminarPortatilPorIdVenta(id_venta)
+            portatil_nuevo = {"IDventa":id_venta, "marca":marca,"modelo":modelo,"DNIvendedor":dni,"precio":precio}
+            self.lista_portatiles.append(portatil_nuevo)
+            return True
+        else:
+            return False
+
     def seleccionarPortatil(self, id_venta):
-        indice = self.indiceEnListaIDventa(id_venta)
-        if indice != False:
+        existe = self.existeEnListaIDventa(id_venta)
+        if existe != False:
+            indice = self.indiceEnListaIDventa(id_venta)
             return self.lista_portatiles[indice]
         else:
             return False
