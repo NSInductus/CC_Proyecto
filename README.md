@@ -19,17 +19,11 @@ La arquitectura será una arquitectura basada en microservicios, contaremos con 
 ## Tecnologías utilizadas
 
 
-Para implementar los microservicios se seleccionará minuciosamente el lenguaje de cada uno de los microservicios aunque la primera idea es implementarlos en python.
-Se utilizará Travis CI como servicio de integración continua.
-Las bases de datos utilizadas serán bases de datos no relacionales, que podrían utilizar MongoDB.
-En principio para la comunicación entre microservicios utilizaremos un broker, concretamente RabbitMQ.
-Para la implementación de la Aplicación se utilizarán framework como Flask.
-
-Todas estas especificaciones de tecnologías a utilizar están abiertas a cambios que puedan surgir durante el desarrollo del proyecto.
+Para la información completa de las tecnologías que se utilizarán, ver [aquí](docs/tecnologias.md).
 
 ## Historias de usuarios
 
-Las historias de usuario se pueden ver [aquí](docs/historias_de_usuario.md)
+Las historias de usuario se pueden ver [aquí](docs/historias_de_usuario.md).
 
 ## Licencia
 
