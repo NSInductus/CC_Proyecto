@@ -34,7 +34,7 @@ class Portatiles:
         else:
             return False
 
-    def modificarPortatil(self, id_venta, marca="", modelo="", precio=""):
+    def modificarPortatil(self, id_venta,  precio="", modelo="", marca=""):
         existe = self.existeEnListaIDventa(id_venta)
         if existe != False:
             indice = self.indiceEnListaIDventa(id_venta)
