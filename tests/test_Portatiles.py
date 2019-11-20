@@ -68,17 +68,17 @@ def test_modificar_portatil_2():
     assert nueva_lista.seleccionarPortatil(indice) == portatil_modificado
 
 def test_varias_pruebas_agregar_modificar_eliminar():
-        nueva_lista = Portatiles()
-        indice1 = nueva_lista.agregarPortatil("MSI","GL62M","333X",2000)
-        indice2 = nueva_lista.agregarPortatil("ASUN","TUF","333X",1500)
-        indice3 = nueva_lista.agregarPortatil("ACER","Aspire 3","333X",957)
-        assert nueva_lista.numeroPortatilesEnVenta() == 3
-        assert nueva_lista.eliminarPortatilPorIdVenta(indice2) == True
-        assert nueva_lista.modificarPortatil(indice2) == False
-        assert nueva_lista.modificarPortatil(indice1,400,"Modelo","Marca") == True
-        portatil_modificado = {"IDventa":indice1, "marca":"Marca","modelo":"Modelo","DNIvendedor":"333X","precio":400}
-        assert nueva_lista.seleccionarPortatil(indice1) == portatil_modificado
-        assert nueva_lista.numeroPortatilesEnVenta() == 2
-        assert nueva_lista.eliminarPortatilPorIdVenta(indice1) == True
-        assert nueva_lista.eliminarPortatilPorIdVenta(indice3) == True
-        assert nueva_lista.numeroPortatilesEnVenta() == 0
+    nueva_lista = Portatiles()
+    indice1 = nueva_lista.agregarPortatil("MSI","GL62M","333X",2000)
+    indice2 = nueva_lista.agregarPortatil("ASUN","TUF","333X",1500)
+    indice3 = nueva_lista.agregarPortatil("ACER","Aspire 3","333X",957)
+    assert nueva_lista.numeroPortatilesEnVenta() == 3
+    assert nueva_lista.eliminarPortatilPorIdVenta(indice2) == True
+    assert nueva_lista.modificarPortatil(indice2) == False
+    assert nueva_lista.modificarPortatil(indice1,400,"Modelo","Marca") == True
+    portatil_modificado = {"IDventa":indice1, "marca":"Marca","modelo":"Modelo","DNIvendedor":"333X","precio":400}
+    assert nueva_lista.seleccionarPortatil(indice1) == portatil_modificado
+    assert nueva_lista.numeroPortatilesEnVenta() == 2
+    assert nueva_lista.eliminarPortatilPorIdVenta(indice1) == True
+    assert nueva_lista.eliminarPortatilPorIdVenta(indice3) == True
+    assert nueva_lista.numeroPortatilesEnVenta() == 0
