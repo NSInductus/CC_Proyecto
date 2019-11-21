@@ -32,11 +32,19 @@ Destacar que durante este proyecto se ha optado por una técnica de diseño e im
 * La minimización del número de defectos software.
 * La creación de un software modular. reutilizable y que se pueda cambiar en el futuro.
 
-Para realizar los test en este proyecto se utilizará el framework **Pytest**.
+Para realizar los test en este proyecto se utilizará el framework **pytest**.
 
-Para instalar **Pytest** se escribirá en terminal el siguiente comando:
+Para instalar **pytest** se escribe en terminal el siguiente comando:
 ```shell
 $ pip install pytest
+```
+
+Para los test de covertura se ha utilizado el plug-in **pytest-cov**.
+
+
+Para instalar **pytest-cov** se escribe en la terminalel siguiente comando:
+```shell
+$ pip install pytest-cov
 ```
 
 
