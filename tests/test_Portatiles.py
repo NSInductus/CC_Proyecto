@@ -46,6 +46,10 @@ def test_eliminar_portatil():
     assert nueva_lista.eliminarPortatilPorIdVenta(indice) == True
     assert nueva_lista.numeroPortatilesEnVenta() == 0
     assert nueva_lista.indiceEnListaIDventa(indice) == False
+    indice = nueva_lista.agregarPortatil("MSI","GL62M","333X",2000)
+    indice2 = nueva_lista.agregarPortatil("ASUN","TUF","333X",1500)
+    assert nueva_lista.eliminarPortatilPorIdVenta(indice) == True
+    assert nueva_lista.numeroPortatilesEnVenta() == 1
 
 def test_modificar_portatil():
     nueva_lista = Portatiles()
