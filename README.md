@@ -42,10 +42,12 @@ $ pip install pytest
 Para los test de covertura se ha utilizado el plug-in **pytest-cov**.
 
 
-Para instalar **pytest-cov** se escribe en la terminalel siguiente comando:
+Para instalar **pytest-cov** se escribe en la terminal el siguiente comando:
 ```shell
 $ pip install pytest-cov
 ```
+
+## Herramienta de construcción
 
 
 ## Licencia
