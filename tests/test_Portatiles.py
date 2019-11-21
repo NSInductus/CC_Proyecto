@@ -13,7 +13,7 @@ def test_agregar_nuevo_portatil():
     nueva_lista = Portatiles()
     indice = nueva_lista.agregarPortatil("MSI","GL62M","333X",2000)
     assert nueva_lista.numeroPortatilesEnVenta() == 1
-    portatil = {"IDventa":indice, "marca":"MSI","modelo":"GL62M","DNIvendedor":"333X","precio":2000}
+    portatil = {"IDventa":indice, "marca":"MSI", "modelo":"GL62M", "DNIvendedor":"333X", "precio":2000}
     assert nueva_lista.seleccionarPortatil(indice) == portatil
 
 def test_agregar_varios_portatiles():
