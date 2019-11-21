@@ -60,7 +60,3 @@ class Portatiles:
             return self.lista_portatiles[indice]
         else:
             return False
-
-    def listar(self):
-        for i in self.lista_portatiles:
-            print(i)
