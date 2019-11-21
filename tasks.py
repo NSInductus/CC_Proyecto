@@ -1,27 +1,30 @@
 from invoke import task, run
 
-#Instalación de dependencias necesarias para el proyecto
+#Instalacion de dependencias necesarias para el proyecto
 @task
-def install(c):
-    c.run("pip install -r requirements.txt")
-    print("La instalación de dependencias necesarias para el proyecto concluida.")
+def install():
+    run("pip install -r requirements.txt")
+    print("La instalacion de dependencias necesarias para el proyecto concluida.")
 
-#Ejecución de test
+#Ejecucion de test
 @task
-def test(c):
-    c.run("pytest -q tests/test_*.py")
-    print("La ejecución de tests concluida.")
+def test():
+    run("pytest -q tests/test_*.py")
+    print("La ejecucion de tests concluida.")
 
-#Ejecución de test de covertura
+#Ejecucion de test de covertura
 @task
-def coverage(c):
-    c.run("pytest --cov=src tests/")
-    print("La ejecución de tests de covertura concluida.")
+def coverage():
+    run("pytest --cov=src tests/")
+    print("La ejecucion de tests de covertura concluida.")
 
 #Borrado de ficheros generados automaticamente
 @task
-def clean(c):
-    c.run(rm .coverade)
-    c.run(rm -r .pytest_cache)
-    c.run(rm -r ./tests/__pycache__)
-    print("El borrado de ficheros generados automaaticamente concluido.")
+def clean():
+    run("rm tasks.pyc")
+    run("rm ./src/Portatiles.pyc")
+    run("rm .coverage")
+    run("rm -r .pytest_cache")
+    run("rm -r ./tests/__pycache__")
+    run("rm .coverage")
+    print("El borrado de ficheros generados automaticamente concluido.")
