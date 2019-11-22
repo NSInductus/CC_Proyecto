@@ -1,6 +1,6 @@
 # Proyecto de Cloud Computing
 
-[![License: LGPL v3](https://img.shields.io/badge/License-LGPL%20v3-blue.svg)](https://www.gnu.org/licenses/lgpl-3.0)
+[![License: LGPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![](https://travis-ci.com/NSInductus/CC_Proyecto.svg?branch=master)](https://travis-ci.com/NSInductus/CC_Proyecto)
 [![](https://circleci.com/gh/NSInductus/CC_Proyecto.svg?style=svg)](https://circleci.com/gh/NSInductus/CC_Proyecto)
 [![](https://codecov.io/gh/NSInductus/CC_Proyecto/branch/master/graph/badge.svg)](https://codecov.io/gh/NSInductus/CC_Proyecto)
@@ -92,7 +92,15 @@ $ invoke coverage
 
 ## Integración continua
 
+La integración continua es una técnica que consiste en hacer integraciones de un proyecto con la mayor frecuencia posible, para detectar errores y problemas lo más pronto posible. La integración consiste en la compilación de todo el proyecto y la ejecución de las pruebas sobre el mismo.
+
+Para el proyecto se han utilizado dos herramientas de integración continua, las cuales son:
+
+* **Travis-CI**: La configuración de esta herramienta se encuentra en el fichero [.travis.yml](https://github.com/NSInductus/CC_Proyecto/blob/master/.travis.yml). Esta herramienta primero instalará las dependencias necesarias, es decir, las contenidas en el fichero [requirements.txt](https://github.com/NSInductus/CC_Proyecto/blob/master/requirements.txt), para posteriormente ejecutar tanto los test unitarios como los test de cobertura. Por último una vez se ejecuten los test, se enviarán los resultados de los test de cobertura a **codecov**. Según la configuración establecida en el fichero **.travis.yml** se ejecutará sobre un sistema **Linux** y sobre las versiones de **python**: 3.5.8, 3.6.9, 3.7.0, 3.7.3, 3.7.5 y 3.8.0.
+
+
+
 
 ## Licencia
 
-Este proyecto está licenciado bajo la licencia GNU General Public License v3.0.
+Este proyecto está licenciado bajo la licencia [GNU General Public License v3.0](https://www.gnu.org/licenses/gpl-3.0).
