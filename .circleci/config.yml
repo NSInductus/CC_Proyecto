@@ -1,0 +1,20 @@
+version: 2
+jobs:
+  build:
+    docker:
+      # Version con la que se trabaja desde la máquina local
+      - image: circleci/python:3.7.5
+    steps:
+      - checkout
+      - run:
+          name: Instalar un entorno virtual con python3
+          command: pipenv install --three
+      - run:
+          name: Instalar dependencias
+          command: pipenv run pip install -r requirements.txt
+      - run:
+          name: Ejecutar tests
+          command: pipenv run python -m pytest tests/test_*.py
+      - run:
+          name: Ejecutar test de cobertura
+          command: pipenv run python -m pytest --cov=src tests/
