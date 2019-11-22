@@ -55,6 +55,40 @@ $ pip install pytest-cov
 
 ## Herramienta de construcción
 
+Como herramienta de construcción se utilizará **invoke**, por su...
+
+Para poder utilizarla hay que instalarla en python, para eso se escribe en la terminal el siguiente comando:
+
+```shell
+$ pip install invoke
+```
+
+Para la configuración de la misma, se ha agregado el fichero **tasks.py**.
+
+
+```
+buildtool: tasks.py
+```
+
+Para utilizar la herramienta de construcción se ha de escribir en la terminal "invoke" seguido de la tarea que se desea que realice la herramienta. Estas tareas se han definido anteriormente en el fichero de configuración de la herramienta.
+
+Las posibles tareas que se pueden hacer son:
+
+* **install**: Esta tarea es la encargada de instalar las dependencias necesarias para que funcione nuestro proyecto, las cuales están definidas en el fichero **requirements.txt**. Para esto hay que escribir en la terminal:
+```shell
+$ invoke install
+```
+
+* **test**: Esta tarea es la encargada de ejecutar los test unitarios, sobre nuestras clases de python. Para esto hay que escribir en la terminal:
+```shell
+$ invoke test
+```
+
+* **coverage**: Esta tarea es la encargada de ejecutar los test de covertura, sobre nuetsras clases de python. Para esto hay que escribir en la terminal:
+```shell
+$ invoke coverage
+```
+
 
 ## Integración continua
 
