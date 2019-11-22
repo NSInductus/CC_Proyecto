@@ -1,0 +1,23 @@
+# Lenguaje de programación
+language: python
+
+# Versiones de python
+python:
+    - "3.4.10"
+    - "3.5.8"
+    - "3.6"
+    - "3.7"
+    - "3.8"
+
+#Instalar todo lo necesario
+before_install:
+    - pip install -r requirements.txt
+
+#Ejecución de test unitarios y de covertura
+script:
+    - invoke test
+    - invoke coverage
+
+#Pasa los resultados a codecov
+after_success:
+    - codecov
