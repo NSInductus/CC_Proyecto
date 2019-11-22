@@ -55,7 +55,7 @@ $ pip install pytest-cov
 
 ## Herramienta de construcción
 
-Como herramienta de construcción se utilizará **invoke**, por su...
+Como herramienta de construcción se utilizará **invoke**, por su madurez y fiabilidad frente a otras herramientas , así como por su detallada y clara documentación que permiten al usuario saber como tiene que utilizar invoke en cada momento.
 
 Para poder utilizarla hay que instalarla en python, para eso se escribe en la terminal el siguiente comando:
 
