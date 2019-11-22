@@ -50,6 +50,9 @@ $ pip install pytest-cov
 ## Herramienta de construcción
 
 
+## Integración continua
+
+
 ## Licencia
 
 Este proyecto está licenciado bajo la licencia GNU General Public License v3.0.
