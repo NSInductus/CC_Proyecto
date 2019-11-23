@@ -6,7 +6,7 @@
 [![](https://codecov.io/gh/NSInductus/CC_Proyecto/branch/master/graph/badge.svg)](https://codecov.io/gh/NSInductus/CC_Proyecto)
 
 
-Proyecto para desarrollar en la asignatura de Cloud Computing correspondiente al Máster de Ingeniería Informática.
+Proyecto para desarrollar en la asignatura de **Cloud Computing** correspondiente al Máster de Ingeniería Informática.
 
 ## Descripción del problema
 
@@ -45,7 +45,7 @@ Para instalar **pytest** se escribe en terminal el siguiente comando:
 $ pip install pytest
 ```
 
-Para los test de covertura se ha utilizado el plug-in **pytest-cov**.
+Para los test de cobertura se ha utilizado el plug-in **pytest-cov**.
 
 
 Para instalar **pytest-cov** se escribe en la terminal el siguiente comando:
@@ -63,7 +63,7 @@ Para poder utilizarla hay que instalarla en python, para eso se escribe en la te
 $ pip install invoke
 ```
 
-Para la configuración de la misma, se ha agregado el fichero **tasks.py**.
+Para la configuración de la misma, se ha agregado el fichero [tasks.py](https://github.com/NSInductus/CC_Proyecto/blob/master/tasks.py).
 
 
 ```
@@ -74,18 +74,18 @@ Para utilizar la herramienta de construcción se ha de escribir en la terminal "
 
 Las posibles tareas que se pueden hacer son:
 
-* **install**: Esta tarea es la encargada de instalar las dependencias necesarias para que funcione nuestro proyecto, las cuales están definidas en el fichero **requirements.txt**. Para esto hay que escribir en la terminal:
-```shell
+* **install**: Esta tarea es la encargada de instalar las dependencias necesarias para que funcione nuestro proyecto, las cuales están definidas en el fichero [requirements.txt](https://github.com/NSInductus/CC_Proyecto/blob/master/requirements.txt). Para esto hay que escribir en la terminal:
+```
 $ invoke install
 ```
 
 * **test**: Esta tarea es la encargada de ejecutar los test unitarios, sobre nuestras clases de python. Para esto hay que escribir en la terminal:
-```shell
+```
 $ invoke test
 ```
 
-* **coverage**: Esta tarea es la encargada de ejecutar los test de covertura, sobre nuetsras clases de python. Para esto hay que escribir en la terminal:
-```shell
+* **coverage**: Esta tarea es la encargada de ejecutar los test de cobertura, sobre nuestras clases de python. Para esto hay que escribir en la terminal:
+```
 $ invoke coverage
 ```
 

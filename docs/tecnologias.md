@@ -1,5 +1,6 @@
 # Tecnologías utilizadas
 
+Se describe de forma breve las tecnologías que se utilizarán en el proyecto. Conforme se vaya desarrollando el mismo se irán explicando con mayor precisión y de forma más especifica.
 
 Para implementar los microservicios todos y cada uno de los servicios necesarios para implementar este proyecto se utilizará el lenguaje de programación **Python**.
 
@@ -11,7 +12,10 @@ Las bases de datos utilizadas serán bases de datos no relacionales, que se impl
 
 Para la implementación de la Aplicación se utilizará un framework, el seleccionado es **Flask**.
 
-Se utilizará **Travis CI** como servicio de integración continua.
+
+Como librería para la creación de los test y como marco de test se utilizará **pytest**. Para los test de cobertura se utilizará el framework **pytest-cov**.
+
+Se utilizarán **Travis CI** y **Circle CI** como herramientas de integración continua.
 
 
 *Todas estas especificaciones de tecnologías a utilizar están abiertas a cambios que puedan surgir durante el desarrollo del proyecto.*
