@@ -86,3 +86,13 @@ def test_varias_pruebas_agregar_modificar_eliminar():
     assert nueva_lista.eliminarPortatilPorIdVenta(indice1) == True
     assert nueva_lista.eliminarPortatilPorIdVenta(indice3) == True
     assert nueva_lista.numeroPortatilesEnVenta() == 0
+
+def test_indices():
+    nueva_lista = Portatiles()
+    indice1 = nueva_lista.agregarPortatil("MSI","GL62M","333X",2000)
+    indice2 = nueva_lista.agregarPortatil("ASUN","TUF","333X",1500)
+    indice3 = nueva_lista.agregarPortatil("ACER","Aspire 3","333X",957)
+    assert nueva_lista.numeroPortatilesEnVenta() == 3
+    assert nueva_lista.eliminarPortatilPorIdVenta(indice2) == True
+    indice4 = nueva_lista.agregarPortatil("ASUN","TUF2","373X",947)
+    assert indice1 != indice2 != indice3 != indice4

@@ -1,12 +1,14 @@
 class Portatiles:
     def __init__ (self):
         self.lista_portatiles = []
+        self.indice = 1
 
     def numeroPortatilesEnVenta(self):
         return len(self.lista_portatiles)
 
     def agregarPortatil(self, marca, modelo, DNIvendedor, precio):
-        id_venta = self.numeroPortatilesEnVenta()+1
+        id_venta = self.indice
+        self.indice = self.indice + 1
         portatil = {"IDventa":id_venta, "marca":marca,"modelo":modelo,"DNIvendedor":DNIvendedor,"precio":precio}
         self.lista_portatiles.append(portatil)
         return id_venta
