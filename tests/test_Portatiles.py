@@ -16,6 +16,13 @@ def test_agregar_nuevo_portatil():
     portatil = {"IDventa":indice, "marca":"MSI", "modelo":"GL62M", "DNIvendedor":"333X", "precio":2000, "pantalla":"", "procesador":"", "RAM":"", "almacenamiento":"", "grafica":"", "bateria":"", "SO":"",  "comentario":""}
     assert nueva_lista.seleccionarPortatil(indice) == portatil
 
+def test_agregar_nuevo_portatil_version_larga():
+    nueva_lista = Portatiles()
+    indice = nueva_lista.agregarPortatil("MSI","GL62M","333X",2000, "Muy bueno", "16", "intel core i7", "8GB DDR4", "1 TB", "nvidia geforce GTX 1050", "3 H", "Ninguno")
+    assert nueva_lista.numeroPortatilesEnVenta() == 1
+    portatil = {"IDventa":indice, "marca":"MSI", "modelo":"GL62M", "DNIvendedor":"333X", "precio":2000, "pantalla":"16", "procesador":"intel core i7", "RAM":"8GB DDR4", "almacenamiento":"1 TB", "grafica":"nvidia geforce GTX 1050", "bateria":"3 H", "SO":"Ninguno",  "comentario":"Muy bueno"}
+    assert nueva_lista.seleccionarPortatil(indice) == portatil
+
 def test_agregar_varios_portatiles():
     nueva_lista = Portatiles()
     indice1 = nueva_lista.agregarPortatil("MSI","GL62M","333X",2000)
@@ -59,6 +66,16 @@ def test_modificar_portatil():
     assert nueva_lista.seleccionarPortatil(indice) == portatil
     assert nueva_lista.modificarPortatil(indice, 1500,"GL82M","MSI-PLUS") == True
     portatil_modificado = {"IDventa":indice, "marca":"MSI-PLUS", "modelo":"GL82M", "DNIvendedor":"333X", "precio":1500, "pantalla":"", "procesador":"", "RAM":"", "almacenamiento":"", "grafica":"", "bateria":"", "SO":"",  "comentario":""}
+    assert nueva_lista.seleccionarPortatil(indice) == portatil_modificado
+
+def test_modificar_portatil_version_larga():
+    nueva_lista = Portatiles()
+    indice = nueva_lista.agregarPortatil("MSI","GL62M","333X",2000, "Muy bueno", "16", "intel core i7", "8GB DDR4", "1 TB", "nvidia geforce GTX 1050", "3 H", "Ninguno")
+    assert nueva_lista.numeroPortatilesEnVenta() == 1
+    portatil = {"IDventa":indice, "marca":"MSI", "modelo":"GL62M", "DNIvendedor":"333X", "precio":2000, "pantalla":"16", "procesador":"intel core i7", "RAM":"8GB DDR4", "almacenamiento":"1 TB", "grafica":"nvidia geforce GTX 1050", "bateria":"3 H", "SO":"Ninguno",  "comentario":"Muy bueno"}
+    assert nueva_lista.seleccionarPortatil(indice) == portatil
+    assert nueva_lista.modificarPortatil(indice, 1500,"GL82M","MSI-PLUS", "Oferta, bajada de precio y aumento RAM", "16", "intel core i7", "16GB DDR4" ) == True
+    portatil_modificado = {"IDventa":indice, "marca":"MSI-PLUS", "modelo":"GL82M", "DNIvendedor":"333X", "precio":1500, "pantalla":"16", "procesador":"intel core i7", "RAM":"16GB DDR4", "almacenamiento":"1 TB", "grafica":"nvidia geforce GTX 1050", "bateria":"3 H", "SO":"Ninguno",  "comentario":"Oferta, bajada de precio y aumento RAM"}
     assert nueva_lista.seleccionarPortatil(indice) == portatil_modificado
 
 def test_modificar_portatil_2():
