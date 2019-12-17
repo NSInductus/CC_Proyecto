@@ -85,3 +85,10 @@ class Portatiles:
             if portatil.get("DNIvendedor") == DNIusuario:
                 portatiles_usuario.append(portatil)
         return portatiles_usuario
+
+    def buscar_portatil_por_precio(self, limite_inferior, limite_superior):
+        portatiles_busqueda = []
+        for i, portatil in enumerate(self.lista_portatiles):
+            if (portatil.get("precio") < limite_superior) and (portatil.get("precio") < limite_inferior):
+                portatiles_busqueda.append(portatil)
+        return portatiles_busqueda
