@@ -99,3 +99,16 @@ class Portatiles:
             if (portatil.get("modelo") == modelo) and (portatil.get("marca") == marca):
                 portatiles_busqueda.append(portatil)
         return portatiles_busqueda
+
+    #Te compara portatiles de la misma marca y modelo y te los ordena por precio
+    def comparar_portatiles(self, modelo, marca):
+        portatiles_iguales = []
+        for i, portatil in enumerate(self.lista_portatiles):
+            if (portatil.get("modelo") == modelo) and (portatil.get("marca") == marca):
+                portatiles_iguales.append(portatil)
+        print(portatiles_iguales)
+        if len(portatiles_iguales) >= 1:
+            portatiles_iguales = sorted(portatiles_iguales, key=lambda k: k['precio'])
+            return portatiles_iguales
+        else:
+            return False
