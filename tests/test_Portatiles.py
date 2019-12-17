@@ -113,3 +113,21 @@ def test_indices():
     assert nueva_lista.eliminarPortatilPorIdVenta(indice2) == True
     indice4 = nueva_lista.agregarPortatil("ASUN","TUF2","373X",947)
     assert indice1 != indice2 != indice3 != indice4
+
+def test_portatiles_en_venta_de_usuario():
+    nueva_lista = Portatiles()
+    mis_portatiles_en_venta = nueva_lista.portatiles_en_venta_de_usuario("333X")
+    assert len(mis_portatiles_en_venta) == 0
+    indice1 = nueva_lista.agregarPortatil("MSI","GL62M","333X",2000)
+    indice2 = nueva_lista.agregarPortatil("ASUN","TUF","345X",1500)
+    indice3 = nueva_lista.agregarPortatil("ACER","Aspire 3","333X",957)
+    mis_portatiles_en_venta = nueva_lista.portatiles_en_venta_de_usuario("333X")
+    assert len(mis_portatiles_en_venta) == 2
+    portatil1 = {"IDventa":indice1, "marca":"MSI", "modelo":"GL62M", "DNIvendedor":"333X", "precio":2000, "pantalla":"", "procesador":"", "RAM":"", "almacenamiento":"", "grafica":"", "bateria":"", "SO":"",  "comentario":""}
+    portatil2 = {"IDventa":indice3, "marca":"ACER", "modelo":"Aspire 3", "DNIvendedor":"333X", "precio":957, "pantalla":"", "procesador":"", "RAM":"", "almacenamiento":"", "grafica":"", "bateria":"", "SO":"",  "comentario":""}
+    assert mis_portatiles_en_venta[0] == portatil1
+    assert mis_portatiles_en_venta[1] == portatil2
+    assert nueva_lista.eliminarPortatilPorIdVenta(indice1) == True
+    mis_portatiles_en_venta = nueva_lista.portatiles_en_venta_de_usuario("333X")
+    assert len(mis_portatiles_en_venta) == 1
+    assert mis_portatiles_en_venta[0] == portatil2

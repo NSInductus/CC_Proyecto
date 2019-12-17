@@ -78,3 +78,10 @@ class Portatiles:
             return self.lista_portatiles[indice]
         else:
             return False
+
+    def portatiles_en_venta_de_usuario(self, DNIusuario):
+        portatiles_usuario = []
+        for i, portatil in enumerate(self.lista_portatiles):
+            if portatil.get("DNIvendedor") == DNIusuario:
+                portatiles_usuario.append(portatil)
+        return portatiles_usuario
