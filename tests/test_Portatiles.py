@@ -166,3 +166,15 @@ def test_comparar_portatiles():
     assert len(portatiles_comparar) == 2
     portatil1 = {"IDventa":indice4, "marca":"MSI", "modelo":"GL62M", "DNIvendedor":"356X", "precio":1000, "pantalla":"", "procesador":"", "RAM":"", "almacenamiento":"", "grafica":"", "bateria":"", "SO":"",  "comentario":""}
     assert portatiles_comparar[0] == portatil1
+
+def test_imprimir_comparacion():
+    nueva_lista = Portatiles()
+    indice1 = nueva_lista.agregarPortatil("MSI","GL62M","333X",2000)
+    indice2 = nueva_lista.agregarPortatil("ASUN","TUF","333X",1500)
+    indice3 = nueva_lista.agregarPortatil("ACER","Aspire 3","333X",957)
+    indice4 = nueva_lista.agregarPortatil("MSI","GL62M","356X", 999)
+    indice5 = nueva_lista.agregarPortatil("MSI","GL62M","356X", 999)
+    indice6 = nueva_lista.agregarPortatil("MSI","GL62M","356X", 999)
+    indice7 = nueva_lista.agregarPortatil("MSI","GL62M","356X", 999)
+    portatiles_comparar = nueva_lista.comparar_portatiles("GL62M", "MSI")
+    nueva_lista.imprimir_comparacion(portatiles_comparar, "comparacion.pdf")

@@ -1,3 +1,5 @@
+from reportlab.pdfgen import canvas
+
 class Portatiles:
     def __init__ (self):
         self.lista_portatiles = []
@@ -112,3 +114,9 @@ class Portatiles:
             return portatiles_iguales
         else:
             return False
+
+    def imprimir_comparacion(self, vector_comparacion, ruta):
+        c = canvas.Canvas(ruta)
+        for i, portatil in enumerate(vector_comparacion):
+            c.drawString(200, 10*(i+1), "Portatil: " + str(portatil.get("marca")) + " " + str(portatil.get("modelo")) + " " + str(portatil.get("pantalla")) + " " +portatil.get("procesador") + " " +str(portatil.get("RAM")) + " " +str(portatil.get("almacenamiento")) + " " +str(portatil.get("grafica")) + " " +str(portatil.get("bateria")) + " " +str(portatil.get("SO")) + " " +str(portatil.get("comentario")) + " " + str(portatil.get("precio")))
+        c.save()
