@@ -142,3 +142,15 @@ def test_buscar_portatil_por_precio():
     assert len(portatiles_busqueda) == 1
     portatiles_busqueda = nueva_lista.buscar_portatil_por_precio(1000, 3000)
     assert len(portatiles_busqueda) == 2
+
+
+def test_buscar_portatil_por_modelo_marca():
+    nueva_lista = Portatiles()
+    indice1 = nueva_lista.agregarPortatil("MSI","GL62M","333X",2000)
+    indice2 = nueva_lista.agregarPortatil("ASUN","TUF","333X",1500)
+    indice3 = nueva_lista.agregarPortatil("ACER","Aspire 3","333X",957)
+    indice4 = nueva_lista.agregarPortatil("MSI","GL62M","356X", 2033)
+    portatiles_busqueda = nueva_lista.buscar_portatil_por_modelo_marca("B","A")
+    assert len(portatiles_busqueda) == 0
+    portatiles_busqueda = nueva_lista.buscar_portatil_por_modelo_marca("GL62M", "MSI")
+    assert len(portatiles_busqueda) == 2
