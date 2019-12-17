@@ -92,3 +92,10 @@ class Portatiles:
             if (portatil.get("precio") <= limite_superior) and (portatil.get("precio") >= limite_inferior):
                 portatiles_busqueda.append(portatil)
         return portatiles_busqueda
+
+    def buscar_portatil_por_modelo_marca(self, modelo, marca):
+        portatiles_busqueda = []
+        for i, portatil in enumerate(self.lista_portatiles):
+            if (portatil.get("modelo") == modelo) and (portatil.get("marca") == marca):
+                portatiles_busqueda.append(portatil)
+        return portatiles_busqueda
