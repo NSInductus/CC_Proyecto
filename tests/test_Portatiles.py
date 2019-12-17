@@ -140,3 +140,5 @@ def test_buscar_portatil_por_precio():
     indice3 = nueva_lista.agregarPortatil("ACER","Aspire 3","333X",957)
     portatiles_busqueda = nueva_lista.buscar_portatil_por_precio(0, 1000)
     assert len(portatiles_busqueda) == 1
+    portatiles_busqueda = nueva_lista.buscar_portatil_por_precio(1000, 3000)
+    assert len(portatiles_busqueda) == 2
