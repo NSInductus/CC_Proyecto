@@ -13,10 +13,10 @@ app = Flask(__name__)
 
 portatiles = Portatiles.Portatiles()
 
-#DE PRESENTACIÓN
-@app.route("/")
+#DE PRESENTACION
+@app.route('/')
 def index():
-    return Response(json.dumps("REST para la gestión de portátiles."), status=200)
+    return Response(json.dumps("REST"), status=200, mimetype="application/json")
 
 #Para comprobar
 #http://127.0.0.1:5000/numeroPortatilesEnVenta
@@ -47,7 +47,7 @@ def seleccionarPortatil(id_venta):
 def agregarPortatil(marca, modelo, DNIvendedor, precio, comentario="", pantalla="", procesador="", RAM="", almacenamiento="", grafica="", bateria="", SO=""):
     id_venta = portatiles.agregarPortatil(marca, modelo, DNIvendedor, precio, comentario, pantalla, procesador, RAM, almacenamiento, grafica, bateria, SO)
     #return Response(str(id_venta))
-    return Response(json.dumps(id_venta), status=201, mimetype="application/json")
+    return Response(json.dumps(id_venta), status=200, mimetype="application/json")
 
 
 #http://127.0.0.1:5000/modificarPortatil/1/800000
@@ -65,7 +65,7 @@ def agregarPortatil(marca, modelo, DNIvendedor, precio, comentario="", pantalla=
 def modificarPortatil(id_venta, precio="", modelo="", marca="",comentario="",  pantalla="", procesador="", RAM="", almacenamiento="", grafica="", bateria="", SO=""):
     modificado = portatiles.modificarPortatil(id_venta, precio, modelo, marca,comentario,  pantalla, procesador, RAM, almacenamiento, grafica, bateria, SO)
     #return Response(str(id_venta))
-    return Response(json.dumps(modificado), status=201, mimetype="application/json")
+    return Response(json.dumps(modificado), status=200, mimetype="application/json")
 
 #http://127.0.0.1:5000/eliminarPortatilPorIdVenta/1/80000
 @app.route('/eliminarPortatilPorIdVenta/<int:id_venta>', methods=['GET','DELETE'])
