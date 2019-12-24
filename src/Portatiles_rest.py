@@ -16,7 +16,7 @@ portatiles = Portatiles.Portatiles()
 #DE PRESENTACIÓN
 @app.route("/")
 def index():
-    return Response("REST para la gestión de portátiles.", status=200)
+    return Response(json.dumps("REST para la gestión de portátiles."), status=200)
 
 #Para comprobar
 #http://127.0.0.1:5000/numeroPortatilesEnVenta
