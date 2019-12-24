@@ -3,3 +3,4 @@ pytest==4.6.6
 pytest-cov==2.8.1
 codecov==2.0.15
 reportlab==3.5.32
+flask==1.1.1
