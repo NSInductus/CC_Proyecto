@@ -35,15 +35,15 @@ def seleccionarPortatil(id_venta):
 
 #http://127.0.0.1:5000/agregarPortatil/msi/gl62/333X/600
 #http://127.0.0.1:5000/agregarPortatil/msi/gl62/333X/600/Muy%20bueno/15/i7/GB%20DDR4/1gb/GTX/2H/Linux
-@app.route('/agregarPortatil/<marca>/<modelo>/<DNIvendedor>/<int:precio>', methods=['GET', 'POST'])
-@app.route('/agregarPortatil/<marca>/<modelo>/<DNIvendedor>/<int:precio>/<comentario>', methods=['GET', 'POST'])
-@app.route('/agregarPortatil/<marca>/<modelo>/<DNIvendedor>/<int:precio>/<comentario>/<pantalla>', methods=['GET', 'POST'])
-@app.route('/agregarPortatil/<marca>/<modelo>/<DNIvendedor>/<int:precio>/<comentario>/<pantalla>/<procesador>', methods=['GET', 'POST'])
-@app.route('/agregarPortatil/<marca>/<modelo>/<DNIvendedor>/<int:precio>/<comentario>/<pantalla>/<procesador>/<RAM>', methods=['GET', 'POST'])
-@app.route('/agregarPortatil/<marca>/<modelo>/<DNIvendedor>/<int:precio>/<comentario>/<pantalla>/<procesador>/<RAM>/<almacenamiento>', methods=['GET', 'POST'])
-@app.route('/agregarPortatil/<marca>/<modelo>/<DNIvendedor>/<int:precio>/<comentario>/<pantalla>/<procesador>/<RAM>/<almacenamiento>/<grafica>', methods=['GET', 'POST'])
-@app.route('/agregarPortatil/<marca>/<modelo>/<DNIvendedor>/<int:precio>/<comentario>/<pantalla>/<procesador>/<RAM>/<almacenamiento>/<grafica>/<bateria>', methods=['GET', 'POST'])
-@app.route('/agregarPortatil/<marca>/<modelo>/<DNIvendedor>/<int:precio>/<comentario>/<pantalla>/<procesador>/<RAM>/<almacenamiento>/<grafica>/<bateria>/<SO>', methods=['GET', 'POST'])
+@app.route('/agregarPortatil/<marca>/<modelo>/<DNIvendedor>/<int:precio>', methods=['POST'])
+@app.route('/agregarPortatil/<marca>/<modelo>/<DNIvendedor>/<int:precio>/<comentario>', methods=['POST'])
+@app.route('/agregarPortatil/<marca>/<modelo>/<DNIvendedor>/<int:precio>/<comentario>/<pantalla>', methods=['POST'])
+@app.route('/agregarPortatil/<marca>/<modelo>/<DNIvendedor>/<int:precio>/<comentario>/<pantalla>/<procesador>', methods=['POST'])
+@app.route('/agregarPortatil/<marca>/<modelo>/<DNIvendedor>/<int:precio>/<comentario>/<pantalla>/<procesador>/<RAM>', methods=['POST'])
+@app.route('/agregarPortatil/<marca>/<modelo>/<DNIvendedor>/<int:precio>/<comentario>/<pantalla>/<procesador>/<RAM>/<almacenamiento>', methods=['POST'])
+@app.route('/agregarPortatil/<marca>/<modelo>/<DNIvendedor>/<int:precio>/<comentario>/<pantalla>/<procesador>/<RAM>/<almacenamiento>/<grafica>', methods=['POST'])
+@app.route('/agregarPortatil/<marca>/<modelo>/<DNIvendedor>/<int:precio>/<comentario>/<pantalla>/<procesador>/<RAM>/<almacenamiento>/<grafica>/<bateria>', methods=['POST'])
+@app.route('/agregarPortatil/<marca>/<modelo>/<DNIvendedor>/<int:precio>/<comentario>/<pantalla>/<procesador>/<RAM>/<almacenamiento>/<grafica>/<bateria>/<SO>', methods=['POST'])
 def agregarPortatil(marca, modelo, DNIvendedor, precio, comentario="", pantalla="", procesador="", RAM="", almacenamiento="", grafica="", bateria="", SO=""):
     id_venta = portatiles.agregarPortatil(marca, modelo, DNIvendedor, precio, comentario, pantalla, procesador, RAM, almacenamiento, grafica, bateria, SO)
     #return Response(str(id_venta))
@@ -51,24 +51,24 @@ def agregarPortatil(marca, modelo, DNIvendedor, precio, comentario="", pantalla=
 
 
 #http://127.0.0.1:5000/modificarPortatil/1/800000
-@app.route('/modificarPortatil/<int:id_venta>/<int:precio>', methods=['GET', 'UPDATE'])
-@app.route('/modificarPortatil/<int:id_venta>/<int:precio>/<modelo>', methods=['GET', 'UPDATE'])
-@app.route('/modificarPortatil/<int:id_venta>/<int:precio>/<modelo>/<marca>', methods=['GET', 'UPDATE'])
-@app.route('/modificarPortatil/<int:id_venta>/<int:precio>/<modelo>/<marca>/<comentario>', methods=['GET', 'UPDATE'])
-@app.route('/modificarPortatil/<int:id_venta>/<int:precio>/<modelo>/<marca>/<comentario>/<pantalla>', methods=['GET', 'UPDATE'])
-@app.route('/modificarPortatil/<int:id_venta>/<int:precio>/<modelo>/<marca>/<comentario>/<pantalla>/<procesador>', methods=['GET', 'UPDATE'])
-@app.route('/modificarPortatil/<int:id_venta>/<int:precio>/<modelo>/<marca>/<comentario>/<pantalla>/<procesador>/<RAM>', methods=['GET', 'UPDATE'])
-@app.route('/modificarPortatil/<int:id_venta>/<int:precio>/<modelo>/<marca>/<comentario>/<pantalla>/<procesador>/<RAM>/<almacenamiento>', methods=['GET', 'UPDATE'])
-@app.route('/modificarPortatil/<int:id_venta>/<int:precio>/<modelo>/<marca>/<comentario>/<pantalla>/<procesador>/<RAM>/<almacenamiento>/<grafica>', methods=['GET', 'UPDATE'])
-@app.route('/modificarPortatil/<int:id_venta>/<int:precio>/<modelo>/<marca>/<comentario>/<pantalla>/<procesador>/<RAM>/<almacenamiento>/<grafica>/<bateria>', methods=['GET', 'UPDATE'])
-@app.route('/modificarPortatil/<int:id_venta>/<int:precio>/<modelo>/<marca>/<comentario>/<pantalla>/<procesador>/<RAM>/<almacenamiento>/<grafica>/<bateria>/<SO>', methods=['GET', 'UPDATE'])
+@app.route('/modificarPortatil/<int:id_venta>/<int:precio>', methods=['PUT'])
+@app.route('/modificarPortatil/<int:id_venta>/<int:precio>/<modelo>', methods=['PUT'])
+@app.route('/modificarPortatil/<int:id_venta>/<int:precio>/<modelo>/<marca>', methods=['PUT'])
+@app.route('/modificarPortatil/<int:id_venta>/<int:precio>/<modelo>/<marca>/<comentario>', methods=['PUT'])
+@app.route('/modificarPortatil/<int:id_venta>/<int:precio>/<modelo>/<marca>/<comentario>/<pantalla>', methods=['PUT'])
+@app.route('/modificarPortatil/<int:id_venta>/<int:precio>/<modelo>/<marca>/<comentario>/<pantalla>/<procesador>', methods=['PUT'])
+@app.route('/modificarPortatil/<int:id_venta>/<int:precio>/<modelo>/<marca>/<comentario>/<pantalla>/<procesador>/<RAM>', methods=['PUT'])
+@app.route('/modificarPortatil/<int:id_venta>/<int:precio>/<modelo>/<marca>/<comentario>/<pantalla>/<procesador>/<RAM>/<almacenamiento>', methods=['PUT'])
+@app.route('/modificarPortatil/<int:id_venta>/<int:precio>/<modelo>/<marca>/<comentario>/<pantalla>/<procesador>/<RAM>/<almacenamiento>/<grafica>', methods=['PUT'])
+@app.route('/modificarPortatil/<int:id_venta>/<int:precio>/<modelo>/<marca>/<comentario>/<pantalla>/<procesador>/<RAM>/<almacenamiento>/<grafica>/<bateria>', methods=['PUT'])
+@app.route('/modificarPortatil/<int:id_venta>/<int:precio>/<modelo>/<marca>/<comentario>/<pantalla>/<procesador>/<RAM>/<almacenamiento>/<grafica>/<bateria>/<SO>', methods=['PUT'])
 def modificarPortatil(id_venta, precio="", modelo="", marca="",comentario="",  pantalla="", procesador="", RAM="", almacenamiento="", grafica="", bateria="", SO=""):
     modificado = portatiles.modificarPortatil(id_venta, precio, modelo, marca,comentario,  pantalla, procesador, RAM, almacenamiento, grafica, bateria, SO)
     #return Response(str(id_venta))
     return Response(json.dumps(modificado), status=200, mimetype="application/json")
 
 #http://127.0.0.1:5000/eliminarPortatilPorIdVenta/1/80000
-@app.route('/eliminarPortatilPorIdVenta/<int:id_venta>', methods=['GET','DELETE'])
+@app.route('/eliminarPortatilPorIdVenta/<int:id_venta>', methods=['DELETE'])
 def eliminarPortatilPorIdVenta(id_venta):
     eliminado = portatiles.eliminarPortatilPorIdVenta(id_venta)
     #return Response(str(id_venta))
@@ -107,6 +107,6 @@ def compararPotatiles(modelo, marca):
     #return Response(str(id_venta))
     return Response(json.dumps(iguales), status=200, mimetype="application/json")
 
-if __name__ == '__main__':
-    app.debug = True
-    app.run()
+#if __name__ == '__main__':
+#    app.debug = True
+#    app.run()
