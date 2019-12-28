@@ -1,3 +1,5 @@
 build:
+  # Contenedor
   docker:
     web: Dockerfile
+# No se incluye run y se coge el CMD del Dockerfile
