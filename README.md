@@ -186,27 +186,28 @@ Finalmente se establece el directorio de trabajo en la carpeta src y se lanza el
 
 En primer lugar me he dado de alta en DockerHub y he linkado mi cuenta de GitHub con mi nueva cuenta de DockerHub. También he instalado la herramienta docker por terminal.
 
-En segundo lugar he creado un repositorio en DockerHub y he linkado mi repositorio con el de Github., como se ve en la siguiente imagen:
+En segundo lugar he creado un repositorio en DockerHub y he linkado mi repositorio con el de Github, como se ve en la siguiente imagen:
 
-ima
+![](docs/img/dockerhub.png)
 
-Después he probado en local ha construir mi microservicio sobre varias imágenes base, para eso he ido modificando el [Dockerfile](Dockerfile) y utilizando el siguiente comando para crear la imagen:
+
+Después he probado en local ha construir mi microservicio sobre varias imágenes base, para eso he ido modificando el [Dockerfile](Dockerfile) y utilizando el siguiente comando para crear cada una de las imagenes:
 
 ```
 & docker build -t nombre_imagen ruta
 ```
 
-Para posteriormente arrancar el contenedor en local utilizando esa imagen, con el comando:
+Para posteriormente arrancar el contenedor en local utilizando cada una de las imagenes, con el comando:
 
 ```
 & docker run ID_nombre_imagen
 ```
-Y después seguir el proceso explicado en la sección: [Comparación de imágenes base](docs/comparacion_imagenes.md).
+Y después he seguido el proceso explicado en la sección: [Comparación de imágenes base](docs/comparacion_imagenes.md).
 
 Posteriormente se creado el archivo [Dockerfile](Dockerfile) definitivo, rellenado como se ha explicado en la sección anterior  y he realizado un *push* a la rama master de mi proyecto de GitHub.
 
 
-Después de realizar el *push* DockerHub automaticamente localiza el Dockerfile en mi repositorio de GitHub y lo utiliza para crear la imagen, la cual se quedará disponible en la web por si alguien la quiere descargar y utilizar, para realizar este proceso simplemente abria que utilizar los siguientes 2 comandos:
+Después de realizar el *push*, DockerHub automaticamente localiza el Dockerfile en mi repositorio de GitHub y lo utiliza para crear la imagen, la cual se quedará disponible en la web por si alguien la quiere descargar y utilizar, para realizar este proceso simplemente tendría que utilizar los siguientes 2 comandos:
 
 
 ```
@@ -223,3 +224,56 @@ $ docker run ID_de_la_imagen_descargada
 ```
 
 Este segundo comando para arrancar el contenedor en local.
+
+## Despliegue en Heroku
+
+Como *PaaS* se ha utilizado *heroku*, las razones son:
+
+* Hay mucha documentación sobre esta herramienta.
+* Es una herramienta gratuita.
+* Permite el uso de contenedores.
+
+La imagen del microservicio de gestión de portátiles esta desplegada [aquí](https://cc-proyecto.herokuapp.com/)
+
+
+Para desplegar nuestro microservicio se han seguido los siguientes pasos:
+
+En primer lugar se ha creado el archivo [heroku.yml](heroku.yml), en el cual se indica que para construir la aplicación tiene que utilizar el *Dockerfile*.
+
+Posteriormente se ha descargado la herramienta heroku por terminal. Y nos hemos dado de alta en Heroku, así como hemos linkado nuestra cuenta de GitHub con nuestra nueva cuenta de Heroku.
+
+Después se ha abierto una terminal en el directorio del proyecto y se ha realizado el siguiente comando:
+
+```
+$ heroku create nombre_app
+
+```
+
+De esta forma crearemos en Heroku un repositorio con el nombre que deseemos.
+
+*Destacar que antes de poder realizar este comando deberemos loguearnos en nuestra cuenta de Heroku*
+
+
+Después tenemos que escribir el siguiente comando en terminal:
+
+
+```
+$ heroku stack:set container
+
+```
+
+Este comando hace que la imagen del sistema operativo que utilizará hereku cambie a la de nuestro contenedor, es decir la de nuestro Docker.
+
+Finalmente se realiza un *push heroku* para que se suban los cambios a Heroku, el comando utilizado es el siguiente:
+
+
+```
+$ git push heroku master
+
+```
+
+
+No nos debemos de olvidar de linkar nuestro repositorio de Heroku con nuestro repositorio de Github, eso lo podemos hacer desde la página web, como muestra la siguiente imagen:
+
+
+![](docs/img/heroku.png)
