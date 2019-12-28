@@ -19,7 +19,7 @@ A continuación se muestra en forma de índice el acceso a más información ref
 * [Tecnologías utilizadas](docs/tecnologias.md).
 * [Historias de usuario](docs/historias_de_usuario.md).
 * [Test](docs/test.md).
-* [Licencia](docs/licencia-md)
+* [Licencia](docs/licencia.md).
 
 ## Arquitectura
 
@@ -35,7 +35,7 @@ Los microservicios implementados o que se implementarán tendrán una arquitectu
 * **Primera capa:** la primera capa de este microservicio contiene la API REST, es decir, el archivo [Portatiles_rest.py](src/Portatiles_rest.py), este contendrá las rutas que se utilizarán para utilizar el microservicio, es decir, para realizar peticiones
 
 
-* **Segunda capa:**  la segunda capa de este microservicio se encarga de administrar la lógica del microservicio, esta consiste en el archivo [Portatiles.py](src/Portatiles.py), el cuál está repleto de funciones que son de utilidad para la segunda capa.
+* **Segunda capa:**  la segunda capa de este microservicio se encarga de administrar la lógica del microservicio, esta contiene el archivo [Portatiles.py](src/Portatiles.py), el cuál está repleto de funciones que son de utilidad para poder cumplir con las historias de usuario.
 
 
 * *Pendiente de añadir la última capa que contendrá la base de datos del microservicio y que será utilizada por el mismo.*
@@ -48,16 +48,18 @@ La Arquitectura de este servicio se puede comprender fácilmente observando la s
 
 Este microservicio presenta las siguientes rutas:
 
-1. **GET-> /** es la ruta de presentación y también sirbe para comprobar que funciona bien el microservicio.
+1. **GET-> /** es la ruta de presentación y también sirve para comprobar que funciona bien el microservicio.
 2. **GET-> /numeroPortatilesEnVenta** es para ver cuantos portatiles existen en venta.
-3. **GET-> /seleccionarPortatil/int:id_venta>** selecciona para mostrar el portatil en venta cuyo *id_vente* coincida con el introducido en la ruta.
+3. **GET-> /seleccionarPortatil/int:id_venta>** selecciona un portátil en venta, cuyo *id_vente* coincida con el introducido en la ruta.
 4. **POST-> /agregarPortatil/marca/modelo/DNIvendedor/int:precio/comentario/pantalla/procesador/RAM/almacenamiento/grafica/bateria/SO** es para agregar un portátil al stock de venta, destacar que los 4 primeros argumentos son obligatorios: marca, modelo, DNIvendedor y precio, mientras el resto son opcionales.
 5. **PUT-> /modificarPortatil/int:id_venta/int:precio/modelo/marca/comentario/pantalla/procesador/RAM/almacenamiento/grafica/bateria/SO** es para modificar un portátil anteriormente introducido en el stock de venta, destacar que son necesarios los 2 primeros argumentos: id_venta y precio, mientras los demás son opcionales.
-6. **DELETE-> /eliminarPortatilPorIdVenta/int:id_venta>** es para eliminar un portátil existente en el stock de venta de portátiles.
+6. **DELETE-> /eliminarPortatilPorIdVenta/int:id_venta** es para eliminar un portátil existente en el stock de venta de portátiles.
 7. **GET-> /verPortatilesEnVentaDeUsuario/DNIusuario** es para ver los portátiles que tiene en venta el usuario cuyo *DNI* coincida con el *DNIvendedor* de los portátiles.
 8. **GET-> /buscarPortatilPorPrecio/int:limite_inferior/int:limite_superior** es para buscar un portátil por un rango de precios, entre los existentes en el stock de venta de portátiles.
 9. **GET-> /buscarPortatilPorModeloMarca/modelo/marca** es para búscar un portátil por su modelo y su marca, entre los existentes en el stock de venta de portátiles.
 10. **GET-> /compararPotatiles/modelo/marca** es parecida a la ruta anterior pero consigues una comparación de estos portátiles por precio de venta.
+
+
 *Destacar que el microservicio manda los datos al cliente en forma de archivo json*
 
 ## Herramienta de construcción
@@ -117,7 +119,7 @@ En primer lugar decir que se ha utilizado DockerHub para la creación de la imag
 
 Contenedor: https://hub.docker.com/repository/docker/nsinductus/cc_proyecto
 
-La imagen residente en el contenedor anteriormente linkado se ha construido sobre una imagen base de debian concretamente debian:unstable-slim. Se ha seleccionado esta imagen como base después de un proceso de selección el cuál se puede ver [aquí](docs/comparacion_imagenes.md).
+La imagen residente en el contenedor anteriormente linkado se ha construido sobre una imagen base de debian concretamente debian:unstable-slim. Se ha seleccionado esta imagen como base, después de un proceso de selección el cuál se puede ver [aquí](docs/comparacion_imagenes.md).
 
 ### Dockerfile
 
@@ -132,7 +134,7 @@ FROM debian:unstable-slim
 LABEL maintainer="Angel Murcia Diaz <angelmd96@correo.ugr.es>"
 ```
 
-En esas primeras dos líneas,se establece la imagen que se va a utilizar como base y se declara quiene s la persona que mantiene el contenedor.
+En esas primeras dos líneas,se establece la imagen que se va a utilizar como base y se declara quien es la persona que mantiene el contenedor.
 
 
 ```
@@ -233,7 +235,7 @@ Como *PaaS* se ha utilizado *heroku*, las razones son:
 * Es una herramienta gratuita.
 * Permite el uso de contenedores.
 
-La imagen del microservicio de gestión de portátiles esta desplegada [aquí](https://cc-proyecto.herokuapp.com/)
+La imagen del microservicio de gestión de portátiles esta desplegada [aquí](https://cc-proyecto.herokuapp.com/).
 
 
 Para desplegar nuestro microservicio se han seguido los siguientes pasos:
@@ -273,7 +275,7 @@ $ git push heroku master
 ```
 
 
-No nos debemos de olvidar de linkar nuestro repositorio de Heroku con nuestro repositorio de Github, eso lo podemos hacer desde la página web, como muestra la siguiente imagen:
+No nos debemos de olvidar de linkar nuestro repositorio de Heroku con nuestro repositorio de GitHub, eso lo podemos hacer desde la página web, como muestra la siguiente imagen:
 
 
 ![](docs/img/heroku.png)
