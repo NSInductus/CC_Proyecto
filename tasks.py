@@ -1,9 +1,10 @@
 from invoke import task, run
+import sys
 
 #Instalacion de dependencias necesarias para el proyecto
 @task
 def install(c):
-    c.run("pip install -r requirements.txt")
+    c.run("pip3 install -r requirements.txt")
     print("La instalacion de dependencias necesarias para el proyecto concluida.")
 
 #Ejecucion de test
@@ -17,3 +18,14 @@ def test(c):
 def coverage(c):
     c.run("pytest --cov=src tests/")
     print("La ejecucion de tests de covertura concluida.")
+
+#Iniciar el servidor
+@task
+def start(c, host="0.0.0.0", puerto="8080"):
+    sys.path.append('src')
+    c.run("gunicorn -b " + host + ":" + puerto + " Portatiles_rest:app")
+
+#Parar el servidor
+@task
+def stop(c):
+    c.run("pkill gunicorn")
