@@ -1,6 +1,6 @@
 # Comparación de imagenes base
 
-El proceso de selección a consistido en: probar con 4 imágenes diferentes, las 4 de repositorios oficiales, 2 de ellas de python (imagenes que ya traian instalado python sobre un sistema Linux), 1 de ellas de fedora y otra de debian, destacar que para estas 2 últimas se ha tenido que instalar python puesto que no lo traían instalado de serie.
+El proceso de selección a consistido en: probar con 4 imágenes diferentes, las 4 de repositorios oficiales, 2 de ellas de python (imagenes que ya traían instalado python sobre un sistema Linux), 1 de ellas de fedora y otra de debian, destacar que para estas 2 últimas se ha tenido que instalar python puesto que no lo traían instalado de serie.
 
 Concretamente las imágenes con las que se ha probado han sido:
 
@@ -9,7 +9,7 @@ Concretamente las imágenes con las que se ha probado han sido:
 * **fedora:31**
 * **debian:unstable-slim**
 
-El proceso de selección se ha basado en el uso de la herramienta: *ab - Apache HTTP server benchmarking tool* realizando una serie de peticiones a una de las rutas y comprobar cuál de las imágenes conseguía realizar las peticiones en el menor tiempo posible. Los resultados se pueden ver a continuación:
+El proceso de selección se ha basado en el uso de la herramienta: *ab - Apache HTTP server benchmarking tool* realizando una serie de peticiones a una de las rutas y comprobar cuál de las imágenes base conseguía realizar las peticiones en el menor tiempo posible. Los resultados se pueden ver a continuación:
 
 |Imagen Base|Tiempo para realizar las peticiones|
 |--------|--------|
