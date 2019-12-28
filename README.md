@@ -58,6 +58,15 @@ $ invoke test
 $ invoke coverage
 ```
 
+* **start**: Esta tarea es la encargada de levantar el microservicio utilizando gunicorn. En esta tarea se pueden utilizar 2 argumentos opcionales para modificar el host y el puerto donde se ejecuta, por defecto el host será *0.0.0.0* y el puerto será *8080*.
+```
+$ invoke start [-h/--host <host>] [-p/--puerto <puerto>]
+```
+
+* **stop**: Esta tarea es la encargada de detener el microservicio lanzado anteriormente con la tarea: *start*.
+```
+$ invoke stop
+```
 
 ## Integración continua
 
