@@ -1,0 +1,8 @@
+# Integración continua
+
+La integración continua es una técnica que consiste en hacer integraciones de un proyecto con la mayor frecuencia posible, para detectar errores y problemas lo más pronto posible. La integración consiste en la compilación de todo el proyecto y la ejecución de las pruebas sobre el mismo.
+
+Para el proyecto se han utilizado dos herramientas de integración continua, las cuales son:
+
+* **Travis-CI**: La configuración de esta herramienta se encuentra en el fichero [.travis.yml](https://github.com/NSInductus/CC_Proyecto/blob/master/.travis.yml). Esta herramienta primero instalará las dependencias necesarias, es decir, las contenidas en el fichero [requirements.txt](https://github.com/NSInductus/CC_Proyecto/blob/master/requirements.txt), para posteriormente ejecutar tanto los test unitarios como los test de cobertura. Por último una vez se ejecuten los test, se enviarán los resultados de los test de cobertura a **codecov**. Según la configuración establecida en el fichero **.travis.yml** se ejecutará sobre un sistema **Linux** y sobre las versiones de **python**: 3.5.8, 3.6.9, 3.7.0, 3.7.3, 3.7.5 y 3.8.0.
+* **Circle-CI**: La configuración de esta herramienta se encuentra en el fichero [config.yml](https://github.com/NSInductus/CC_Proyecto/blob/master/.circleci/config.yml). Esta herramienta tiene un funcionamiento parecido a la usada anteriormente aunque en este caso es necesario la creación de un entorno virtual (en el caso de este proyecto se usa **pipenv**) para el correcto funcionamiento de esta herramienta de integración continua. En esta caso se ejecutará en **Linux** sobre la versión de **python** 3.7.5.
