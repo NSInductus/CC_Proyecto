@@ -20,7 +20,25 @@ A continuación se muestra en forma de índice el acceso a más información ref
 * [Tecnologías utilizadas](docs/tecnologias.md).
 * [Historias de usuario](docs/historias_de_usuario.md).
 * [Test](docs/test.md).
-* [Licencia](docs/licencia-md)
+*
+
+## Arquitectura
+
+La arquitectura será una arquitectura basada en microservicios. Para más información acerca de la arquitectura del proyecto, ver [aquí](docs/arquitectura.md).
+
+## Tecnologías utilizadas
+
+
+Para la información completa de las tecnologías que se utilizarán, ver [aquí](docs/tecnologias.md).
+
+## Historias de usuarios
+
+Las historias de usuario se pueden ver [aquí](docs/historias_de_usuario.md).
+
+## Test
+
+Se ha utilizado la metodología del desarrollo dirigido por pruebas (TDD). Para la información completa de las tecnologías que se utilizarán, ver [aquí](docs/test.md).
+
 
 ## Herramienta de construcción
 
@@ -58,15 +76,6 @@ $ invoke test
 $ invoke coverage
 ```
 
-* **start**: Esta tarea es la encargada de levantar el microservicio utilizando gunicorn. En esta tarea se pueden utilizar 2 argumentos opcionales para modificar el host y el puerto donde se ejecuta, por defecto el host será *0.0.0.0* y el puerto será *8080*.
-```
-$ invoke start [-h/--host <host>] [-p/--puerto <puerto>]
-```
-
-* **stop**: Esta tarea es la encargada de detener el microservicio lanzado anteriormente con la tarea: *start*.
-```
-$ invoke stop
-```
 
 ## Integración continua
 
@@ -76,3 +85,10 @@ Para el proyecto se han utilizado dos herramientas de integración continua, las
 
 * **Travis-CI**: La configuración de esta herramienta se encuentra en el fichero [.travis.yml](https://github.com/NSInductus/CC_Proyecto/blob/master/.travis.yml). Esta herramienta primero instalará las dependencias necesarias, es decir, las contenidas en el fichero [requirements.txt](https://github.com/NSInductus/CC_Proyecto/blob/master/requirements.txt), para posteriormente ejecutar tanto los test unitarios como los test de cobertura. Por último una vez se ejecuten los test, se enviarán los resultados de los test de cobertura a **codecov**. Según la configuración establecida en el fichero **.travis.yml** se ejecutará sobre un sistema **Linux** y sobre las versiones de **python**: 3.5.8, 3.6.9, 3.7.0, 3.7.3, 3.7.5 y 3.8.0.
 * **Circle-CI**: La configuración de esta herramienta se encuentra en el fichero [config.yml](https://github.com/NSInductus/CC_Proyecto/blob/master/.circleci/config.yml). Esta herramienta tiene un funcionamiento parecido a la usada anteriormente aunque en este caso es necesario la creación de un entorno virtual (en el caso de este proyecto se usa **pipenv**) para el correcto funcionamiento de esta herramienta de integración continua. En esta caso se ejecutará en **Linux** sobre la versión de **python** 3.7.5.
+
+
+
+
+## Licencia
+
+Este proyecto está licenciado bajo la licencia [GNU General Public License v3.0](https://www.gnu.org/licenses/gpl-3.0).
