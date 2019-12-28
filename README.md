@@ -109,3 +109,12 @@ $ invoke stop
 ## Integración continua
 
 Como herramientas para la integración continua se ha utilizado: **TravisCi** & **CircleCI**. Para más información acerca de la integración continua, ver [aquí](docs/integración_continua.md).
+
+
+## Docker
+
+En primer lugar decir que se ha utilizado
+
+Contenedor: https://hub.docker.com/repository/docker/nsinductus/cc_proyecto
+
+La imagen residente en el contenedor anteriormente linkado se ha construido sobre una imagen base de debian concretamente debian:unstable-slim. Se ha seleccionado esta imagen como base después de un proceso de selección el cuál se puede ver [aquí](docs/comparacion_imagenes.md).
