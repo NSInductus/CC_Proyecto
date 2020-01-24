@@ -67,7 +67,7 @@ def eliminarPortatilPorIdVenta(_id):
 
 @app.route('/portatiles/verPortatilesEnVentaDeUsuario/<DNIusuario>', methods=['GET'])
 def verPortatilesEnVentaDeUsuario(DNIusuario):
-    mis_portatiles = portatiles.portatiles_en_venta_de_usuario(DNIusuario)
+    mis_portatiles = portatiles.buscarPortatilesEnVentaUsuario(DNIusuario)
     return Response(json_util.dumps(mis_portatiles), status=200, mimetype="application/json")
 
 @app.route('/portatiles/buscarPortatilPorPrecio/<int:limite_inferior>/<int:limite_superior>', methods=['GET'])
