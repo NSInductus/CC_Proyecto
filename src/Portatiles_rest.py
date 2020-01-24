@@ -22,7 +22,7 @@ def index():
     return Response(json_util.dumps("REST DE PORTATILES"), status=200, mimetype="application/json")
 
 #PARA COMPROBAR
-@app.route('/portatiles/numeroPortatilesEnVenta', methods=['GET'])
+@app.route('/portatiles/numeroPortatilesEnBD', methods=['GET'])
 def numeroPortatilesEnVenta():
     return Response(json_util.dumps(portatiles.numeroPortatilesEnBD()), status=200, mimetype="application/json")
 

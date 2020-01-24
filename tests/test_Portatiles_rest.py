@@ -43,8 +43,8 @@ def test_prueba(cliente_test):
     else:
         assert (respuesta.status_code == 412)
 
-def test_rest_ruta_desconocida():
-    respuesta = cliente_test.get('/kokoko')
+def test_rest_ruta_desconocida(cliente_test):
+    respuesta = cliente_test.get('/portatiles/kokoko')
     if (respuesta.status_code == 204):
         assert (respuesta.status_code == 204)
 
@@ -96,9 +96,10 @@ def est_rest_agregar_portatil_y_seleccionar_version_corta(cliente_test):
 
 def test_rest_agregar_portatil_y_seleccionar_version_larga(cliente_test):
     #Agregar portatil
-    respuesta = cliente_test.post('/agregarPortatil/msi/gl62/333X/600/Muy%20bueno/15/i7/GB%20DDR4/1gb/GTX/2H/Linux')
+    respuesta = cliente_test.post('/portatiles/agregarPortatil/msi/gl62/333X/600/Muy%20bueno/15/i7/GB%20DDR4/1gb/GTX/2H/Linux')
     if (respuesta.status_code == 200):
         assert (respuesta.status_code == 200 and respuesta.headers["Content-Type"] == "application/json")
+        indice = json_util.loads(respuesta.data)
     elif (respuesta.status_code == 413):
         assert (respuesta.status_code == 413)
     elif (respuesta.status_code == 414):
@@ -397,10 +398,10 @@ def test_rest_comparar_portatiles(cliente_test):
 #Borra todos los registros introducidos durante las pruebas, puesto que => DNIvendedor XXXPRUEBAX
 def test_limpiar_bd_y_comprobar_vacia(cliente_test):
     respuesta = cliente_test.get('/portatiles/verPortatilesEnBDDeUsuario/666X')
-    lista1 = json.loads(respuesta.data)
+    lista1 = json_util.loads(respuesta.data)
     print(lista1)
     respuesta = cliente_test.get('/portatiles/verPortatilesEnBDDeUsuario/333X')
-    lista2 = json.loads(respuesta.data)
+    lista2 = json_util.loads(respuesta.data)
     lista = lista1 + lista2
     print(lista2)
     for portatil in lista:
