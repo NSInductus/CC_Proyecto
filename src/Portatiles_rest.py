@@ -60,6 +60,12 @@ def modificarPortatil(_id, precio="", modelo="", marca="",comentario="",  pantal
     modificado = portatiles.modificarPortatil(_id, precio, modelo, marca,comentario,  pantalla, procesador, RAM, almacenamiento, grafica, bateria, SO)
     return Response(json_util.dumps(modificado), status=200, mimetype="application/json")
 
+@app.route('/portatiles/cambiarStockPortatil/<_id>/<int:vendido_nuevo>', methods=['PUT'])
+def modificarStockPortatil(_id, vendido_nuevo):
+    modificado = portatiles.cambiarStockPortatil(_id, vendido_nuevo)
+    return Response(json_util.dumps(modificado), status=200, mimetype="application/json")
+
+
 @app.route('/portatiles/eliminarPortatilPorIdVenta/<_id>', methods=['DELETE'])
 def eliminarPortatilPorIdVenta(_id):
     eliminado = portatiles.eliminarPortatilPorIdVenta(_id)
