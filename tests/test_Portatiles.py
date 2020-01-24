@@ -13,26 +13,26 @@ data_manager = MongoDM(os.environ['URI_ENVIRON'],os.environ['BD_ENVIRON'],os.env
 nueva_lista = Portatiles(data_manager)
 
 def test_lista_portatiles_vacia():
-    nueva_lista.limpiar_lista()
+    nueva_lista.limpiarLista()
     assert nueva_lista.numeroPortatilesEnBD() == 0
     assert nueva_lista.seleccionarPortatil("1") == False
 
 def test_agregar_nuevo_portatil():
-    nueva_lista.limpiar_lista()
+    nueva_lista.limpiarLista()
     indice = nueva_lista.agregarPortatil("MSI","GL62M","333X",2000)
     assert nueva_lista.numeroPortatilesEnBD() == 1
     portatil = {"_id":bson.ObjectId(indice), "marca":"MSI", "modelo":"GL62M", "DNIvendedor":"333X", "precio":2000, "pantalla":"", "procesador":"", "RAM":"", "almacenamiento":"", "grafica":"", "bateria":"", "SO":"",  "comentario":"", "vendido":0}
     assert nueva_lista.seleccionarPortatil(indice) == portatil
 
 def test_agregar_nuevo_portatil_version_larga():
-    nueva_lista.limpiar_lista()
+    nueva_lista.limpiarLista()
     indice = nueva_lista.agregarPortatil("MSI","GL62M","333X",2000, "Muy bueno", "16", "intel core i7", "8GB DDR4", "1 TB", "nvidia geforce GTX 1050", "3 H", "Ninguno")
     assert nueva_lista.numeroPortatilesEnBD() == 1
     portatil = {"_id":bson.ObjectId(indice), "marca":"MSI", "modelo":"GL62M", "DNIvendedor":"333X", "precio":2000, "pantalla":"16", "procesador":"intel core i7", "RAM":"8GB DDR4", "almacenamiento":"1 TB", "grafica":"nvidia geforce GTX 1050", "bateria":"3 H", "SO":"Ninguno",  "comentario":"Muy bueno", "vendido":0}
     assert nueva_lista.seleccionarPortatil(indice) == portatil
 
 def test_agregar_varios_portatiles():
-    nueva_lista.limpiar_lista()
+    nueva_lista.limpiarLista()
     indice1 = nueva_lista.agregarPortatil("MSI","GL62M","333X",2000)
     indice2 = nueva_lista.agregarPortatil("ASUN","TUF","333X",1500)
     indice3 = nueva_lista.agregarPortatil("ACER","Aspire 3","333X",957)
@@ -51,7 +51,7 @@ def test_agregar_varios_portatiles():
     assert nueva_lista.seleccionarPortatil(indice5) == portatil5
 
 def test_eliminar_portatil():
-    nueva_lista.limpiar_lista()
+    nueva_lista.limpiarLista()
     indice = nueva_lista.agregarPortatil("MSI","GL62M","333X",2000)
     assert nueva_lista.numeroPortatilesEnBD() == 1
     assert nueva_lista.eliminarPortatilPorIdVenta("90") == False
@@ -64,7 +64,7 @@ def test_eliminar_portatil():
     assert nueva_lista.numeroPortatilesEnBD() == 1
 
 def test_modificar_portatil():
-    nueva_lista.limpiar_lista()
+    nueva_lista.limpiarLista()
     indice = nueva_lista.agregarPortatil("MSI","GL62M","333X",2000)
     assert nueva_lista.numeroPortatilesEnBD() == 1
     portatil = {"_id":bson.ObjectId(indice), "marca":"MSI", "modelo":"GL62M", "DNIvendedor":"333X", "precio":2000, "pantalla":"", "procesador":"", "RAM":"", "almacenamiento":"", "grafica":"", "bateria":"", "SO":"",  "comentario":"", "vendido":0}
@@ -74,7 +74,7 @@ def test_modificar_portatil():
     assert nueva_lista.seleccionarPortatil(indice) == portatil_modificado
 
 def test_modificar_portatil_version_larga():
-    nueva_lista.limpiar_lista()
+    nueva_lista.limpiarLista()
     indice = nueva_lista.agregarPortatil("MSI","GL62M","333X",2000, "Muy bueno", "16", "intel core i7", "8GB DDR4", "1 TB", "nvidia geforce GTX 1050", "3 H", "Ninguno")
     assert nueva_lista.numeroPortatilesEnBD() == 1
     portatil = {"_id":bson.ObjectId(indice), "marca":"MSI", "modelo":"GL62M", "DNIvendedor":"333X", "precio":2000, "pantalla":"16", "procesador":"intel core i7", "RAM":"8GB DDR4", "almacenamiento":"1 TB", "grafica":"nvidia geforce GTX 1050", "bateria":"3 H", "SO":"Ninguno",  "comentario":"Muy bueno", "vendido":0}
@@ -84,7 +84,7 @@ def test_modificar_portatil_version_larga():
     assert nueva_lista.seleccionarPortatil(indice) == portatil_modificado
 
 def test_modificar_portatil_2():
-    nueva_lista.limpiar_lista()
+    nueva_lista.limpiarLista()
     indice = nueva_lista.agregarPortatil("MSI","GL62M","333X",2000)
     assert nueva_lista.numeroPortatilesEnBD() == 1
     portatil = {"_id":bson.ObjectId(indice), "marca":"MSI", "modelo":"GL62M", "DNIvendedor":"333X", "precio":2000, "pantalla":"", "procesador":"", "RAM":"", "almacenamiento":"", "grafica":"", "bateria":"", "SO":"",  "comentario":"", "vendido":0}
@@ -94,14 +94,14 @@ def test_modificar_portatil_2():
     assert nueva_lista.seleccionarPortatil(indice) == portatil_modificado
 
 def test_varias_pruebas_agregar_modificar_eliminar():
-    nueva_lista.limpiar_lista()
+    nueva_lista.limpiarLista()
     indice1 = nueva_lista.agregarPortatil("MSI","GL62M","333X",2000)
     indice2 = nueva_lista.agregarPortatil("ASUN","TUF","333X",1500)
     indice3 = nueva_lista.agregarPortatil("ACER","Aspire 3","333X",957)
     assert nueva_lista.numeroPortatilesEnBD() == 3
     assert nueva_lista.eliminarPortatilPorIdVenta(indice2) == True
     assert nueva_lista.modificarPortatil(indice1,400,"Modelo","Marca") == True
-    portatil_modificado = {"IDventa":indice1, "marca":"Marca", "modelo":"Modelo", "DNIvendedor":"333X", "precio":400, "pantalla":"", "procesador":"", "RAM":"", "almacenamiento":"", "grafica":"", "bateria":"", "SO":"",  "comentario":"", "vendido":0}
+    portatil_modificado = {"_id":bson.ObjectId(indice1), "marca":"Marca", "modelo":"Modelo", "DNIvendedor":"333X", "precio":400, "pantalla":"", "procesador":"", "RAM":"", "almacenamiento":"", "grafica":"", "bateria":"", "SO":"",  "comentario":"", "vendido":0}
     assert nueva_lista.seleccionarPortatil(indice1) == portatil_modificado
     assert nueva_lista.numeroPortatilesEnBD() == 2
     assert nueva_lista.eliminarPortatilPorIdVenta(indice1) == True
@@ -109,7 +109,7 @@ def test_varias_pruebas_agregar_modificar_eliminar():
     assert nueva_lista.numeroPortatilesEnBD() == 0
 
 def test_indices():
-    nueva_lista.limpiar_lista()
+    nueva_lista.limpiarLista()
     indice1 = nueva_lista.agregarPortatil("MSI","GL62M","333X",2000)
     indice2 = nueva_lista.agregarPortatil("ASUN","TUF","333X",1500)
     indice3 = nueva_lista.agregarPortatil("ACER","Aspire 3","333X",957)
@@ -119,7 +119,7 @@ def test_indices():
     assert indice1 != indice2 != indice3 != indice4
 
 def test_portatiles_en_venta_de_usuario():
-    nueva_lista.limpiar_lista()
+    nueva_lista.limpiarLista()
     mis_portatiles_en_venta = nueva_lista.buscarPortatilesEnVentaUsuario("333X")
     assert len(mis_portatiles_en_venta) == 0
     indice1 = nueva_lista.agregarPortatil("MSI","GL62M","333X",2000)
@@ -138,7 +138,7 @@ def test_portatiles_en_venta_de_usuario():
 
 
 def test_buscar_portatil_por_precio():
-    nueva_lista.limpiar_lista()
+    nueva_lista.limpiarLista()
     indice1 = nueva_lista.agregarPortatil("MSI","GL62M","333X",2000)
     indice2 = nueva_lista.agregarPortatil("ASUN","TUF","333X",1500)
     indice3 = nueva_lista.agregarPortatil("ACER","Aspire 3","333X",957)
@@ -149,7 +149,7 @@ def test_buscar_portatil_por_precio():
 
 
 def test_buscar_portatil_por_modelo_marca():
-    nueva_lista.limpiar_lista()
+    nueva_lista.limpiarLista()
     indice1 = nueva_lista.agregarPortatil("MSI","GL62M","333X",2000)
     indice2 = nueva_lista.agregarPortatil("ASUN","TUF","333X",1500)
     indice3 = nueva_lista.agregarPortatil("ACER","Aspire 3","333X",957)
@@ -160,19 +160,19 @@ def test_buscar_portatil_por_modelo_marca():
     assert len(portatiles_busqueda) == 2
 
 def test_comparar_portatiles():
-    nueva_lista.limpiar_lista()
+    nueva_lista.limpiarLista()
     indice1 = nueva_lista.agregarPortatil("MSI","GL62M","333X",2000)
     indice2 = nueva_lista.agregarPortatil("ASUN","TUF","333X",1500)
     indice3 = nueva_lista.agregarPortatil("ACER","Aspire 3","333X",957)
     indice4 = nueva_lista.agregarPortatil("MSI","GL62M","356X", 1000)
-    assert nueva_lista.compararPotatiles("B","A") == False
-    portatiles_comparar = nueva_lista.compararPotatiles("GL62M", "MSI")
+    assert nueva_lista.compararPortatiles("B","A") == False
+    portatiles_comparar = nueva_lista.compararPortatiles("GL62M", "MSI")
     assert len(portatiles_comparar) == 2
     portatil1 = {"_id":bson.ObjectId(indice4), "marca":"MSI", "modelo":"GL62M", "DNIvendedor":"356X", "precio":1000, "pantalla":"", "procesador":"", "RAM":"", "almacenamiento":"", "grafica":"", "bateria":"", "SO":"",  "comentario":"", "vendido":0}
     assert portatiles_comparar[0] == portatil1
 
 def test_imprimir_comparacion():
-    nueva_lista.limpiar_lista()
+    nueva_lista.limpiarLista()
     indice1 = nueva_lista.agregarPortatil("MSI","GL62M","333X",2000)
     indice2 = nueva_lista.agregarPortatil("ASUN","TUF","333X",1500)
     indice3 = nueva_lista.agregarPortatil("ACER","Aspire 3","333X",957)
@@ -180,17 +180,17 @@ def test_imprimir_comparacion():
     indice5 = nueva_lista.agregarPortatil("MSI","GL62M","356X", 999)
     indice6 = nueva_lista.agregarPortatil("MSI","GL62M","356X", 999)
     indice7 = nueva_lista.agregarPortatil("MSI","GL62M","356X", 999)
-    portatiles_comparar = nueva_lista.compararPotatiles("GL62M", "MSI")
-    nueva_lista.imprimir_comparacion(portatiles_comparar, "comparacion.pdf")
+    portatiles_comparar = nueva_lista.compararPortatiles("GL62M", "MSI")
+    nueva_lista.imprimirComparacion(portatiles_comparar, "comparacion.pdf")
 
 def test_buscar_portatil_por_modelo_marca_excluyendo_en_venta():
-    nueva_lista.limpiar_lista()
+    nueva_lista.limpiarLista()
     indice1 = nueva_lista.agregarPortatil("MSI","GL62M","333PRUEBAX",2000)
     indice2 = nueva_lista.agregarPortatil("ASUN","TUF","333PRUEBAX",1500)
     indice3 = nueva_lista.agregarPortatil("ACER","Aspire 3","333PRUEBAX",957)
     indice4 = nueva_lista.agregarPortatil("MSI","GL62M","333PRUEBAX", 2033)
     #En venta para que de 1 posteriormente
-    nueva_lista.cambiar_stock_portatil(indice4,1)
+    nueva_lista.cambiarStockPortatil(indice4,1)
     portatiles_busqueda = nueva_lista.buscarPortatilPorModeloMarca("B","A")
     assert len(portatiles_busqueda) == 0
     portatiles_busqueda = nueva_lista.buscarPortatilPorModeloMarca("GL62M", "MSI")
