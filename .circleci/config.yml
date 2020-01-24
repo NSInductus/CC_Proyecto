@@ -4,6 +4,7 @@ jobs:
     docker:
       # Version con la que se trabaja desde la máquina local
       - image: circleci/python:3.7.5
+      - image: mongo:3.6.3
     steps:
       - checkout
       - run:
@@ -18,3 +19,7 @@ jobs:
       - run:
           name: Ejecutar test de cobertura
           command: pipenv run python -m pytest --cov=src tests/
+
+    machine:
+      services:
+        - mongodb
