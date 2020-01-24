@@ -1,5 +1,6 @@
 from invoke import task, run
 import sys
+import os
 
 #Instalacion de dependencias necesarias para el proyecto
 @task
@@ -10,20 +11,30 @@ def install(c):
 #Ejecucion de test
 @task
 def test(c):
+    os.environ['URI_ENVIRON'] = 'localhost:27017'
+    os.environ['BD_ENVIRON'] = 'BDPruebaPortatiles'
+    os.environ['CO_ENVIRON'] = 'COPortatiles'
     c.run("pytest -q tests/test_*.py")
     print("La ejecucion de tests concluida.")
 
 #Ejecucion de test de covertura
 @task
 def coverage(c):
+    os.environ['URI_ENVIRON'] = 'localhost:27017'
+    os.environ['BD_ENVIRON'] = 'BDPruebaPortatiles'
+    os.environ['CO_ENVIRON'] = 'COPortatiles'
     c.run("pytest --cov=src tests/")
     print("La ejecucion de tests de covertura concluida.")
 
 #Iniciar el servidor
 @task
 def start(c, host="0.0.0.0", puerto="8080"):
+    os.environ['URI_ENVIRON'] = 'localhost:27017'
+    os.environ['BD_ENVIRON'] = 'BDPortatiles'
+    os.environ['CO_ENVIRON'] = 'COPortatiles'
     sys.path.append('src')
-    c.run("gunicorn -b " + host + ":" + puerto + " Portatiles_rest:app")
+    with c.cd('src/'):
+        c.run("gunicorn -b " + host + ":" + puerto + " Portatiles_rest:app")
 
 #Parar el servidor
 @task
