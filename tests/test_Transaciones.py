@@ -84,18 +84,29 @@ def test_eliminar_portatil(cliente_test):
 
 def test_estadisticas(cliente_test):
     nueva_lista.limpiarLista()
-    mis_portatiles_en_venta = nueva_lista.verEstadisticas("333X")
-    assert len(mis_portatiles_en_venta) == 0
+    mis_transaciones = nueva_lista.verEstadisticas("333X")
+    assert len(mis_transaciones) == 0
     indice1 = nueva_lista.agregarTransacion("e23rewr2wqe43242t", "333X", 1)
     indice2 = nueva_lista.agregarTransacion("e23rqweqq4q3242t", "334X", 1)
     indice3 = nueva_lista.agregarTransacion("e12312442ed2d322t", "333X", 1)
-    mis_portatiles_en_venta = nueva_lista.verEstadisticas("333X")
-    assert len(mis_portatiles_en_venta) == 2
-    transacion1 = {"_id":bson.ObjectId(indice1), "id_portatil": "e23rewr2wqe43242t", "DNIvendedor": "333X", "tipo":1, "comentario":"Soy un comentario"}
-    transacion3 = {"_id":bson.ObjectId(indice3), "id_portatil": "e12312442ed2d322t", "DNIvendedor": "333X", "tipo":1, "comentario":"Soy un comentario"}
-    assert mis_portatiles_en_venta[0] == transacion1
-    assert mis_portatiles_en_venta[1] == transacion3
-    assert nueva_lista.eliminarPortatilPorIdVenta(indice1) == True
-    mis_portatiles_en_venta = nueva_lista.verEstadisticas("333X")
-    assert len(mis_portatiles_en_venta) == 1
-    assert mis_portatiles_en_venta[0] == transacion3
+    mis_transaciones = nueva_lista.verEstadisticas("333X")
+    assert len(mis_transaciones) == 2
+    transacion1 = {"_id":bson.ObjectId(indice1), "id_portatil": "e23rewr2wqe43242t", "DNIvendedor": "333X", "tipo":1, "comentario":""}
+    transacion3 = {"_id":bson.ObjectId(indice3), "id_portatil": "e12312442ed2d322t", "DNIvendedor": "333X", "tipo":1, "comentario":""}
+    assert mis_transaciones[0] == transacion1
+    assert mis_transaciones[1] == transacion3
+    assert nueva_lista.eliminarTransacion(indice1) == True
+    mis_transaciones = nueva_lista.verEstadisticas("333X")
+    assert len(mis_transaciones) == 1
+    assert mis_transaciones[0] == transacion3
+
+
+
+def test_imprimir_comparacion(cliente_test):
+    nueva_lista.limpiarLista()
+    indice1 = nueva_lista.agregarTransacion("e23rewr2wqe43242t", "333X", 1)
+    indice2 = nueva_lista.agregarTransacion("e23rqweqq4q3242t", "333X", 1)
+    indice3 = nueva_lista.agregarTransacion("e12312442ed2d322t", "333X", 1)
+    mis_transaciones = nueva_lista.verEstadisticas("333X")
+    assert len(mis_transaciones) == 3
+    nueva_lista.imprimirComparacion(mis_transaciones, "transaciones.pdf")
