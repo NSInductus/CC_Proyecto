@@ -37,3 +37,6 @@ class Transaciones:
             for i, portatil in enumerate(vector_comparacion):
                 c.drawString(200, 10*(i+1), "Transacion: " + str(portatil.get("id")) + " " + str(portatil.get("DNIvendedor")) + " " + str(portatil.get("tipo")) + " " + portatil.get("comentario") )
             c.save()
+
+    def limpiarLista(self):
+        self.data_manager.borrar_conjunto()
