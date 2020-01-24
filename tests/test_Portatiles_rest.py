@@ -11,8 +11,6 @@ import Portatiles_rest
 from Portatiles import Portatiles
 from MongoDM import MongoDM
 
-#app = Portatiles_rest.app.test_client()
-
 def funcion_inicio():
     data_manager = MongoDM(os.environ['URI_ENVIRON'],os.environ['BD_ENVIRON'],os.environ['CO_ENVIRON'])
     portatiles = Portatiles(data_manager)
