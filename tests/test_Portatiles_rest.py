@@ -4,6 +4,7 @@ import os
 
 sys.path.append('src')
 
+import json
 from bson import json_util
 
 import Portatiles_rest
@@ -115,7 +116,7 @@ def test_rest_agregar_portatil_y_seleccionar_version_larga(cliente_test):
     portatil = {"_id":{"$oid": indice}, "marca":"msi", "modelo":"gl62", "DNIvendedor":"333X", "precio":600, "pantalla":"15", "procesador":"i7", "RAM":"GB DDR4", "almacenamiento":"1gb", "grafica":"GTX", "bateria":"2H", "SO":"Linux",  "comentario":"Muy bueno", "vendido":0}
     if (respuesta.status_code == 200):
         assert (respuesta.status_code == 200 and respuesta.headers["Content-Type"] == "application/json")
-        assert json_util.loads(respuesta.data) == portatil
+        assert json.loads(respuesta.data) == portatil
     elif (respuesta.status_code == 413):
         assert (respuesta.status_code == 413)
     elif (respuesta.status_code == 414):
@@ -158,7 +159,7 @@ def test_rest_modificar_portatil_solo_precio_y_seleccionar(cliente_test):
     respuesta = cliente_test.get(cadena)
     if (respuesta.status_code == 200):
         assert (respuesta.status_code == 200 and respuesta.headers["Content-Type"] == "application/json")
-        assert json_util.loads(respuesta.data) == portatil
+        assert json.loads(respuesta.data) == portatil
     elif (respuesta.status_code == 413):
         assert (respuesta.status_code == 413)
     elif (respuesta.status_code == 414):
@@ -200,7 +201,7 @@ def test_rest_eliminar_portatil(cliente_test):
     if (respuesta.status_code == 200):
         assert (respuesta.status_code == 200 and respuesta.headers["Content-Type"] == "application/json")
         #Utilizamos None porque es lo que devuelve
-        assert json_util.loads(respuesta.data) == None
+        assert json.loads(respuesta.data) == None
     elif (respuesta.status_code == 413):
         assert (respuesta.status_code == 413)
     elif (respuesta.status_code == 414):
@@ -211,7 +212,8 @@ def test_rest_eliminar_portatil(cliente_test):
         assert (respuesta.status_code == 412)
 
 def test_rest_buscar_portatil_dnivendedor(cliente_test):
-    respuesta = cliente_test.get('/portatiles/verPortatilesEnVentaDeUsuario/666X')
+    #Agregar portatil
+    respuesta = cliente_test.post('/portatiles/agregarPortatil/msi/gl62/666X/600')
     if (respuesta.status_code == 200):
         assert (respuesta.status_code == 200 and respuesta.headers["Content-Type"] == "application/json")
         indice1 = json_util.loads(respuesta.data)
@@ -227,7 +229,7 @@ def test_rest_buscar_portatil_dnivendedor(cliente_test):
     respuesta = cliente_test.post('/portatiles/agregarPortatil/lg/gram/666X/1100')
     if (respuesta.status_code == 200):
         assert (respuesta.status_code == 200 and respuesta.headers["Content-Type"] == "application/json")
-        indice2 = json_util.loads(respuesta.data)
+        indice2 = json.loads(respuesta.data)
     elif (respuesta.status_code == 413):
         assert (respuesta.status_code == 413)
     elif (respuesta.status_code == 414):
@@ -242,10 +244,10 @@ def test_rest_buscar_portatil_dnivendedor(cliente_test):
     portatil2 = {"_id":{"$oid": indice2}, "marca":"lg", "modelo":"gram", "DNIvendedor":"666X", "precio":1100, "pantalla":"", "procesador":"", "RAM":"", "almacenamiento":"", "grafica":"", "bateria":"", "SO":"",  "comentario":"", "vendido":0}
     #Agregan a lista para comparar
     lista = [portatil1, portatil2]
-    respuesta = cliente_test.get('/portatiles/verPortatilesEnBDDeUsuario/666X')
+    respuesta = cliente_test.get('/portatiles/verPortatilesEnVentaDeUsuario/666X')
     if (respuesta.status_code == 200):
         assert (respuesta.status_code == 200 and respuesta.headers["Content-Type"] == "application/json")
-        assert json_util.loads(respuesta.data) == lista
+        assert json.loads(respuesta.data) == lista
     elif (respuesta.status_code == 413):
         assert (respuesta.status_code == 413)
     elif (respuesta.status_code == 414):
@@ -273,7 +275,7 @@ def test_rest_buscar_portatil_precio(cliente_test):
     respuesta = cliente_test.post('/portatiles/agregarPortatil/lg/gram/333X/100000')
     if (respuesta.status_code == 200):
         assert (respuesta.status_code == 200 and respuesta.headers["Content-Type"] == "application/json")
-        indice2 = json_util.loads(respuesta.data)
+        indice2 = json.loads(respuesta.data)
     elif (respuesta.status_code == 413):
         assert (respuesta.status_code == 413)
     elif (respuesta.status_code == 414):
@@ -291,7 +293,7 @@ def test_rest_buscar_portatil_precio(cliente_test):
     respuesta = cliente_test.get('/portatiles/buscarPortatilPorPrecio/99999/120000')
     if (respuesta.status_code == 200):
         assert (respuesta.status_code == 200 and respuesta.headers["Content-Type"] == "application/json")
-        assert json_util.loads(respuesta.data) == lista
+        assert json.loads(respuesta.data) == lista
     elif (respuesta.status_code == 413):
         assert (respuesta.status_code == 413)
     elif (respuesta.status_code == 414):
@@ -320,7 +322,7 @@ def test_rest_buscar_portatil_modelo_marca(cliente_test):
     respuesta = cliente_test.post('/portatiles/agregarPortatil/marca_especial/modelo_especial/333X/1100')
     if (respuesta.status_code == 200):
         assert (respuesta.status_code == 200 and respuesta.headers["Content-Type"] == "application/json")
-        indice2 = json_util.loads(respuesta.data)
+        indice2 = json.loads(respuesta.data)
     elif (respuesta.status_code == 413):
         assert (respuesta.status_code == 413)
     elif (respuesta.status_code == 414):
@@ -338,7 +340,7 @@ def test_rest_buscar_portatil_modelo_marca(cliente_test):
     respuesta = cliente_test.get('/portatiles/buscarPortatilPorModeloMarca/modelo_especial/marca_especial')
     if (respuesta.status_code == 200):
         assert (respuesta.status_code == 200 and respuesta.headers["Content-Type"] == "application/json")
-        assert json_util.loads(respuesta.data) == lista
+        assert json.loads(respuesta.data) == lista
     elif (respuesta.status_code == 413):
         assert (respuesta.status_code == 413)
     elif (respuesta.status_code == 414):
@@ -385,7 +387,7 @@ def test_rest_comparar_portatiles(cliente_test):
     respuesta = cliente_test.get('/portatiles/buscarPortatilPorModeloMarca/modelo_especial_com/marca_especial_com')
     if (respuesta.status_code == 200):
         assert (respuesta.status_code == 200 and respuesta.headers["Content-Type"] == "application/json")
-        assert json_util.loads(respuesta.data) == lista
+        assert json.loads(respuesta.data) == lista
     elif (respuesta.status_code == 413):
         assert (respuesta.status_code == 413)
     elif (respuesta.status_code == 414):
@@ -397,16 +399,16 @@ def test_rest_comparar_portatiles(cliente_test):
 
 #Borra todos los registros introducidos durante las pruebas, puesto que => DNIvendedor XXXPRUEBAX
 def test_limpiar_bd_y_comprobar_vacia(cliente_test):
-    respuesta = cliente_test.get('/portatiles/verPortatilesEnBDDeUsuario/666X')
-    lista1 = json_util.loads(respuesta.data)
-    print(lista1)
-    respuesta = cliente_test.get('/portatiles/verPortatilesEnBDDeUsuario/333X')
-    lista2 = json_util.loads(respuesta.data)
+    respuesta = cliente_test.get('/portatiles/verPortatilesEnVentaDeUsuario/666X')
+    lista1 = json.loads(respuesta.data)
+    #print(lista1)
+    respuesta = cliente_test.get('/portatiles/verPortatilesEnVentaDeUsuario/333X')
+    lista2 = json.loads(respuesta.data)
     lista = lista1 + lista2
-    print(lista2)
+    #print(lista2)
     for portatil in lista:
         id = portatil.get("_id")
         id = id.get("$oid")
-        print(id)
+        #print(id)
         cadena = '/portatiles/eliminarPortatilPorIdVenta/' + id
         respuesta = cliente.delete(cadena)
