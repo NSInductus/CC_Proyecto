@@ -8,6 +8,8 @@ class Transaciones:
     def numeroTransaciones(self):
         return self.data_manager.numero_elementos()
 
+    #Tipo 1 => Transacion de compra/venta
+    #Tipo 2 => Transacion de devolucion
     def agregarTransacion(self, id_portatil, DNIvendedor, tipo, comentario=""):
         transacion = {"id_portatil":id_portatil,"DNIvendedor":DNIvendedor, "tipo":tipo, "comentario":comentario}
         id_transacion = self.data_manager.insertar_elemento(transacion)
@@ -29,7 +31,7 @@ class Transaciones:
         transaciones_usuario = []
         for i, transacion in enumerate(lista_transaciones):
             if transacion.get("DNIvendedor") == DNIvendedor:
-                transaciones_usuario.append(transaciones)
+                transaciones_usuario.append(transacion)
         return transaciones_usuario
 
     def imprimirComparacion(self, vector_comparacion, ruta):
