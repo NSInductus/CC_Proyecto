@@ -1,5 +1,6 @@
 #FLASK_APP=Portatiles_rest.py flask run
 #python3 Portatiles_rest.py  flask run
+import os
 
 from flask import Flask
 from flask import request
