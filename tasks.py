@@ -29,3 +29,13 @@ def start(c, host="0.0.0.0", puerto="8080"):
 @task
 def stop(c):
     c.run("pkill gunicorn")
+
+@task
+def clear(c):
+    c.run("rm -rf __pycache__")
+    c.run("rm -rf .pytest_cache")
+    c.run("rm -rf src/__pycache__/")
+    c.run("rm -rf src/.pytest_cache/")
+    c.run("rm -rf tests/__pycache__/")
+    c.run("rm .coverage")
+    c.run("rm comparacion.pdf")
