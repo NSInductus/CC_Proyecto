@@ -7,7 +7,9 @@ jobs:
       - image: mongo:3.6.3
 
     environment:
-      - MONGO_URL: "mongodb://localhost:27017"
+      - URI_ENVIRON: 'localhost:27017'
+      - BD_ENVIRON: 'BDPruebaPortatiles'
+      - CO_ENVIRON: 'COPortatiles'
 
     steps:
       - checkout
