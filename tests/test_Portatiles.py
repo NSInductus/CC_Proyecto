@@ -54,7 +54,7 @@ def test_eliminar_portatil():
     nueva_lista.limpiar_lista()
     indice = nueva_lista.agregarPortatil("MSI","GL62M","333X",2000)
     assert nueva_lista.numeroPortatilesEnVenta() == 1
-    assert nueva_lista.eliminarPortatilPorIdVenta("90"") == False
+    assert nueva_lista.eliminarPortatilPorIdVenta("90") == False
     assert nueva_lista.numeroPortatilesEnVenta() == 1
     assert nueva_lista.indiceEnListaIDventa(indice) == 0
     assert nueva_lista.eliminarPortatilPorIdVenta(indice) == True
