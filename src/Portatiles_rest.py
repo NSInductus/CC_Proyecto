@@ -14,7 +14,7 @@ from MongoDM import MongoDM
 app = Flask(__name__)
 
 data_manager = MongoDM(os.environ['URI_ENVIRON'],os.environ['BD_ENVIRON'],os.environ['CO_ENVIRON'])
-portatiles = Portatiles()
+portatiles = Portatiles(data_manager)
 
 #DE PRESENTACION
 @app.route('/portatiles/')
