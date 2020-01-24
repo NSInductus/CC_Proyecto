@@ -6,11 +6,11 @@ class Portatiles:
         #Se inicializa con un data_manager
         self.data_manager = data_manager
 
-    def numeroPortatilesEnVenta(self):
+    def numeroPortatilesEnBD(self):
         return self.data_manager.numero_elementos()
 
     def agregarPortatil(self, marca, modelo, DNIvendedor, precio, comentario="", pantalla="", procesador="", RAM="", almacenamiento="", grafica="", bateria="", SO=""):
-        portatil = {"marca":marca,"modelo":modelo, "pantalla":pantalla, "procesador":procesador, "RAM":RAM, "almacenamiento":almacenamiento, "grafica":grafica, "bateria":bateria, "SO":SO, "DNIvendedor":DNIvendedor, "comentario":comentario, "precio":precio}
+        portatil = {"marca":marca,"modelo":modelo, "pantalla":pantalla, "procesador":procesador, "RAM":RAM, "almacenamiento":almacenamiento, "grafica":grafica, "bateria":bateria, "SO":SO, "DNIvendedor":DNIvendedor, "comentario":comentario, "precio":precio, "vendido": 0}
         _id = self.data_manager.insertar_elemento(portatil)
         return _id
 
@@ -47,8 +47,35 @@ class Portatiles:
                 marca = portatil.get("marca")
             if modelo == "":
                 modelo = portatil.get("modelo")
-            portatil_nuevo = {"marca":marca,"modelo":modelo, "pantalla":pantalla, "procesador":procesador, "RAM":RAM, "almacenamiento":almacenamiento, "grafica":grafica, "bateria":bateria, "SO":SO, "DNIvendedor":dni, "comentario":comentario, "precio":precio}
+            vendido = portatil.get("vendido")
+            portatil_nuevo = {"marca":marca,"modelo":modelo, "pantalla":pantalla, "procesador":procesador, "RAM":RAM, "almacenamiento":almacenamiento, "grafica":grafica, "bateria":bateria, "SO":SO, "DNIvendedor":dni, "comentario":comentario, "precio":precio, "vendido": vendido}
             self.data_manager.actualizar_elemento(_id, portatil_nuevo)
+            return True
+        else:
+            return False
+
+    #Funcion solo para modificar el stock
+    #Si se vende un portatil => vendido = 1
+    #Si se devuelve un portatil => vendido = 0
+    def cambiarStockPortatil(self, _id, vendido_nuevo):
+        #existe = self.existeEnListaIDventa(id_venta)
+        portatil = self.data_manager.obtener_elemento("_id", _id)
+        if portatil != False:
+            comentario = portatil.get("comentario")
+            precio = portatil.get("precio")
+            pantalla = portatil.get("pantalla")
+            procesador = portatil.get("procesador")
+            RAM = portatil.get("RAM")
+            almacenamiento = portatil.get("almacenamiento")
+            grafica = portatil.get("grafica")
+            bateria = portatil.get("bateria")
+            SO = portatil.get("SO")
+            marca = portatil.get("marca")
+            modelo = portatil.get("modelo")
+            dni = portatil.get("DNIvendedor")
+            vendido = vendido_nuevo
+            portatil_nuevo = {"marca":marca,"modelo":modelo, "pantalla":pantalla, "procesador":procesador, "RAM":RAM, "almacenamiento":almacenamiento, "grafica":grafica, "bateria":bateria, "SO":SO, "DNIvendedor":dni, "comentario":comentario, "precio":precio, "vendido":vendido_nuevo}
+            self.data_manager.actualizar_elemento(id_venta, portatil_nuevo)
             return True
         else:
             return False
@@ -60,7 +87,7 @@ class Portatiles:
         lista_portatiles = self.data_manager.obtener_todos_elementos()
         portatiles_usuario = []
         for i, portatil in enumerate(lista_portatiles):
-            if portatil.get("DNIvendedor") == DNIusuario:
+            if (portatil.get("DNIvendedor") == DNIusuario) and (portatil.get("vendido") == 0):
                 portatiles_usuario.append(portatil)
         return portatiles_usuario
 
@@ -68,7 +95,7 @@ class Portatiles:
         lista_portatiles = self.data_manager.obtener_todos_elementos()
         portatiles_busqueda = []
         for i, portatil in enumerate(self.lista_portatiles):
-            if (portatil.get("precio") <= limite_superior) and (portatil.get("precio") >= limite_inferior):
+            if (portatil.get("precio") <= limite_superior) and (portatil.get("precio") >= limite_inferior) and (portatil.get("vendido") == 0):
                 portatiles_busqueda.append(portatil)
         return portatiles_busqueda
 
@@ -76,7 +103,7 @@ class Portatiles:
         lista_portatiles = self.data_manager.obtener_todos_elementos()
         portatiles_busqueda = []
         for i, portatil in enumerate(self.lista_portatiles):
-            if (portatil.get("modelo") == modelo) and (portatil.get("marca") == marca):
+            if (portatil.get("modelo") == modelo) and (portatil.get("marca") == marca) and (portatil.get("vendido") == 0):
                 portatiles_busqueda.append(portatil)
         return portatiles_busqueda
 
@@ -85,7 +112,7 @@ class Portatiles:
         lista_portatiles = self.data_manager.obtener_todos_elementos()
         portatiles_iguales = []
         for i, portatil in enumerate(self.lista_portatiles):
-            if (portatil.get("modelo") == modelo) and (portatil.get("marca") == marca):
+            if (portatil.get("modelo") == modelo) and (portatil.get("marca") == marca) and (portatil.get("vendido") == 0):
                 portatiles_iguales.append(portatil)
         print(portatiles_iguales)
         if len(portatiles_iguales) >= 1:
