@@ -2,18 +2,22 @@ from reportlab.pdfgen import canvas
 
 #Clase Portatiles: contenedora de la lógica de negocio del microservicio Portatiles
 class Portatiles:
+    #Constructor
     def __init__ (self, data_manager):
         #Se inicializa con un data_manager
         self.data_manager = data_manager
 
+    # Funcion para conseguir el número de portatiles existentes
     def numeroPortatilesEnBD(self):
         return self.data_manager.numero_elementos()
 
+    #Funcion para agregar un portatil
     def agregarPortatil(self, marca, modelo, DNIvendedor, precio, comentario="", pantalla="", procesador="", RAM="", almacenamiento="", grafica="", bateria="", SO=""):
         portatil = {"marca":marca,"modelo":modelo, "pantalla":pantalla, "procesador":procesador, "RAM":RAM, "almacenamiento":almacenamiento, "grafica":grafica, "bateria":bateria, "SO":SO, "DNIvendedor":DNIvendedor, "comentario":comentario, "precio":precio, "vendido": 0}
         _id = self.data_manager.insertar_elemento(portatil)
         return _id
 
+    #Funcion para eliminar un portatil sabiendo su identificador (_id)
     def eliminarPortatilPorIdVenta(self, _id):
         existe = self.data_manager.obtener_elemento("_id", _id)
         if existe != False:
@@ -22,6 +26,7 @@ class Portatiles:
         else:
             return False
 
+    #Funcion para modificar un portatil ya existente
     def modificarPortatil(self, id_venta, precio="", modelo="", marca="",comentario="",  pantalla="", procesador="", RAM="", almacenamiento="", grafica="", bateria="", SO=""):
         existe = self.data_manager.obtener_elemento("_id", _id)
         if existe != False:
@@ -80,9 +85,11 @@ class Portatiles:
         else:
             return False
 
+    #Funcion para seleccionar un portatil
     def seleccionarPortatil(self, _id):
         return self.data_manager.obtener_elemento("_id", _id)
 
+    #Funcion para ver los portatiles que tiene a la venta un usuario sabiendo su DNI
     def buscarPortatilesEnVentaUsuario(self, DNIusuario):
         lista_portatiles = self.data_manager.obtener_todos_elementos()
         portatiles_usuario = []
@@ -91,6 +98,7 @@ class Portatiles:
                 portatiles_usuario.append(portatil)
         return portatiles_usuario
 
+    #Funcion para buscar portatiles por un rango de precios
     def buscarPortatilPorPrecio(self, limite_inferior, limite_superior):
         lista_portatiles = self.data_manager.obtener_todos_elementos()
         portatiles_busqueda = []
@@ -99,6 +107,7 @@ class Portatiles:
                 portatiles_busqueda.append(portatil)
         return portatiles_busqueda
 
+    #Funcion para buscar portatiles por modelo, marca
     def buscarPortatilPorModeloMarca(self, modelo, marca):
         lista_portatiles = self.data_manager.obtener_todos_elementos()
         portatiles_busqueda = []
@@ -107,6 +116,7 @@ class Portatiles:
                 portatiles_busqueda.append(portatil)
         return portatiles_busqueda
 
+    #Funcion para comparar portatiles por modelo, marca
     #Te compara portatiles de la misma marca y modelo y te los ordena por precio
     def compararPortatiles(self, modelo, marca):
         lista_portatiles = self.data_manager.obtener_todos_elementos()
@@ -120,7 +130,7 @@ class Portatiles:
             return portatiles_iguales
         else:
             return False
-
+    #Funcion para imprimir la comparacion en PDF
     def imprimirComparacion(self, vector_comparacion, ruta):
         c = canvas.Canvas(ruta)
         for i, portatil in enumerate(vector_comparacion):
