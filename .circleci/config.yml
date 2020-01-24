@@ -23,7 +23,3 @@ jobs:
       - run:
           name: Ejecutar test de cobertura
           command: pipenv run python -m pytest --cov=src tests/
-
-    machine:
-      services:
-        - mongodb
