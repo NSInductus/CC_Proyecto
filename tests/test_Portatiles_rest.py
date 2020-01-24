@@ -64,7 +64,7 @@ def test_rest_numero_portatiles(cliente_test):
         assert (respuesta.status_code == 412)
 
 
-def est_rest_agregar_portatil_y_seleccionar_version_corta(cliente_test):
+def test_rest_agregar_portatil_y_seleccionar_version_corta(cliente_test):
     #Agregar portatil
     respuesta = cliente_test.post('/portatiles/agregarPortatil/msi/gl62/333X/600')
     if (respuesta.status_code == 200):
@@ -85,7 +85,7 @@ def est_rest_agregar_portatil_y_seleccionar_version_corta(cliente_test):
     portatil = {"_id":{"$oid": indice}, "marca":"msi", "modelo":"gl62", "DNIvendedor":"333X", "precio":600, "pantalla":"", "procesador":"", "RAM":"", "almacenamiento":"", "grafica":"", "bateria":"", "SO":"",  "comentario":"", "vendido":0}
     if (respuesta.status_code == 200):
         assert (respuesta.status_code == 200 and respuesta.headers["Content-Type"] == "application/json")
-        assert json_util.loads(respuesta.data) == portatil
+        assert json.loads(respuesta.data) == portatil
     elif (respuesta.status_code == 413):
         assert (respuesta.status_code == 413)
     elif (respuesta.status_code == 414):
@@ -169,7 +169,7 @@ def test_rest_modificar_portatil_solo_precio_y_seleccionar(cliente_test):
     else:
         assert (respuesta.status_code == 412)
 
-def test_rest_eliminar_portatil(cliente_test):
+def test_rest_eliminar_portatil_y_seleccionar(cliente_test):
     respuesta = cliente_test.post('/portatiles/agregarPortatil/msi/gl62/333X/600')
     if (respuesta.status_code == 200):
         assert (respuesta.status_code == 200 and respuesta.headers["Content-Type"] == "application/json")
@@ -396,6 +396,82 @@ def test_rest_comparar_portatiles(cliente_test):
         assert (respuesta.status_code == 429)
     else:
         assert (respuesta.status_code == 412)
+
+
+def test_rest_modificar_stock_portatil_y_seleccionar(cliente_test):
+    #Agregar Portatil para posteriormente modificarlo
+    respuesta = cliente_test.post('/portatiles/agregarPortatil/msi/gl62/333PRUEBAX/600')
+    if (respuesta.status_code == 200):
+        assert (respuesta.status_code == 200 and respuesta.headers["Content-Type"] == "application/json")
+        indice = json_util.loads(respuesta.data)
+    elif (respuesta.status_code == 413):
+        assert (respuesta.status_code == 413)
+    elif (respuesta.status_code == 414):
+        assert (respuesta.status_code == 414)
+    elif (respuesta.status_code == 429):
+        assert (respuesta.status_code == 429)
+    else:
+        assert (respuesta.status_code == 412)
+    #Eliminar portatil
+    cadena = '/portatiles/cambiarStockPortatil/' + indice + '/1'
+    respuesta = cliente_test.put(cadena)
+
+    if (respuesta.status_code == 200):
+        assert (respuesta.status_code == 200 and respuesta.headers["Content-Type"] == "application/json")
+    elif (respuesta.status_code == 413):
+        assert (respuesta.status_code == 413)
+    elif (respuesta.status_code == 414):
+        assert (respuesta.status_code == 414)
+    elif (respuesta.status_code == 429):
+        assert (respuesta.status_code == 429)
+    else:
+        assert (respuesta.status_code == 412)
+    #Seleccionar portatil modificado
+    portatil = {"_id":{"$oid": indice}, "marca":"msi", "modelo":"gl62", "DNIvendedor":"333PRUEBAX", "precio":600, "pantalla":"", "procesador":"", "RAM":"", "almacenamiento":"", "grafica":"", "bateria":"", "SO":"",  "comentario":"", "vendido":1}
+    cadena = '/portatiles/seleccionarPortatil/' + indice
+    respuesta = cliente_test.get(cadena)
+    if (respuesta.status_code == 200):
+        assert (respuesta.status_code == 200 and respuesta.headers["Content-Type"] == "application/json")
+        assert json.loads(respuesta.data) == portatil
+    elif (respuesta.status_code == 413):
+        assert (respuesta.status_code == 413)
+    elif (respuesta.status_code == 414):
+        assert (respuesta.status_code == 414)
+    elif (respuesta.status_code == 429):
+        assert (respuesta.status_code == 429)
+    else:
+        assert (respuesta.status_code == 412)
+
+    #Eliminar portatil
+    cadena = '/portatiles/cambiarStockPortatil/' + indice + '/0'
+    respuesta = cliente_test.put(cadena)
+
+    if (respuesta.status_code == 200):
+        assert (respuesta.status_code == 200 and respuesta.headers["Content-Type"] == "application/json")
+    elif (respuesta.status_code == 413):
+        assert (respuesta.status_code == 413)
+    elif (respuesta.status_code == 414):
+        assert (respuesta.status_code == 414)
+    elif (respuesta.status_code == 429):
+        assert (respuesta.status_code == 429)
+    else:
+        assert (respuesta.status_code == 412)
+    #Seleccionar portatil modificado
+    portatil = {"_id":{"$oid": indice}, "marca":"msi", "modelo":"gl62", "DNIvendedor":"333PRUEBAX", "precio":600, "pantalla":"", "procesador":"", "RAM":"", "almacenamiento":"", "grafica":"", "bateria":"", "SO":"",  "comentario":"", "vendido":0}
+    cadena = '/portatiles/seleccionarPortatil/' + indice
+    respuesta = cliente_test.get(cadena)
+    if (respuesta.status_code == 200):
+        assert (respuesta.status_code == 200 and respuesta.headers["Content-Type"] == "application/json")
+        assert json.loads(respuesta.data) == portatil
+    elif (respuesta.status_code == 413):
+        assert (respuesta.status_code == 413)
+    elif (respuesta.status_code == 414):
+        assert (respuesta.status_code == 414)
+    elif (respuesta.status_code == 429):
+        assert (respuesta.status_code == 429)
+    else:
+        assert (respuesta.status_code == 412)
+
 
 #Borra todos los registros introducidos durante las pruebas, puesto que => DNIvendedor XXXPRUEBAX
 def test_limpiar_bd_y_comprobar_vacia(cliente_test):
