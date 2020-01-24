@@ -24,8 +24,8 @@ def funcion_fin():
 @pytest.fixture
 def cliente_test():
     funcion_inicio()
-    clieente_test = app.test_client()
-    app.config['TESTING'] = test_prueba
+    cliente_test = Portatiles_rest.app.test_client()
+    Portatiles_rest.app.config['TESTING'] = test_prueba
     yield cliente_test
     funcion_fin()
 
