@@ -136,3 +136,6 @@ class Portatiles:
         for i, portatil in enumerate(vector_comparacion):
             c.drawString(200, 10*(i+1), "Portatil: " + str(portatil.get("marca")) + " " + str(portatil.get("modelo")) + " " + str(portatil.get("pantalla")) + " " +portatil.get("procesador") + " " +str(portatil.get("RAM")) + " " +str(portatil.get("almacenamiento")) + " " +str(portatil.get("grafica")) + " " +str(portatil.get("bateria")) + " " +str(portatil.get("SO")) + " " +str(portatil.get("comentario")) + " " + str(portatil.get("precio")))
         c.save()
+
+    def limpiar_lista(self):
+        self.data_manager.borrar_conjunto()
