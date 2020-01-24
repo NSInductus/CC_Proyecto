@@ -5,36 +5,32 @@ from flask import Flask
 from flask import request
 from flask import Response
 
-import json
+from bson import json_util
 
-import Portatiles
+from Portatiles import Portatiles
+from MongoDM import MongoDM
 
 app = Flask(__name__)
 
-portatiles = Portatiles.Portatiles()
+data_manager = MongoDM(os.environ['URI_ENVIRON'],os.environ['BD_ENVIRON'],os.environ['CO_ENVIRON'])
+portatiles = Portatiles()
 
 #DE PRESENTACION
-@app.route('/')
+@app.route('/portatiles/')
 def index():
-    return Response(json.dumps("REST"), status=200, mimetype="application/json")
+    return Response(json_util.dumps("REST DE PORTATILES"), status=200, mimetype="application/json")
 
-#Para comprobar
-#http://127.0.0.1:5000/numeroPortatilesEnVenta
-@app.route('/numeroPortatilesEnVenta', methods=['GET'])
+#PARA COMPROBAR
+@app.route('/portatiles/numeroPortatilesEnVenta', methods=['GET'])
 def numeroPortatilesEnVenta():
-    #return Response(str(portatiles.numeroPortatilesEnVenta()))
-    return Response(json.dumps(portatiles.numeroPortatilesEnVenta()), status=200, mimetype="application/json")
+    return Response(json_util.dumps(portatiles.numeroPortatilesEnBD()), status=200, mimetype="application/json")
 
-#Para comprobar
-#http://127.0.0.1:5000/seleccionarPortatil/1
-@app.route('/seleccionarPortatil/<int:id_venta>', methods=['GET'])
-def seleccionarPortatil(id_venta):
+#PARA COMPROBAR
+@app.route('/portatiles/seleccionarPortatil/<_id>', methods=['GET'])
+def seleccionarPortatil(_id):
     portatil = portatiles.seleccionarPortatil(id_venta)
-    #return Response(str(id_venta))
-    return Response(json.dumps(portatil), status=200, mimetype="application/json")
+    return Response(json_util.dumps(portatil), status=200, mimetype="application/json")
 
-#http://127.0.0.1:5000/agregarPortatil/msi/gl62/333X/600
-#http://127.0.0.1:5000/agregarPortatil/msi/gl62/333X/600/Muy%20bueno/15/i7/GB%20DDR4/1gb/GTX/2H/Linux
 @app.route('/agregarPortatil/<marca>/<modelo>/<DNIvendedor>/<int:precio>', methods=['POST'])
 @app.route('/agregarPortatil/<marca>/<modelo>/<DNIvendedor>/<int:precio>/<comentario>', methods=['POST'])
 @app.route('/agregarPortatil/<marca>/<modelo>/<DNIvendedor>/<int:precio>/<comentario>/<pantalla>', methods=['POST'])
@@ -45,12 +41,9 @@ def seleccionarPortatil(id_venta):
 @app.route('/agregarPortatil/<marca>/<modelo>/<DNIvendedor>/<int:precio>/<comentario>/<pantalla>/<procesador>/<RAM>/<almacenamiento>/<grafica>/<bateria>', methods=['POST'])
 @app.route('/agregarPortatil/<marca>/<modelo>/<DNIvendedor>/<int:precio>/<comentario>/<pantalla>/<procesador>/<RAM>/<almacenamiento>/<grafica>/<bateria>/<SO>', methods=['POST'])
 def agregarPortatil(marca, modelo, DNIvendedor, precio, comentario="", pantalla="", procesador="", RAM="", almacenamiento="", grafica="", bateria="", SO=""):
-    id_venta = portatiles.agregarPortatil(marca, modelo, DNIvendedor, precio, comentario, pantalla, procesador, RAM, almacenamiento, grafica, bateria, SO)
-    #return Response(str(id_venta))
-    return Response(json.dumps(id_venta), status=200, mimetype="application/json")
+    _id = portatiles.agregarPortatil(marca, modelo, DNIvendedor, precio, comentario, pantalla, procesador, RAM, almacenamiento, grafica, bateria, SO)
+    return Response(json_util.dumps(_id), status=200, mimetype="application/json")
 
-
-#http://127.0.0.1:5000/modificarPortatil/1/800000
 @app.route('/modificarPortatil/<int:id_venta>/<int:precio>', methods=['PUT'])
 @app.route('/modificarPortatil/<int:id_venta>/<int:precio>/<modelo>', methods=['PUT'])
 @app.route('/modificarPortatil/<int:id_venta>/<int:precio>/<modelo>/<marca>', methods=['PUT'])
@@ -64,48 +57,36 @@ def agregarPortatil(marca, modelo, DNIvendedor, precio, comentario="", pantalla=
 @app.route('/modificarPortatil/<int:id_venta>/<int:precio>/<modelo>/<marca>/<comentario>/<pantalla>/<procesador>/<RAM>/<almacenamiento>/<grafica>/<bateria>/<SO>', methods=['PUT'])
 def modificarPortatil(id_venta, precio="", modelo="", marca="",comentario="",  pantalla="", procesador="", RAM="", almacenamiento="", grafica="", bateria="", SO=""):
     modificado = portatiles.modificarPortatil(id_venta, precio, modelo, marca,comentario,  pantalla, procesador, RAM, almacenamiento, grafica, bateria, SO)
+    return Response(json_util.dumps(modificado), status=200, mimetype="application/json")
+
+@app.route('/eliminarPortatilPorIdVenta/<_id>', methods=['DELETE'])
+def eliminarPortatilPorIdVenta(_id):
+    eliminado = portatiles.eliminarPortatilPorIdVenta(_id)
     #return Response(str(id_venta))
-    return Response(json.dumps(modificado), status=200, mimetype="application/json")
+    return Response(json_util.dumps(eliminado), status=200, mimetype="application/json")
 
-#http://127.0.0.1:5000/eliminarPortatilPorIdVenta/1/80000
-@app.route('/eliminarPortatilPorIdVenta/<int:id_venta>', methods=['DELETE'])
-def eliminarPortatilPorIdVenta(id_venta):
-    eliminado = portatiles.eliminarPortatilPorIdVenta(id_venta)
-    #return Response(str(id_venta))
-    return Response(json.dumps(eliminado), status=200, mimetype="application/json")
-
-
-#http://127.0.0.1:5000/verPortatilesEnVentaDeUsuario/333X
 @app.route('/verPortatilesEnVentaDeUsuario/<DNIusuario>', methods=['GET'])
 def verPortatilesEnVentaDeUsuario(DNIusuario):
     mis_portatiles = portatiles.portatiles_en_venta_de_usuario(DNIusuario)
-    #return Response(str(id_venta))
-    return Response(json.dumps(mis_portatiles), status=200, mimetype="application/json")
+    return Response(json_util.dumps(mis_portatiles), status=200, mimetype="application/json")
 
-
-#http://127.0.0.1:5000/buscarPortatilPorPrecio/500/1000
 @app.route('/buscarPortatilPorPrecio/<int:limite_inferior>/<int:limite_superior>', methods=['GET'])
 def buscarPortatilPorPrecio(limite_inferior, limite_superior):
     buscados = portatiles.buscar_portatil_por_precio(limite_inferior, limite_superior)
     #return Response(str(id_venta))
-    return Response(json.dumps(buscados), status=200, mimetype="application/json")
+    return Response(json_util.dumps(buscados), status=200, mimetype="application/json")
 
-
-#http://127.0.0.1:5000/buscarPortatilPorModeloMarca/gl62/msi
 @app.route('/buscarPortatilPorModeloMarca/<modelo>/<marca>', methods=['GET'])
 def buscarPortatilPorModeloMarca(modelo, marca):
     buscados = portatiles.buscar_portatil_por_modelo_marca(modelo, marca)
     #return Response(str(id_venta))
-    return Response(json.dumps(buscados), status=200, mimetype="application/json")
+    return Response(json_util.dumps(buscados), status=200, mimetype="application/json")
 
-
-
-#http://127.0.0.1:5000/compararPotatiles/gl62/msi
 @app.route('/compararPotatiles/<modelo>/<marca>', methods=['GET'])
 def compararPotatiles(modelo, marca):
     iguales = portatiles.comparar_portatiles(modelo, marca)
     #return Response(str(id_venta))
-    return Response(json.dumps(iguales), status=200, mimetype="application/json")
+    return Response(json_util.dumps(iguales), status=200, mimetype="application/json")
 
 #if __name__ == '__main__':
 #    app.debug = True
