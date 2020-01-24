@@ -27,9 +27,9 @@ class Portatiles:
             return False
 
     #Funcion para modificar un portatil ya existente
-    def modificarPortatil(self, id_venta, precio="", modelo="", marca="",comentario="",  pantalla="", procesador="", RAM="", almacenamiento="", grafica="", bateria="", SO=""):
-        existe = self.data_manager.obtener_elemento("_id", _id)
-        if existe != False:
+    def modificarPortatil(self, _id, precio="", modelo="", marca="",comentario="",  pantalla="", procesador="", RAM="", almacenamiento="", grafica="", bateria="", SO=""):
+        portatil = self.data_manager.obtener_elemento("_id", _id)
+        if portatil != False:
             if comentario == "":
                 comentario = portatil.get("comentario")
             if precio == "":
@@ -52,6 +52,7 @@ class Portatiles:
                 marca = portatil.get("marca")
             if modelo == "":
                 modelo = portatil.get("modelo")
+            dni = portatil.get("DNIvendedor")
             vendido = portatil.get("vendido")
             portatil_nuevo = {"marca":marca,"modelo":modelo, "pantalla":pantalla, "procesador":procesador, "RAM":RAM, "almacenamiento":almacenamiento, "grafica":grafica, "bateria":bateria, "SO":SO, "DNIvendedor":dni, "comentario":comentario, "precio":precio, "vendido": vendido}
             self.data_manager.actualizar_elemento(_id, portatil_nuevo)
@@ -63,7 +64,7 @@ class Portatiles:
     #Si se vende un portatil => vendido = 1
     #Si se devuelve un portatil => vendido = 0
     def cambiarStockPortatil(self, _id, vendido_nuevo):
-        #existe = self.existeEnListaIDventa(id_venta)
+        #existe = self.portatilEnListaIDventa(_id)
         portatil = self.data_manager.obtener_elemento("_id", _id)
         if portatil != False:
             comentario = portatil.get("comentario")
@@ -80,7 +81,7 @@ class Portatiles:
             dni = portatil.get("DNIvendedor")
             vendido = vendido_nuevo
             portatil_nuevo = {"marca":marca,"modelo":modelo, "pantalla":pantalla, "procesador":procesador, "RAM":RAM, "almacenamiento":almacenamiento, "grafica":grafica, "bateria":bateria, "SO":SO, "DNIvendedor":dni, "comentario":comentario, "precio":precio, "vendido":vendido_nuevo}
-            self.data_manager.actualizar_elemento(id_venta, portatil_nuevo)
+            self.data_manager.actualizar_elemento(_id, portatil_nuevo)
             return True
         else:
             return False
