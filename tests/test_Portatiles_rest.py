@@ -6,7 +6,7 @@ sys.path.append('src')
 
 from bson import json_util
 
-from Portatiles_rest import Portatiles_rest
+import Portatiles_rest
 from Portatiles import Portatiles
 from MongoDM import MongoDM
 
@@ -21,7 +21,7 @@ def funcion_fin():
     portatiles = Portatiles(data_manager)
     portatiles.limpiar_lista()
 
-@pytest.ficture
+@pytest.fixture
 def cliente_test():
     funcion_inicio()
     clieente_test = app.test_client()
