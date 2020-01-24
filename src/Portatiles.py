@@ -103,7 +103,7 @@ class Portatiles:
     def buscarPortatilPorPrecio(self, limite_inferior, limite_superior):
         lista_portatiles = self.data_manager.obtener_todos_elementos()
         portatiles_busqueda = []
-        for i, portatil in enumerate(self.lista_portatiles):
+        for i, portatil in enumerate(lista_portatiles):
             if (portatil.get("precio") <= limite_superior) and (portatil.get("precio") >= limite_inferior) and (portatil.get("vendido") == 0):
                 portatiles_busqueda.append(portatil)
         return portatiles_busqueda
@@ -112,7 +112,7 @@ class Portatiles:
     def buscarPortatilPorModeloMarca(self, modelo, marca):
         lista_portatiles = self.data_manager.obtener_todos_elementos()
         portatiles_busqueda = []
-        for i, portatil in enumerate(self.lista_portatiles):
+        for i, portatil in enumerate(lista_portatiles):
             if (portatil.get("modelo") == modelo) and (portatil.get("marca") == marca) and (portatil.get("vendido") == 0):
                 portatiles_busqueda.append(portatil)
         return portatiles_busqueda
@@ -122,7 +122,7 @@ class Portatiles:
     def compararPortatiles(self, modelo, marca):
         lista_portatiles = self.data_manager.obtener_todos_elementos()
         portatiles_iguales = []
-        for i, portatil in enumerate(self.lista_portatiles):
+        for i, portatil in enumerate(lista_portatiles):
             if (portatil.get("modelo") == modelo) and (portatil.get("marca") == marca) and (portatil.get("vendido") == 0):
                 portatiles_iguales.append(portatil)
         print(portatiles_iguales)
