@@ -120,19 +120,19 @@ def test_indices():
 
 def test_portatiles_en_venta_de_usuario():
     nueva_lista.limpiar_lista()
-    mis_portatiles_en_venta = nueva_lista.portatiles_en_venta_de_usuario("333X")
+    mis_portatiles_en_venta = nueva_lista.buscarPortatilesEnVentaUsuario("333X")
     assert len(mis_portatiles_en_venta) == 0
     indice1 = nueva_lista.agregarPortatil("MSI","GL62M","333X",2000)
     indice2 = nueva_lista.agregarPortatil("ASUN","TUF","345X",1500)
     indice3 = nueva_lista.agregarPortatil("ACER","Aspire 3","333X",957)
-    mis_portatiles_en_venta = nueva_lista.portatiles_en_venta_de_usuario("333X")
+    mis_portatiles_en_venta = nueva_lista.buscarPortatilesEnVentaUsuario("333X")
     assert len(mis_portatiles_en_venta) == 2
     portatil1 = {"_id":bson.ObjectId(indice1), "marca":"MSI", "modelo":"GL62M", "DNIvendedor":"333X", "precio":2000, "pantalla":"", "procesador":"", "RAM":"", "almacenamiento":"", "grafica":"", "bateria":"", "SO":"",  "comentario":"", "vendido":0}
     portatil2 = {"_id":bson.ObjectId(indice3), "marca":"ACER", "modelo":"Aspire 3", "DNIvendedor":"333X", "precio":957, "pantalla":"", "procesador":"", "RAM":"", "almacenamiento":"", "grafica":"", "bateria":"", "SO":"",  "comentario":"", "vendido":0}
     assert mis_portatiles_en_venta[0] == portatil1
     assert mis_portatiles_en_venta[1] == portatil2
-    assert nueva_lista.eliminarPortatilPorIdBD(indice1) == True
-    mis_portatiles_en_venta = nueva_lista.portatiles_en_venta_de_usuario("333X")
+    assert nueva_lista.eliminarPortatilPorIdVenta(indice1) == True
+    mis_portatiles_en_venta = nueva_lista.buscarPortatilesEnVentaUsuario("333X")
     assert len(mis_portatiles_en_venta) == 1
     assert mis_portatiles_en_venta[0] == portatil2
 
@@ -142,9 +142,9 @@ def test_buscar_portatil_por_precio():
     indice1 = nueva_lista.agregarPortatil("MSI","GL62M","333X",2000)
     indice2 = nueva_lista.agregarPortatil("ASUN","TUF","333X",1500)
     indice3 = nueva_lista.agregarPortatil("ACER","Aspire 3","333X",957)
-    portatiles_busqueda = nueva_lista.buscar_portatil_por_precio(0, 1000)
+    portatiles_busqueda = nueva_lista.buscarPortatilPorPrecio(0, 1000)
     assert len(portatiles_busqueda) == 1
-    portatiles_busqueda = nueva_lista.buscar_portatil_por_precio(1000, 3000)
+    portatiles_busqueda = nueva_lista.buscarPortatilPorPrecio(1000, 3000)
     assert len(portatiles_busqueda) == 2
 
 
@@ -154,9 +154,9 @@ def test_buscar_portatil_por_modelo_marca():
     indice2 = nueva_lista.agregarPortatil("ASUN","TUF","333X",1500)
     indice3 = nueva_lista.agregarPortatil("ACER","Aspire 3","333X",957)
     indice4 = nueva_lista.agregarPortatil("MSI","GL62M","356X", 2033)
-    portatiles_busqueda = nueva_lista.buscar_portatil_por_modelo_marca("B","A")
+    portatiles_busqueda = nueva_lista.buscarPortatilPorModeloMarca("B","A")
     assert len(portatiles_busqueda) == 0
-    portatiles_busqueda = nueva_lista.buscar_portatil_por_modelo_marca("GL62M", "MSI")
+    portatiles_busqueda = nueva_lista.buscarPortatilPorModeloMarca("GL62M", "MSI")
     assert len(portatiles_busqueda) == 2
 
 def test_comparar_portatiles():
@@ -165,8 +165,8 @@ def test_comparar_portatiles():
     indice2 = nueva_lista.agregarPortatil("ASUN","TUF","333X",1500)
     indice3 = nueva_lista.agregarPortatil("ACER","Aspire 3","333X",957)
     indice4 = nueva_lista.agregarPortatil("MSI","GL62M","356X", 1000)
-    assert nueva_lista.comparar_portatiles("B","A") == False
-    portatiles_comparar = nueva_lista.comparar_portatiles("GL62M", "MSI")
+    assert nueva_lista.compararPotatiles("B","A") == False
+    portatiles_comparar = nueva_lista.compararPotatiles("GL62M", "MSI")
     assert len(portatiles_comparar) == 2
     portatil1 = {"_id":bson.ObjectId(indice4), "marca":"MSI", "modelo":"GL62M", "DNIvendedor":"356X", "precio":1000, "pantalla":"", "procesador":"", "RAM":"", "almacenamiento":"", "grafica":"", "bateria":"", "SO":"",  "comentario":"", "vendido":0}
     assert portatiles_comparar[0] == portatil1
@@ -180,7 +180,7 @@ def test_imprimir_comparacion():
     indice5 = nueva_lista.agregarPortatil("MSI","GL62M","356X", 999)
     indice6 = nueva_lista.agregarPortatil("MSI","GL62M","356X", 999)
     indice7 = nueva_lista.agregarPortatil("MSI","GL62M","356X", 999)
-    portatiles_comparar = nueva_lista.comparar_portatiles("GL62M", "MSI")
+    portatiles_comparar = nueva_lista.compararPotatiles("GL62M", "MSI")
     nueva_lista.imprimir_comparacion(portatiles_comparar, "comparacion.pdf")
 
 def test_buscar_portatil_por_modelo_marca_excluyendo_en_venta():
@@ -191,7 +191,7 @@ def test_buscar_portatil_por_modelo_marca_excluyendo_en_venta():
     indice4 = nueva_lista.agregarPortatil("MSI","GL62M","333PRUEBAX", 2033)
     #En venta para que de 1 posteriormente
     nueva_lista.cambiar_stock_portatil(indice4,1)
-    portatiles_busqueda = nueva_lista.buscar_portatil_por_modelo_marca("B","A")
+    portatiles_busqueda = nueva_lista.buscarPortatilPorModeloMarca("B","A")
     assert len(portatiles_busqueda) == 0
-    portatiles_busqueda = nueva_lista.buscar_portatil_por_modelo_marca("GL62M", "MSI")
+    portatiles_busqueda = nueva_lista.buscarPortatilPorModeloMarca("GL62M", "MSI")
     assert len(portatiles_busqueda) == 1
