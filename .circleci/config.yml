@@ -4,7 +4,7 @@ jobs:
     docker:
       # Version con la que se trabaja desde la máquina local
       - image: circleci/python:3.7.5
-      - image: circleci/mongo:3.6.3
+      - image: mongo:3.6.3
 
     environment:
       - MONGO_URL: "mongodb://localhost:27017"
