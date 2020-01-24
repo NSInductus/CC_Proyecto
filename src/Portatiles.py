@@ -83,7 +83,7 @@ class Portatiles:
     def seleccionarPortatil(self, _id):
         return self.data_manager.obtener_elemento("_id", _id)
 
-    def portatiles_en_venta_de_usuario(self, DNIusuario):
+    def buscarPortatilesEnVentaUsuario(self, DNIusuario):
         lista_portatiles = self.data_manager.obtener_todos_elementos()
         portatiles_usuario = []
         for i, portatil in enumerate(lista_portatiles):
@@ -91,7 +91,7 @@ class Portatiles:
                 portatiles_usuario.append(portatil)
         return portatiles_usuario
 
-    def buscar_portatil_por_precio(self, limite_inferior, limite_superior):
+    def buscarPortatilPorPrecio(self, limite_inferior, limite_superior):
         lista_portatiles = self.data_manager.obtener_todos_elementos()
         portatiles_busqueda = []
         for i, portatil in enumerate(self.lista_portatiles):
@@ -99,7 +99,7 @@ class Portatiles:
                 portatiles_busqueda.append(portatil)
         return portatiles_busqueda
 
-    def buscar_portatil_por_modelo_marca(self, modelo, marca):
+    def buscarPortatilPorModeloMarca(self, modelo, marca):
         lista_portatiles = self.data_manager.obtener_todos_elementos()
         portatiles_busqueda = []
         for i, portatil in enumerate(self.lista_portatiles):
@@ -108,7 +108,7 @@ class Portatiles:
         return portatiles_busqueda
 
     #Te compara portatiles de la misma marca y modelo y te los ordena por precio
-    def comparar_portatiles(self, modelo, marca):
+    def compararPortatiles(self, modelo, marca):
         lista_portatiles = self.data_manager.obtener_todos_elementos()
         portatiles_iguales = []
         for i, portatil in enumerate(self.lista_portatiles):
@@ -121,7 +121,7 @@ class Portatiles:
         else:
             return False
 
-    def imprimir_comparacion(self, vector_comparacion, ruta):
+    def imprimirComparacion(self, vector_comparacion, ruta):
         c = canvas.Canvas(ruta)
         for i, portatil in enumerate(vector_comparacion):
             c.drawString(200, 10*(i+1), "Portatil: " + str(portatil.get("marca")) + " " + str(portatil.get("modelo")) + " " + str(portatil.get("pantalla")) + " " +portatil.get("procesador") + " " +str(portatil.get("RAM")) + " " +str(portatil.get("almacenamiento")) + " " +str(portatil.get("grafica")) + " " +str(portatil.get("bateria")) + " " +str(portatil.get("SO")) + " " +str(portatil.get("comentario")) + " " + str(portatil.get("precio")))
