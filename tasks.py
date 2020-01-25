@@ -57,11 +57,11 @@ def start(c, host="0.0.0.0", micro= "", puerto="8080", puerto_2="8000"):
     with c.cd('src/'):
         if micro == "":
             c.run("gunicorn -b " + host + ":" + puerto + " Portatiles_rest:app --daemon")
-            c.run("gunicorn -b " + host + ":" + puerto_2 + " Transaciones_rest:app --daemon")
+            c.run("gunicorn -b " + host + ":" + puerto_2 + " Transacciones_rest:app --daemon")
         elif micro == "Portatiles":
             c.run("gunicorn -b " + host + ":" + puerto + " Portatiles_rest:app")
-        elif micro == "Transaciones":
-            c.run("gunicorn -b " + host + ":" + puerto + " Transaciones_rest:app")
+        elif micro == "Transacciones":
+            c.run("gunicorn -b " + host + ":" + puerto + " Transacciones_rest:app")
 
 #Parar el servidor
 @task
@@ -77,4 +77,4 @@ def clear(c):
     c.run("rm -rf tests/__pycache__/")
     c.run("rm .coverage")
     c.run("rm comparacion.pdf")
-    c.run("rm transaciones.pdf")
+    c.run("rm transacciones.pdf")

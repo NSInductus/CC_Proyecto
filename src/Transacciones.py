@@ -1,11 +1,11 @@
 from reportlab.pdfgen import canvas
 import bson
 
-class Transaciones:
+class Transacciones:
     def __init__ (self, data_manager):
         self.data_manager  = data_manager
 
-    def numeroTransaciones(self):
+    def numeroTransacciones(self):
         return self.data_manager.numero_elementos()
 
     #Tipo 1 => Transacion de compra
@@ -28,20 +28,20 @@ class Transaciones:
              return False
 
     def verEstadisticas(self, DNIusuario):
-        lista_transaciones = self.data_manager.obtener_todos_elementos()
-        transaciones_usuario = []
-        for i, transacion in enumerate(lista_transaciones):
+        lista_transacciones = self.data_manager.obtener_todos_elementos()
+        transacciones_usuario = []
+        for i, transacion in enumerate(lista_transacciones):
             if transacion.get("DNIusuario") == DNIusuario:
-                transaciones_usuario.append(transacion)
-        return transaciones_usuario
+                transacciones_usuario.append(transacion)
+        return transacciones_usuario
 
     def verEstadisticasFiltradasTipo(self, DNIusuario, tipo):
-        lista_transaciones = self.data_manager.obtener_todos_elementos()
-        transaciones_usuario = []
-        for i, transacion in enumerate(lista_transaciones):
+        lista_transacciones = self.data_manager.obtener_todos_elementos()
+        transacciones_usuario = []
+        for i, transacion in enumerate(lista_transacciones):
             if (transacion.get("DNIusuario") == DNIusuario) and (transacion.get("tipo") == tipo):
-                transaciones_usuario.append(transacion)
-        return transaciones_usuario
+                transacciones_usuario.append(transacion)
+        return transacciones_usuario
 
     def imprimirComparacion(self, vector_comparacion, ruta):
             c = canvas.Canvas(ruta)

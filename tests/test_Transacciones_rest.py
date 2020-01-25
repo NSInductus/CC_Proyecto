@@ -7,28 +7,28 @@ sys.path.append('src')
 import json
 from bson import json_util
 
-import Transaciones_rest
+import Transacciones_rest
 import Portatiles_rest
-from Transaciones import Transaciones
+from Transacciones import Transacciones
 from Portatiles import Portatiles
 from MongoDM import MongoDM
 
 def funcion_inicio():
 
     data_manager = MongoDM(os.environ['URI_BD_T'],os.environ['BD_T'],os.environ['CO_T'])
-    transaciones = Transaciones(data_manager)
-    transaciones.limpiarLista()
+    transacciones = Transacciones(data_manager)
+    transacciones.limpiarLista()
 
 @pytest.fixture
 def cliente_test():
     funcion_inicio()
-    cliente_test = Transaciones_rest.app.test_client()
+    cliente_test = Transacciones_rest.app.test_client()
     cliente_test_portatil = Portatiles_rest.app.test_client()
     yield cliente_test, cliente_test_portatil
 
 
-def test_transaciones_rest_prueba(cliente_test):
-    respuesta = cliente_test[0].get('/transaciones/')
+def test_transacciones_rest_prueba(cliente_test):
+    respuesta = cliente_test[0].get('/transacciones/')
     if (respuesta.status_code == 200):
         assert (respuesta.status_code == 200 and respuesta.headers["Content-Type"] == "application/json")
         assert json_util.loads(respuesta.data) == "REST DE TRANSACIONES"
@@ -41,12 +41,12 @@ def test_transaciones_rest_prueba(cliente_test):
     else:
         assert (respuesta.status_code == 412)
 
-def test_transaciones_rest_ruta_desconocida(cliente_test):
-    respuesta = cliente_test[0].get('/transaciones/kokoko')
+def test_transacciones_rest_ruta_desconocida(cliente_test):
+    respuesta = cliente_test[0].get('/transacciones/kokoko')
     if (respuesta.status_code == 204):
         assert (respuesta.status_code == 204)
 
-def test_transaciones_rest_prueba_vender_portatil(cliente_test):
+def test_transacciones_rest_prueba_vender_portatil(cliente_test):
     #Seleccionar portatil
     cadena = '/portatiles/agregarPortatil/msi/gl62/333X/600'
     respuesta = cliente_test[1].post(cadena)
@@ -81,10 +81,10 @@ def test_transaciones_rest_prueba_vender_portatil(cliente_test):
     else:
         assert (respuesta.status_code == 412)
     DNIcomprador = "555X"
-    cadena = '/transaciones/venderPortatil/' + indice + '/' + DNIcomprador
+    cadena = '/transacciones/venderPortatil/' + indice + '/' + DNIcomprador
     respuesta = cliente_test[0].post(cadena)
 
-def test_transaciones_rest_prueba_devolver_portatil(cliente_test):
+def test_transacciones_rest_prueba_devolver_portatil(cliente_test):
     #Seleccionar portatil
     cadena = '/portatiles/agregarPortatil/msi/gl62/333X/600'
     respuesta = cliente_test[1].post(cadena)
@@ -119,13 +119,13 @@ def test_transaciones_rest_prueba_devolver_portatil(cliente_test):
     else:
         assert (respuesta.status_code == 412)
     DNIcomprador = "555X"
-    cadena = '/transaciones/devolverPortatil/' + indice + '/' + DNIcomprador
+    cadena = '/transacciones/devolverPortatil/' + indice + '/' + DNIcomprador
     respuesta = cliente_test[0].post(cadena)
 
 #Funciones de ver estadisticas del API
-def test_transaciones_rest_ver_estadisticas(cliente_test):
+def test_transacciones_rest_ver_estadisticas(cliente_test):
     lista = []
-    respuesta = cliente_test[0].get('/transaciones/verEstadisticas/666X')
+    respuesta = cliente_test[0].get('/transacciones/verEstadisticas/666X')
     if (respuesta.status_code == 200):
         assert (respuesta.status_code == 200 and respuesta.headers["Content-Type"] == "application/json")
         assert json.loads(respuesta.data) == lista
@@ -138,9 +138,9 @@ def test_transaciones_rest_ver_estadisticas(cliente_test):
     else:
         assert (respuesta.status_code == 412)
 
-def test_transaciones_rest_ver_estadisticas_tipo(cliente_test):
+def test_transacciones_rest_ver_estadisticas_tipo(cliente_test):
     lista = []
-    respuesta = cliente_test[0].get('/transaciones/verEstadisticas/666X/1')
+    respuesta = cliente_test[0].get('/transacciones/verEstadisticas/666X/1')
     if (respuesta.status_code == 200):
         assert (respuesta.status_code == 200 and respuesta.headers["Content-Type"] == "application/json")
         assert json.loads(respuesta.data) == lista

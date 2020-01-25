@@ -34,4 +34,4 @@ EXPOSE ${PORT}
 WORKDIR /src/
 
 # Lanzar el servidor
-CMD gunicorn -b 0.0.0.0:${PORT} Transaciones_rest:app
+CMD gunicorn -b 0.0.0.0:${PORT} Transacciones_rest:app
