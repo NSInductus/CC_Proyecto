@@ -7,6 +7,7 @@ from flask import request
 from flask import Response
 
 from bson import json_util
+import json
 
 from Transaciones import Transaciones
 from Portatiles import Portatiles
@@ -45,10 +46,10 @@ def seleccionarTransacion(_id):
     transacion = transaciones.seleccionarTransacion(_id)
     return Response(json_util.dumps(transacion), status=200, mimetype="application/json")
 
-@app.route('/transaciones/agregarTransacion/<id_portatil>/<DNIvendedor>/<int:tipo>', methods=['POST'])
-@app.route('/transaciones/agregarTransacion/<id_portatil>/<DNIvendedor>/<int:tipo>/<comentario>', methods=['POST'])
-def agregarTransacion(id_portatil, DNIvendedor, tipo, comentario=""):
-    _id = transaciones.agregarTransacion(id_portatil, DNIvendedor, tipo, comentario)
+@app.route('/transaciones/agregarTransacion/<id_portatil>/<DNIusuario>/<int:tipo>', methods=['POST'])
+@app.route('/transaciones/agregarTransacion/<id_portatil>/<DNIusuario>/<int:tipo>/<comentario>', methods=['POST'])
+def agregarTransacion(id_portatil, DNIusuario, tipo, comentario=""):
+    _id = transaciones.agregarTransacion(id_portatil, DNIusuario, tipo, comentario)
     return Response(json_util.dumps(_id), status=200, mimetype="application/json")
 
 ##3
@@ -76,25 +77,27 @@ def seleccionarPortatil(id_portatil):
     return Response(json_util.dumps(respuesta), status=200, mimetype="application/json")
 
 
-
-@app.route('/transaciones/venderPortatil/<id_portatil>/<DNIvendedor>', methods=['POST'])
-@app.route('/transaciones/venderPortatil/<id_portatil>/<DNIvendedor>/<comentario>', methods=['POST'])
-def venderPortatil(id_portatil, DNIvendedor, comentario=""):
+@app.route('/transaciones/venderPortatil/<id_portatil>/<DNIcomprador>', methods=['POST'])
+@app.route('/transaciones/venderPortatil/<id_portatil>/<DNIcomprador>/<comentario>', methods=['POST'])
+def venderPortatil(id_portatil, DNIcomprador, comentario=""):
     _id = False
     cliente_test = Portatiles_rest.app.test_client()
     #Portatiles_rest.app.config['TESTING'] = test_prueba
     cadena = '/portatiles/seleccionarPortatil/' + id_portatil
     respuesta = cliente_test.get(cadena)
+
+    respuesta = json.loads(respuesta.data)
     if respuesta != False:
         cadena = '/portatiles/cambiarStockPortatil/' + id_portatil + '/1'
-        respuesta = cliente_test.put(cadena)
-        _id = transaciones.agregarTransacion(id_portatil, DNIvendedor, 1, comentario)
+        respuesta2 = cliente_test.put(cadena)
+        _id = transaciones.agregarTransacion(id_portatil, DNIcomprador, 1, comentario)
+        _id = transaciones.agregarTransacion(id_portatil, respuesta.get("DNIvendedor"), 2, comentario)
     return Response(json_util.dumps(_id), status=200, mimetype="application/json")
 
 
-@app.route('/transaciones/devolverPortatil/<id_portatil>/<DNIvendedor>', methods=['POST'])
-@app.route('/transaciones/devolverPortatil/<id_portatil>/<DNIvendedor>/<comentario>', methods=['POST'])
-def devolverPortatil(id_portatil, DNIvendedor, comentario=""):
+@app.route('/transaciones/devolverPortatil/<id_portatil>/<DNIcomprador>', methods=['POST'])
+@app.route('/transaciones/devolverPortatil/<id_portatil>/<DNIcomprador>/<comentario>', methods=['POST'])
+def devolverPortatil(id_portatil, DNIcomprador, comentario=""):
     _id = False
     cliente_test = Portatiles_rest.app.test_client()
     #Portatiles_rest.app.config['TESTING'] = test_prueba
@@ -103,10 +106,15 @@ def devolverPortatil(id_portatil, DNIvendedor, comentario=""):
     if respuesta != False:
         cadena = '/portatiles/cambiarStockPortatil/' + id_portatil + '/0'
         respuesta = cliente_test.put(cadena)
-        _id = transaciones.agregarTransacion(id_portatil, DNIvendedor, 0, comentario)
+        _id = transaciones.agregarTransacion(id_portatil, DNIcomprador, 3, comentario)
     return Response(json_util.dumps(_id), status=200, mimetype="application/json")
 
-@app.route('/transaciones/verEstadisticas/<DNIvendedor>', methods=['GET'])
-def verEstadisticas(DNIvendedor):
-    mis_transaciones = transaciones.verEstadisticas(DNIvendedor)
-    return Response(json_util.dumps(mis_transaciones), status=200, mimetype="application/json")
+@app.route('/transaciones/verEstadisticas/<DNIusuario>', methods=['GET'])
+@app.route('/transaciones/verEstadisticas/<DNIusuario>/<int:tipo>', methods=['GET'])
+def verEstadisticas(DNIusuario, tipo=0):
+    if tipo == 0:
+        mis_transaciones = transaciones.verEstadisticasFiltradasTipo(DNIusuario,tipo)
+        return Response(json_util.dumps(mis_transaciones), status=200, mimetype="application/json")
+    else:
+        mis_transaciones = transaciones.verEstadisticas(DNIusuario)
+        return Response(json_util.dumps(mis_transaciones), status=200, mimetype="application/json")
