@@ -13,16 +13,16 @@ from MongoDM import MongoDM
 #data_manager = MongoDM(os.environ['URI_ENVIRON'],os.environ['BD_ENVIRON'],os.environ['CO_ENVIRON'])
 #nueva_lista_p = Portatiles(data_manager)
 
-data_manager = MongoDM(os.environ['URI_ENVIRON'],os.environ['BDT_ENVIRON'],os.environ['COT_ENVIRON'])
+data_manager = MongoDM(os.environ['URI_BD_T'], os.environ['BD_T'], os.environ['CO_T'])
 nueva_lista = Transaciones(data_manager)
 
 def funcion_inicio():
-    data_manager = MongoDM(os.environ['URI_ENVIRON'],os.environ['BDT_ENVIRON'],os.environ['COT_ENVIRON'])
+    data_manager = MongoDM(os.environ['URI_BD_T'], os.environ['BD_T'], os.environ['CO_T'])
     nueva_lista = Transaciones(data_manager)
     nueva_lista.limpiarLista()
 
 def funcion_fin():
-    data_manager = MongoDM(os.environ['URI_ENVIRON'],os.environ['BDT_ENVIRON'],os.environ['COT_ENVIRON'])
+    data_manager = MongoDM(os.environ['URI_BD_T'], os.environ['BD_T'], os.environ['CO_T'])
     nueva_lista = Transaciones(data_manager)
     nueva_lista.limpiarLista()
 
@@ -40,7 +40,7 @@ def test_lista_transaciones_vacia(cliente_test):
 def test_agregar_y_seleccionar_nueva_transacion(cliente_test):
     indice = nueva_lista.agregarTransacion("e23rewr2wqe43242t", "333X", 1)
     assert nueva_lista.numeroTransaciones() == 1
-    transacion = {"_id":bson.ObjectId(indice), "id_portatil": "e23rewr2wqe43242t", "DNIvendedor": "333X", "tipo":1, "comentario":""}
+    transacion = {"_id":bson.ObjectId(indice), "id_portatil": "e23rewr2wqe43242t", "DNIusuario": "333X", "tipo":1, "comentario":""}
     assert nueva_lista.seleccionarTransacion(indice) == transacion
 
 #def test_agregar_nuevo_portatil():
@@ -49,16 +49,16 @@ def test_agregar_y_seleccionar_nueva_transacion(cliente_test):
 #    i = nueva_lista_p.agregarPortatil("MSI","GL62M","333X",2000)
 #    indice = nueva_lista.agregarTransacion(i, "333X", 1)
 #    assert nueva_lista.numeroTransaciones() == 1
-    #portatil = {"_id":bson.ObjectId(indice), "marca":"MSI", "modelo":"GL62M", "DNIvendedor":"333X", "precio":2000, "pantalla":"", "procesador":"", "RAM":"", "almacenamiento":"", "grafica":"", "bateria":"", "SO":"",  "comentario":"", "vendido":0}
-#    transacion = {"_id":bson.ObjectId(indice), "id_portatil": i, "DNIvendedor": "333X", "tipo":1, "comentario":""}
+    #portatil = {"_id":bson.ObjectId(indice), "marca":"MSI", "modelo":"GL62M", "DNIusuario":"333X", "precio":2000, "pantalla":"", "procesador":"", "RAM":"", "almacenamiento":"", "grafica":"", "bateria":"", "SO":"",  "comentario":"", "vendido":0}
+#    transacion = {"_id":bson.ObjectId(indice), "id_portatil": i, "DNIusuario": "333X", "tipo":1, "comentario":""}
 #    assert nueva_lista.seleccionarTransacion(indice) == transacion
 
 
 def test_agregar_y_seleccionar_nuevo_transacion_con_comentario(cliente_test):
     indice = nueva_lista.agregarTransacion("e23rewr2wqe43242t", "333X", 1, "Soy un comentario")
     assert nueva_lista.numeroTransaciones() == 1
-    #portatil = {"_id":bson.ObjectId(indice), "marca":"MSI", "modelo":"GL62M", "DNIvendedor":"333X", "precio":2000, "pantalla":"", "procesador":"", "RAM":"", "almacenamiento":"", "grafica":"", "bateria":"", "SO":"",  "comentario":"", "vendido":0}
-    transacion = {"_id":bson.ObjectId(indice), "id_portatil": "e23rewr2wqe43242t", "DNIvendedor": "333X", "tipo":1, "comentario":"Soy un comentario"}
+    #portatil = {"_id":bson.ObjectId(indice), "marca":"MSI", "modelo":"GL62M", "DNIusuario":"333X", "precio":2000, "pantalla":"", "procesador":"", "RAM":"", "almacenamiento":"", "grafica":"", "bateria":"", "SO":"",  "comentario":"", "vendido":0}
+    transacion = {"_id":bson.ObjectId(indice), "id_portatil": "e23rewr2wqe43242t", "DNIusuario": "333X", "tipo":1, "comentario":"Soy un comentario"}
     assert nueva_lista.seleccionarTransacion(indice) == transacion
 
 def test_agregar_varias_transaciones(cliente_test):
@@ -67,10 +67,10 @@ def test_agregar_varias_transaciones(cliente_test):
     indice3 = nueva_lista.agregarTransacion("e23rewr2wqe43242t", "333X", 1)
     indice4 = nueva_lista.agregarTransacion("e23rewr2wqe43242t", "333X", 1)
     assert nueva_lista.numeroTransaciones() == 4
-    transacion1 = {"_id":bson.ObjectId(indice1), "id_portatil": "e23rewr2wqe43242t", "DNIvendedor": "333X", "tipo":1, "comentario":""}
-    transacion2 = {"_id":bson.ObjectId(indice2), "id_portatil": "e23rewr2wqe43242t", "DNIvendedor": "333X", "tipo":1, "comentario":""}
-    transacion3 = {"_id":bson.ObjectId(indice3), "id_portatil": "e23rewr2wqe43242t", "DNIvendedor": "333X", "tipo":1, "comentario":""}
-    transacion4 = {"_id":bson.ObjectId(indice4), "id_portatil": "e23rewr2wqe43242t", "DNIvendedor": "333X", "tipo":1, "comentario":""}
+    transacion1 = {"_id":bson.ObjectId(indice1), "id_portatil": "e23rewr2wqe43242t", "DNIusuario": "333X", "tipo":1, "comentario":""}
+    transacion2 = {"_id":bson.ObjectId(indice2), "id_portatil": "e23rewr2wqe43242t", "DNIusuario": "333X", "tipo":1, "comentario":""}
+    transacion3 = {"_id":bson.ObjectId(indice3), "id_portatil": "e23rewr2wqe43242t", "DNIusuario": "333X", "tipo":1, "comentario":""}
+    transacion4 = {"_id":bson.ObjectId(indice4), "id_portatil": "e23rewr2wqe43242t", "DNIusuario": "333X", "tipo":1, "comentario":""}
     assert nueva_lista.seleccionarTransacion(indice1) == transacion1
     assert nueva_lista.seleccionarTransacion(indice2) == transacion2
     assert nueva_lista.seleccionarTransacion(indice3) == transacion3
@@ -98,8 +98,8 @@ def test_estadisticas(cliente_test):
     indice3 = nueva_lista.agregarTransacion("e12312442ed2d322t", "333X", 1)
     mis_transaciones = nueva_lista.verEstadisticas("333X")
     assert len(mis_transaciones) == 2
-    transacion1 = {"_id":bson.ObjectId(indice1), "id_portatil": "e23rewr2wqe43242t", "DNIvendedor": "333X", "tipo":1, "comentario":""}
-    transacion3 = {"_id":bson.ObjectId(indice3), "id_portatil": "e12312442ed2d322t", "DNIvendedor": "333X", "tipo":1, "comentario":""}
+    transacion1 = {"_id":bson.ObjectId(indice1), "id_portatil": "e23rewr2wqe43242t", "DNIusuario": "333X", "tipo":1, "comentario":""}
+    transacion3 = {"_id":bson.ObjectId(indice3), "id_portatil": "e12312442ed2d322t", "DNIusuario": "333X", "tipo":1, "comentario":""}
     assert mis_transaciones[0] == transacion1
     assert mis_transaciones[1] == transacion3
     assert nueva_lista.eliminarTransacion(indice1) == True
