@@ -10,6 +10,12 @@ jobs:
       - URI_BD_P: 'localhost:27017'
       - BD_P: 'BDPruebaPortatiles'
       - CO_P: 'COPortatiles'
+      - URI_BD_T: 'localhost:27017'
+      - BD_P: 'BDPruebaTransaciones'
+      - CO_P: 'COTransaciones'
+      - HOST: 'localhost'
+      - PORT: '8080'
+      - PORT_2: '8000'
 
     steps:
       - checkout
