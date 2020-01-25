@@ -7,15 +7,9 @@ jobs:
       - image: mongo:3.6.3
 
     environment:
-      - URI_BD_P: 'localhost:27017'
-      - BD_P: 'BDPruebaPortatiles'
-      - CO_P: 'COPruebaPortatiles'
-      - URI_BD_T: 'localhost:27017'
-      - BD_T: 'BDPruebaTransaciones'
-      - CO_T: 'COPruebaTransaciones'
-      - HOST: 'localhost'
-      - PORT: '8080'
-      - PORT_2: '8000'
+      - URI_ENVIRON: 'localhost:27017'
+      - BD_ENVIRON: 'BDPruebaPortatiles'
+      - CO_ENVIRON: 'COPortatiles'
 
     steps:
       - checkout
@@ -30,4 +24,4 @@ jobs:
           command: pipenv run python -m pytest tests/test_*.py
       - run:
           name: Ejecutar test de cobertura
-          command: pipenv run python -m pytest --cov: src tests/
+          command: pipenv run python -m pytest --cov=src tests/
