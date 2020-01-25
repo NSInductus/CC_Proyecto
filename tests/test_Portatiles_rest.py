@@ -12,11 +12,12 @@ from Portatiles import Portatiles
 from MongoDM import MongoDM
 
 def funcion_inicio():
-    data_manager = MongoDM(os.environ['URI_ENVIRON'],os.environ['BD_ENVIRON'],os.environ['CO_ENVIRON'])
+    data_manager = MongoDM(os.environ['URI_BD_P'],os.environ['BD_P'],os.environ['CO_P'])
     portatiles = Portatiles(data_manager)
+    portatiles.limpiarLista()
 
 def funcion_fin():
-    data_manager = MongoDM(os.environ['URI_ENVIRON'],os.environ['BD_ENVIRON'],os.environ['CO_ENVIRON'])
+    data_manager = MongoDM(os.environ['URI_BD_P'],os.environ['BD_P'],os.environ['CO_P'])
     portatiles = Portatiles(data_manager)
     portatiles.limpiarLista()
 
@@ -52,6 +53,7 @@ def test_rest_numero_portatiles(cliente_test):
     respuesta = cliente_test.get('/portatiles/numeroPortatilesEnBD')
     if (respuesta.status_code == 200):
         assert (respuesta.status_code == 200 and respuesta.headers["Content-Type"] == "application/json")
+        assert json_util.loads(respuesta.data) == 0
     elif (respuesta.status_code == 413):
         assert (respuesta.status_code == 413)
     elif (respuesta.status_code == 414):
@@ -485,4 +487,4 @@ def test_limpiar_bd_y_comprobar_vacia(cliente_test):
         id = id.get("$oid")
         #print(id)
         cadena = '/portatiles/eliminarPortatilPorIdVenta/' + id
-        respuesta = cliente.delete(cadena)
+        respuesta = cliente_test.delete(cadena)
