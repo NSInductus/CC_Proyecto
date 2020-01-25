@@ -26,3 +26,14 @@ script:
 #Pasa los resultados a codecov
 after_success:
     - codecov
+
+env:
+  - URI_BD_P=localhost:27017
+  - BD_P=BDPruebaPortatiles
+  - CO_P=COPruebaPortatiles
+  - URI_BD_T=localhost:27017
+  - BD_T=BDPruebaTransaciones
+  - CO_T=COPruebaTransaciones
+  - HOST=localhost
+  - PORT=8080
+  - PORT_2=8000
