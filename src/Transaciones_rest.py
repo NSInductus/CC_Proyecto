@@ -47,7 +47,9 @@ def venderPortatil(id_portatil, DNIcomprador, comentario=""):
         ids.append(_id2)
     return Response(json_util.dumps(ids), status=200, mimetype="application/json")
 
-
+#Funcion que añade la transacion de devolucion
+#Cuando alguien devuelve un portatil, ese alguien añadira una transacion de tipo devolucion (3)
+#Para esto interactua con el otro microservicio, es decir, Portatiles
 @app.route('/transaciones/devolverPortatil/<id_portatil>/<DNIcomprador>', methods=['POST'])
 @app.route('/transaciones/devolverPortatil/<id_portatil>/<DNIcomprador>/<comentario>', methods=['POST'])
 def devolverPortatil(id_portatil, DNIcomprador, comentario=""):
