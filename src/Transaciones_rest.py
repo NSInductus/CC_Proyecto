@@ -11,6 +11,7 @@ from bson import json_util
 from Transaciones import Transaciones
 from Portatiles import Portatiles
 from MongoDM import MongoDM
+import Portatiles_rest
 
 app = Flask(__name__)
 
@@ -23,8 +24,8 @@ app = Flask(__name__)
 data_manager = MongoDM('localhost:27017','PruebaT','ColeccionT')
 transaciones = Transaciones(data_manager)
 
-data_manager = MongoDM('localhost:28017','PruebaP','ColeccionP')
-portatiles = Portatiles(data_manager)
+#data_manager = MongoDM('localhost:27017','PruebaP','ColeccionP')
+#portatiles = Portatiles(data_manager)
 
 
 #DE PRESENTACION
@@ -49,3 +50,63 @@ def seleccionarTransacion(_id):
 def agregarTransacion(id_portatil, DNIvendedor, tipo, comentario=""):
     _id = transaciones.agregarTransacion(id_portatil, DNIvendedor, tipo, comentario)
     return Response(json_util.dumps(_id), status=200, mimetype="application/json")
+
+##3
+@app.route('/transaciones/agregarPortatil/<marca>/<modelo>/<DNIvendedor>/<int:precio>', methods=['POST'])
+@app.route('/transaciones/agregarPortatil/<marca>/<modelo>/<DNIvendedor>/<int:precio>/<comentario>', methods=['POST'])
+@app.route('/transaciones/agregarPortatil/<marca>/<modelo>/<DNIvendedor>/<int:precio>/<comentario>/<pantalla>', methods=['POST'])
+@app.route('/transaciones/agregarPortatil/<marca>/<modelo>/<DNIvendedor>/<int:precio>/<comentario>/<pantalla>/<procesador>', methods=['POST'])
+@app.route('/transaciones/agregarPortatil/<marca>/<modelo>/<DNIvendedor>/<int:precio>/<comentario>/<pantalla>/<procesador>/<RAM>', methods=['POST'])
+@app.route('/transaciones/agregarPortatil/<marca>/<modelo>/<DNIvendedor>/<int:precio>/<comentario>/<pantalla>/<procesador>/<RAM>/<almacenamiento>', methods=['POST'])
+@app.route('/transaciones/agregarPortatil/<marca>/<modelo>/<DNIvendedor>/<int:precio>/<comentario>/<pantalla>/<procesador>/<RAM>/<almacenamiento>/<grafica>', methods=['POST'])
+@app.route('/transaciones/agregarPortatil/<marca>/<modelo>/<DNIvendedor>/<int:precio>/<comentario>/<pantalla>/<procesador>/<RAM>/<almacenamiento>/<grafica>/<bateria>', methods=['POST'])
+@app.route('/transaciones/agregarPortatil/<marca>/<modelo>/<DNIvendedor>/<int:precio>/<comentario>/<pantalla>/<procesador>/<RAM>/<almacenamiento>/<grafica>/<bateria>/<SO>', methods=['POST'])
+def agregarPortatil(marca, modelo, DNIvendedor, precio, comentario="", pantalla="", procesador="", RAM="", almacenamiento="", grafica="", bateria="", SO=""):
+    cliente_test = Portatiles_rest.app.test_client()
+    respuesta = cliente_test.post('/portatiles/agregarPortatil/msi/gl62/333X/600')
+    _id = json_util.loads(respuesta.data)
+    return Response(json_util.dumps(_id), status=200, mimetype="application/json")
+
+@app.route('/transaciones/seleccionarPortatil/<id_portatil>', methods=['GET'])
+def seleccionarPortatil(id_portatil):
+    cliente_test = Portatiles_rest.app.test_client()
+    cadena = '/portatiles/seleccionarPortatil/' + id_portatil
+    respuesta = cliente_test.get(cadena)
+    respuesta = json_util.loads(respuesta.data)
+    return Response(json_util.dumps(respuesta), status=200, mimetype="application/json")
+
+
+
+@app.route('/transaciones/venderPortatil/<id_portatil>/<DNIvendedor>', methods=['POST'])
+@app.route('/transaciones/venderPortatil/<id_portatil>/<DNIvendedor>/<comentario>', methods=['POST'])
+def venderPortatil(id_portatil, DNIvendedor, comentario=""):
+    _id = False
+    cliente_test = Portatiles_rest.app.test_client()
+    #Portatiles_rest.app.config['TESTING'] = test_prueba
+    cadena = '/portatiles/seleccionarPortatil/' + id_portatil
+    respuesta = cliente_test.get(cadena)
+    if respuesta != False:
+        cadena = '/portatiles/cambiarStockPortatil/' + id_portatil + '/1'
+        respuesta = cliente_test.put(cadena)
+        _id = transaciones.agregarTransacion(id_portatil, DNIvendedor, 1, comentario)
+    return Response(json_util.dumps(_id), status=200, mimetype="application/json")
+
+
+@app.route('/transaciones/devolverPortatil/<id_portatil>/<DNIvendedor>', methods=['POST'])
+@app.route('/transaciones/devolverPortatil/<id_portatil>/<DNIvendedor>/<comentario>', methods=['POST'])
+def devolverPortatil(id_portatil, DNIvendedor, comentario=""):
+    _id = False
+    cliente_test = Portatiles_rest.app.test_client()
+    #Portatiles_rest.app.config['TESTING'] = test_prueba
+    cadena = '/portatiles/seleccionarPortatil/' + id_portatil
+    respuesta = cliente_test.get(cadena)
+    if respuesta != False:
+        cadena = '/portatiles/cambiarStockPortatil/' + id_portatil + '/0'
+        respuesta = cliente_test.put(cadena)
+        _id = transaciones.agregarTransacion(id_portatil, DNIvendedor, 0, comentario)
+    return Response(json_util.dumps(_id), status=200, mimetype="application/json")
+
+@app.route('/transaciones/verEstadisticas/<DNIvendedor>', methods=['GET'])
+def verEstadisticas(DNIvendedor):
+    mis_transaciones = transaciones.verEstadisticas(DNIvendedor)
+    return Response(json_util.dumps(mis_transaciones), status=200, mimetype="application/json")
