@@ -50,3 +50,4 @@ def clear(c):
     c.run("rm -rf tests/__pycache__/")
     c.run("rm .coverage")
     c.run("rm comparacion.pdf")
+    c.run("rm transaciones.pdf")
