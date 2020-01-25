@@ -20,23 +20,16 @@ app = Flask(__name__)
 data_manager = MongoDM(os.environ['URI_BD_T'],os.environ['BD_T'],os.environ['CO_T'])
 transaciones = Transaciones(data_manager)
 
-#data_manager = MongoDM(os.environ['URI_ENVIRON'],os.environ['BD_ENVIRON'],os.environ['CO_ENVIRON'])
-#portatiles = Portatiles(data_manager)
-
-#   QUITAR Y PONER ENVIROMENTE
-
-#data_manager = MongoDM('localhost:27017','T','T')
-#transaciones = Transaciones(data_manager)
-
-#data_manager = MongoDM('localhost:27017','P','P')
-#portatiles = Portatiles(data_manager)
-
 
 #DE PRESENTACION
 @app.route('/transaciones/')
 def index():
     return Response(json_util.dumps("REST DE TRANSACIONES"), status=200, mimetype="application/json")
 
+#Funcion que añade la transacion de compra/venta
+#Cuando alguien compra un portatil, ese alguien añadira una transacion de tipo compra (1)
+#El dueño del portatil (su DNI) añadira una trasacion de tipo venta (2)
+#Para esto interactua con el otro microservicio, es decir, Portatiles
 @app.route('/transaciones/venderPortatil/<id_portatil>/<DNIcomprador>', methods=['POST'])
 @app.route('/transaciones/venderPortatil/<id_portatil>/<DNIcomprador>/<comentario>', methods=['POST'])
 def venderPortatil(id_portatil, DNIcomprador, comentario=""):
