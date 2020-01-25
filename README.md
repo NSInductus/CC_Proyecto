@@ -33,23 +33,6 @@ Los microservicios implementados o que se implementarán tendrán una arquitectu
 
 Para información más concreta acerca de la arquitectura de cada microservicio, ver [aquí](docs/arquitectura_miicroservicios.md).
 
-## Microservicio: Portatiles
-
-Este microservicio presenta las siguientes rutas:
-
-1. **GET-> /** es la ruta de presentación y también sirve para comprobar que funciona bien el microservicio.
-2. **GET-> /numeroPortatilesEnVenta** es para ver cuantos portatiles existen en venta.
-3. **GET-> /seleccionarPortatil/int:id_venta>** selecciona un portátil en venta, cuyo *id_vente* coincida con el introducido en la ruta.
-4. **POST-> /agregarPortatil/marca/modelo/DNIvendedor/int:precio/comentario/pantalla/procesador/RAM/almacenamiento/grafica/bateria/SO** es para agregar un portátil al stock de venta, destacar que los 4 primeros argumentos son obligatorios: marca, modelo, DNIvendedor y precio, mientras el resto son opcionales.
-5. **PUT-> /modificarPortatil/int:id_venta/int:precio/modelo/marca/comentario/pantalla/procesador/RAM/almacenamiento/grafica/bateria/SO** es para modificar un portátil anteriormente introducido en el stock de venta, destacar que son necesarios los 2 primeros argumentos: id_venta y precio, mientras los demás son opcionales.
-6. **DELETE-> /eliminarPortatilPorIdVenta/int:id_venta** es para eliminar un portátil existente en el stock de venta de portátiles.
-7. **GET-> /verPortatilesEnVentaDeUsuario/DNIusuario** es para ver los portátiles que tiene en venta el usuario cuyo *DNI* coincida con el *DNIvendedor* de los portátiles.
-8. **GET-> /buscarPortatilPorPrecio/int:limite_inferior/int:limite_superior** es para buscar un portátil por un rango de precios, entre los existentes en el stock de venta de portátiles.
-9. **GET-> /buscarPortatilPorModeloMarca/modelo/marca** es para búscar un portátil por su modelo y su marca, entre los existentes en el stock de venta de portátiles.
-10. **GET-> /compararPotatiles/modelo/marca** es parecida a la ruta anterior pero consigues una comparación de estos portátiles por precio de venta.
-
-
-*Destacar que el microservicio manda los datos al cliente en forma de archivo json*
 
 ## Herramienta de construcción
 
@@ -87,9 +70,14 @@ $ invoke test
 $ invoke coverage
 ```
 
-* **start**: Esta tarea es la encargada de levantar el microservicio utilizando gunicorn. En esta tarea se pueden utilizar 2 argumentos opcionales para modificar el host y el puerto donde se ejecuta, por defecto el host será *0.0.0.0* y el puerto será *8080*.
+* **start**: Esta tarea es la encargada de levantar el microservicios utilizando gunicorn. En esta tarea se pueden utilizar varios argumentos opcionales para modificar el host y los diferentes puertos donde se ejecutarán los microservicios, por defecto el host será *0.0.0.0* , el puerto será *8080* y el puerto_2 será *8000*.
+Hay varias opciones:
+* No introducir el argumento micro, por lo que lanzará los dos microservicios, Portatiles en el puerto y Transacciones en el puerto_2
+* Introducir *Portatiles* en el argumento micro, y solo se lanzará el microservicio Portatiles.
+* Introducir *Transacciones* en el argumento micro, y solo se lanzará el microservicio Transacciones.
+
 ```
-$ invoke start [-h/--host <host>] [-p/--puerto <puerto>]
+$ invoke start [-h/--host <host>] [-m/--micro <puerto>] [--puerto <puerto>] [--puerto_2 <puerto_2>]
 ```
 
 * **stop**: Esta tarea es la encargada de detener el microservicio lanzado anteriormente con la tarea: *start*.
