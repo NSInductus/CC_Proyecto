@@ -112,7 +112,7 @@ def devolverPortatil(id_portatil, DNIcomprador, comentario=""):
 @app.route('/transaciones/verEstadisticas/<DNIusuario>', methods=['GET'])
 @app.route('/transaciones/verEstadisticas/<DNIusuario>/<int:tipo>', methods=['GET'])
 def verEstadisticas(DNIusuario, tipo=0):
-    if tipo == 0:
+    if tipo != 0:
         mis_transaciones = transaciones.verEstadisticasFiltradasTipo(DNIusuario,tipo)
         return Response(json_util.dumps(mis_transaciones), status=200, mimetype="application/json")
     else:

@@ -35,6 +35,14 @@ class Transaciones:
                 transaciones_usuario.append(transacion)
         return transaciones_usuario
 
+    def verEstadisticasFiltradasTipo(self, DNIusuario, tipo):
+        lista_transaciones = self.data_manager.obtener_todos_elementos()
+        transaciones_usuario = []
+        for i, transacion in enumerate(lista_transaciones):
+            if (transacion.get("DNIusuario") == DNIusuario) and (transacion.get("tipo") == tipo):
+                transaciones_usuario.append(transacion)
+        return transaciones_usuario
+
     def imprimirComparacion(self, vector_comparacion, ruta):
             c = canvas.Canvas(ruta)
             for i, portatil in enumerate(vector_comparacion):
