@@ -19,7 +19,9 @@ A continuación se muestra en forma de índice el acceso a más información ref
 * [Tecnologías utilizadas](docs/tecnologias.md).
 * [Historias de usuario](docs/historias_de_usuario.md).
 * [Test](docs/test.md).
+* [APIs REST](docs/apis_rest.md).
 * [Licencia](docs/licencia.md).
+
 
 ## Arquitectura
 
@@ -27,22 +29,9 @@ La arquitectura será una arquitectura basada en microservicios. Para más infor
 
 ### Arquitectura de los Microservicios
 
-Los microservicios implementados o que se implementarán tendrán una arquitectura por capas, la cuál se basa en separar la funcionalidad del microservicio en diferentes capas, con el fin de seguir los principios de: abstracción, encapsulamiento, funcionalidad, alta cohesión, reutilizable y desacople.
+Los microservicios implementados o que se implementarán tendrán una arquitectura por capas, la cuál se basa en separar la funcionalidad del microservicio en diferentes capas, con el fin de seguir los principios de: *abstracción, encapsulamiento, funcionalidad, alta cohesión, reutilizable y desacople.*
 
-#### Arquitectura del microservicio: Portatiles
-
-
-* **Primera capa:** la primera capa de este microservicio contiene la API REST, es decir, el archivo [Portatiles_rest.py](src/Portatiles_rest.py), este contendrá las rutas que se utilizarán para utilizar el microservicio, es decir, para realizar peticiones
-
-
-* **Segunda capa:**  la segunda capa de este microservicio se encarga de administrar la lógica del microservicio, esta contiene el archivo [Portatiles.py](src/Portatiles.py), el cuál está repleto de funciones que son de utilidad para poder cumplir con las historias de usuario.
-
-
-* *Pendiente de añadir la última capa que contendrá la base de datos del microservicio y que será utilizada por el mismo.*
-
-La Arquitectura de este servicio se puede comprender fácilmente observando la siguiente imagen:
-
-![](docs/img/arquitectura_microservicio_portatiles.png)
+Para información más concreta acerca de la arquitectura de cada microservicio, ver [aquí](docs/arquitectura_miicroservicios.md).
 
 ## Microservicio: Portatiles
 
