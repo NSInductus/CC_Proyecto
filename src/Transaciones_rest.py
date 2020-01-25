@@ -13,7 +13,7 @@ from MongoDM import MongoDM
 
 app = Flask(__name__)
 
-data_manager = MongoDM(os.environ['URI_ENVIRON'],'Nueva','COTransaciones')
+data_manager = MongoDM(os.environ['URI_ENVIRON'],os.environ['BDT_ENVIRON'],os.environ['COT_ENVIRON'])
 transaciones = Transaciones(data_manager)
 
 
