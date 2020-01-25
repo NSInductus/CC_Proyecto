@@ -9,12 +9,22 @@ from flask import Response
 from bson import json_util
 
 from Transaciones import Transaciones
+from Portatiles import Portatiles
 from MongoDM import MongoDM
 
 app = Flask(__name__)
 
-data_manager = MongoDM(os.environ['URI_ENVIRON'],os.environ['BDT_ENVIRON'],os.environ['COT_ENVIRON'])
+#data_manager = MongoDM(os.environ['URI_ENVIRON'],os.environ['BDT_ENVIRON'],os.environ['COT_ENVIRON'])
+#transaciones = Transaciones(data_manager)
+
+#data_manager = MongoDM(os.environ['URI_ENVIRON'],os.environ['BD_ENVIRON'],os.environ['CO_ENVIRON'])
+#portatiles = Portatiles(data_manager)
+
+data_manager = MongoDM('localhost:27017','PruebaT','ColeccionT')
 transaciones = Transaciones(data_manager)
+
+data_manager = MongoDM('localhost:28017','PruebaP','ColeccionP')
+portatiles = Portatiles(data_manager)
 
 
 #DE PRESENTACION
@@ -31,11 +41,11 @@ def numeroTransaciones():
 #PARA COMPROBAR
 @app.route('/transaciones/seleccionarTransacion/<_id>', methods=['GET'])
 def seleccionarTransacion(_id):
-    transacion = portatiles.seleccionarTransacion(_id)
+    transacion = transaciones.seleccionarTransacion(_id)
     return Response(json_util.dumps(transacion), status=200, mimetype="application/json")
 
-@app.route('/portatiles/agregarTransacion/<id_portatil>/<DNIvendedor>/<int:tipo>', methods=['POST'])
-@app.route('/portatiles/agregarTransacion/<id_portatil>/<DNIvendedor>/<int:tipo>/<comentario>', methods=['POST'])
+@app.route('/transaciones/agregarTransacion/<id_portatil>/<DNIvendedor>/<int:tipo>', methods=['POST'])
+@app.route('/transaciones/agregarTransacion/<id_portatil>/<DNIvendedor>/<int:tipo>/<comentario>', methods=['POST'])
 def agregarTransacion(id_portatil, DNIvendedor, tipo, comentario=""):
-    _id = portatiles.agregarTransacion(id_portatil, DNIvendedor, tipo, comentario)
+    _id = transaciones.agregarTransacion(id_portatil, DNIvendedor, tipo, comentario)
     return Response(json_util.dumps(_id), status=200, mimetype="application/json")
