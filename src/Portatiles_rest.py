@@ -13,11 +13,11 @@ from MongoDM import MongoDM
 
 app = Flask(__name__)
 
-#data_manager = MongoDM(os.environ['URI_ENVIRON'],os.environ['BD_ENVIRON'],os.environ['CO_ENVIRON'])
-#portatiles = Portatiles(data_manager)
-
-data_manager = MongoDM('localhost:27017','PruebaP','ColeccionP')
+data_manager = MongoDM(os.environ['URI_BD_P'],os.environ['BD_P'],os.environ['CO_P'])
 portatiles = Portatiles(data_manager)
+
+#data_manager = MongoDM('localhost:27017','P','P')
+#portatiles = Portatiles(data_manager)
 
 #DE PRESENTACION
 @app.route('/portatiles/')
