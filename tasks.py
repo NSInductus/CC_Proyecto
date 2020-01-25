@@ -14,6 +14,8 @@ def test(c):
     os.environ['URI_ENVIRON'] = 'localhost:27017'
     os.environ['BD_ENVIRON'] = 'BDPruebaPortatiles'
     os.environ['CO_ENVIRON'] = 'COPortatiles'
+    os.environ['BDT_ENVIRON'] = 'BDPruebaTransaciones'
+    os.environ['COT_ENVIRON'] = 'COTransaciones'
     c.run("pytest -q tests/test_*.py")
     print("La ejecucion de tests concluida.")
 
@@ -23,6 +25,8 @@ def coverage(c):
     os.environ['URI_ENVIRON'] = 'localhost:27017'
     os.environ['BD_ENVIRON'] = 'BDPruebaPortatiles'
     os.environ['CO_ENVIRON'] = 'COPortatiles'
+    os.environ['BDT_ENVIRON'] = 'BDPruebaTransaciones'
+    os.environ['COT_ENVIRON'] = 'COTransaciones'
     c.run("pytest --cov=src tests/")
     print("La ejecucion de tests de covertura concluida.")
 
