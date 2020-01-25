@@ -13,7 +13,7 @@ from MongoDM import MongoDM
 #data_manager = MongoDM(os.environ['URI_ENVIRON'],os.environ['BD_ENVIRON'],os.environ['CO_ENVIRON'])
 #nueva_lista_p = Portatiles(data_manager)
 
-data_manager = MongoDM(os.environ['URI_ENVIRON'],'Nueva','COTransaciones')
+data_manager = MongoDM(os.environ['URI_ENVIRON'],os.environ['BDT_ENVIRON'],os.environ['COT_ENVIRON'])
 nueva_lista = Transaciones(data_manager)
 
 def funcion_inicio():
