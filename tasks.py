@@ -11,34 +11,57 @@ def install(c):
 #Ejecucion de test
 @task
 def test(c):
-    os.environ['URI_ENVIRON'] = 'localhost:27017'
-    os.environ['BD_ENVIRON'] = 'BDPruebaPortatiles'
-    os.environ['CO_ENVIRON'] = 'COPortatiles'
-    os.environ['BDT_ENVIRON'] = 'BDPruebaTransaciones'
-    os.environ['COT_ENVIRON'] = 'COTransaciones'
+    #os.environ['URI_BD_P'] = 'localhost:27017'
+    #os.environ['BD_P'] = 'BDPruebaPortatiles'
+    #os.environ['CO_P'] = 'COPruebaPortatiles'
+    #os.environ['URI_BD_T'] = 'localhost:27017'
+    #os.environ['BD_T'] = 'BDPruebaTransaciones'
+    #os.environ['CO_T'] = 'COPruebaTransaciones'
+    #os.environ['HOST'] = 'localhost'
+    #os.environ['PORT'] = '8080'
+    #os.environ['PORT_2'] = '8000'
     c.run("pytest -q tests/test_*.py")
     print("La ejecucion de tests concluida.")
 
 #Ejecucion de test de covertura
 @task
 def coverage(c):
-    os.environ['URI_ENVIRON'] = 'localhost:27017'
-    os.environ['BD_ENVIRON'] = 'BDPruebaPortatiles'
-    os.environ['CO_ENVIRON'] = 'COPortatiles'
-    os.environ['BDT_ENVIRON'] = 'BDPruebaTransaciones'
-    os.environ['COT_ENVIRON'] = 'COTransaciones'
+    #os.environ['URI_BD_P'] = 'localhost:27017'
+    #os.environ['BD_P'] = 'BDPruebaPortatiles'
+    #os.environ['CO_P'] = 'COPruebaPortatiles'
+    #os.environ['URI_BD_T'] = 'localhost:27017'
+    #os.environ['BD_T'] = 'BDPruebaTransaciones'
+    #os.environ['CO_T'] = 'COPruebaTransaciones'
+    #os.environ['HOST'] = 'localhost'
+    #os.environ['PORT'] = '8080'
+    #os.environ['PORT_2'] = '8000'
     c.run("pytest --cov=src tests/")
     print("La ejecucion de tests de covertura concluida.")
 
 #Iniciar el servidor
 @task
-def start(c, host="0.0.0.0", puerto="8080"):
-    os.environ['URI_ENVIRON'] = 'localhost:27017'
-    os.environ['BD_ENVIRON'] = 'BDPortatiles'
-    os.environ['CO_ENVIRON'] = 'COPortatiles'
+def start(c, host="0.0.0.0", micro= "", puerto="8080", puerto_2="8000"):
+    #os.environ['URI_BD_P'] = 'localhost:27017'
+    #os.environ['BD_P'] = 'BDPruebaPortatiles'
+    #os.environ['CO_P'] = 'COPruebaPortatiles'
+    #os.environ['URI_BD_T'] = 'localhost:27017'
+    #os.environ['BD_T'] = 'BDPruebaTransaciones'
+    #os.environ['CO_T'] = 'COPruebaTransaciones'
+    #os.environ['HOST'] = 'localhost'
+    #os.environ['PORT'] = '8080'
+    #os.environ['PORT_2'] = '8000'
+    #host = os.environ['HOST']
+    #port = os.environ['PORT']
+    #port2 = os.environ['PORT_2']
     sys.path.append('src')
     with c.cd('src/'):
-        c.run("gunicorn -b " + host + ":" + puerto + " Portatiles_rest:app")
+        if micro == "":
+            c.run("gunicorn -b " + host + ":" + puerto + " Portatiles_rest:app --daemon")
+            c.run("gunicorn -b " + host + ":" + puerto_2 + " Transaciones_rest:app --daemon")
+        elif micro == "Portatiles":
+            c.run("gunicorn -b " + host + ":" + puerto + " Portatiles_rest:app")
+        elif micro == "Transaciones":
+            c.run("gunicorn -b " + host + ":" + puerto + " Transaciones_rest:app")
 
 #Parar el servidor
 @task
