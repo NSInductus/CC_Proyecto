@@ -37,7 +37,7 @@ class Transaciones:
     def imprimirComparacion(self, vector_comparacion, ruta):
             c = canvas.Canvas(ruta)
             for i, portatil in enumerate(vector_comparacion):
-                c.drawString(200, 10*(i+1), "Transacion: " + str(portatil.get("id")) + " " + str(portatil.get("DNIvendedor")) + " " + str(portatil.get("tipo")) + " " + portatil.get("comentario") )
+                c.drawString(200, 10*(i+1), "Transacion: " + str(portatil.get("id_portatil")) + " " + str(portatil.get("DNIvendedor")) + " " + str(portatil.get("tipo")) + " " + portatil.get("comentario") )
             c.save()
 
     def limpiarLista(self):
