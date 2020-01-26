@@ -1,0 +1,36 @@
+# EVALUACION DE PRESTACIONES CON TAURUS
+execution:
+    - concurrency: 10   #
+      ramp-up: 10s
+      hold-for: 50s
+      scenario: portatiles-test
+
+scenarios:
+    portatiles-test:
+        requests:
+        - once:
+          - url: http://localhost:8080/portatiles/agregarPortatil/msi/gl62/333X/2500
+            method: POST
+
+        - url: http://localhost:8080/portatiles/seleccionarPortatil/5e2cfeefd46dbb22740a0d96
+        - url: http://localhost:8080/portatiles/seleccionarPortatil/wqwqdqwfqfefewq
+          method: GET
+
+        - once:
+          - url: http://localhost:8080/portatiles/eliminarPortatilPorIdVenta/5e2cff09d46dbb22740a0d97
+            method: DELETE
+
+    transacciones-test:
+        requests:
+        - url: http://localhost:8000/transacciones/
+          method: GET
+        - once:
+          - url: http://localhost:8000/transacciones/verEstadisticas/339X
+            method: GET
+
+    combinada-test:
+        requests:
+        - url: http://localhost:8000/transacciones/
+          method: GET
+        - url: http://localhost:8000/transacciones/devolverPortatil/5e2d0c1baa15ba4dcb7f8176/333X
+          method: POST
