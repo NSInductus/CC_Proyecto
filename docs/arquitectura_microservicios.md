@@ -5,12 +5,12 @@ A continuación se va a describir especificamente la arquitectura de los dos mic
 ## Arquitectura del microservicio: Portatiles
 
 
-* **Primera capa:** la primera capa de este microservicio contiene la API REST, es decir, el archivo [Portatiles_rest.py](src/Portatiles_rest.py), este contendrá las rutas que se utilizarán para utilizar el microservicio, es decir, para realizar peticiones referentes a la gestión de portátiles.
+* **Primera capa:** la primera capa de este microservicio contiene la API REST, es decir, el archivo [Portatiles_rest.py](https://github.com/NSInductus/CC_Proyecto/blob/master/src/Portatiles_rest.py), este contendrá las rutas que se utilizarán para utilizar el microservicio, es decir, para realizar peticiones referentes a la gestión de portátiles.
 
 
-* **Segunda capa:**  la segunda capa de este microservicio se encarga de administrar la lógica de negocio del microservicio, esta contiene el archivo [Portatiles.py](src/Portatiles.py), el cuál está repleto de funciones que son de utilidad para poder cumplir con las historias de usuario.
+* **Segunda capa:**  la segunda capa de este microservicio se encarga de administrar la lógica de negocio del microservicio, esta contiene el archivo [Portatiles.py](https://github.com/NSInductus/CC_Proyecto/blob/master/src/Portatiles.py), el cuál está repleto de funciones que son de utilidad para poder cumplir con las historias de usuario.
 
-* **Tercera capa:** la tercera capa de este microservicio se encarga de administrar la base de datos donde se guardan y administran todos los portatiles, esta capa contiene el archivo [MongoDM.py](src/MongoDM.py).
+* **Tercera capa:** la tercera capa de este microservicio se encarga de administrar la base de datos donde se guardan y administran todos los portatiles, esta capa contiene el archivo [MongoDM.py](https://github.com/NSInductus/CC_Proyecto/blob/master/src/MongoDM.py).
 
 La Arquitectura de este servicio se puede comprender fácilmente observando la siguiente imagen:
 
@@ -20,13 +20,13 @@ La Arquitectura de este servicio se puede comprender fácilmente observando la s
 ## Arquitectura del microservicio: Transaciones
 
 
-* **Primera capa:** la primera capa de este microservicio contiene la API REST, es decir, el archivo [Transaciones_rest.py](src/Transaciones_rest.py), este contendrá las rutas que se utilizarán para utilizar el microservicio, es decir, para realizar peticiones referentes a las transaciones de compra/venta/devolución.
+* **Primera capa:** la primera capa de este microservicio contiene la API REST, es decir, el archivo [Transaciones_rest.py](https://github.com/NSInductus/CC_Proyecto/blob/master/src/Transacciones_rest.py), este contendrá las rutas que se utilizarán para utilizar el microservicio, es decir, para realizar peticiones referentes a las transaciones de compra/venta/devolución.
 
 
-* **Segunda capa:**  la segunda capa de este microservicio se encarga de administrar la lógica del microservicio, esta contiene el archivo [Transaciones.py](src/Transaciones.py), el cuál está repleto de funciones que son de utilidad para poder cumplir con las historias de usuario.
+* **Segunda capa:**  la segunda capa de este microservicio se encarga de administrar la lógica del microservicio, esta contiene el archivo [Transaciones.py](https://github.com/NSInductus/CC_Proyecto/blob/master/src/Transacciones.py), el cuál está repleto de funciones que son de utilidad para poder cumplir con las historias de usuario.
 
 
-* **Tercera capa:** la tercera capa de este microservicio se encarga de administrar la base de datos donde se guardan y administran todas las transaciones, esta capa contiene el archivo [MongoDM.py](src/MongoDM.py).
+* **Tercera capa:** la tercera capa de este microservicio se encarga de administrar la base de datos donde se guardan y administran todas las transaciones, esta capa contiene el archivo [MongoDM.py](https://github.com/NSInductus/CC_Proyecto/blob/master/src/MongoDM.py).
 
 La Arquitectura de este servicio se puede comprender fácilmente observando la siguiente imagen:
 
