@@ -99,6 +99,13 @@ $ invoke clear
 Como herramientas para la integración continua se ha utilizado: **TravisCi** & **CircleCI**. Para más información acerca de la integración continua, ver [aquí](docs/integracion_continua.md).
 
 
+## Docker
+
+En primer lugar decir que se ha utilizado DockerHub. La creación de la imagen de mi proyecto se ha realizado utilizando un archivo Dockerfile.
+
+Contenedor: https://hub.docker.com/repository/docker/nsinductus/cc_proyecto
+
+Para más información, ver [aquí](docs/docker.md).
 
 ## Almacén de datos
 
