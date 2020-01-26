@@ -1,7 +1,5 @@
 # Docker
 
-En primer lugar decir que se ha utilizado DockerHub para la creación de la imagen de mi proyecto utilizando un archivo Dockerfile.
-
 Contenedor: https://hub.docker.com/repository/docker/nsinductus/cc_proyecto
 
 La imagen residente en el contenedor anteriormente linkado se ha construido sobre una imagen base de debian concretamente debian:unstable-slim. Se ha seleccionado esta imagen como base, después de un proceso de selección el cuál se puede ver [aquí](comparacion_imagenes.md).
