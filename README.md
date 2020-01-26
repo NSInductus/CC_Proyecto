@@ -74,9 +74,9 @@ $ invoke coverage
 
 * **start**: Esta tarea es la encargada de levantar el microservicios utilizando gunicorn. En esta tarea se pueden utilizar varios argumentos opcionales para modificar el host y los diferentes puertos donde se ejecutarán los microservicios, por defecto el host será *0.0.0.0* , el puerto será *8080* y el puerto_2 será *8000*.
 Hay varias opciones:
-* No introducir el argumento micro, por lo que lanzará los dos microservicios, Portatiles en el puerto y Transacciones en el puerto_2
-* Introducir *Portatiles* en el argumento micro, y solo se lanzará el microservicio Portatiles.
-* Introducir *Transacciones* en el argumento micro, y solo se lanzará el microservicio Transacciones.
+  * No introducir el argumento micro, por lo que lanzará los dos microservicios, Portatiles en el puerto y Transacciones en el puerto_2
+  * Introducir *Portatiles* en el argumento micro, y solo se lanzará el microservicio Portatiles.
+  * Introducir *Transacciones* en el argumento micro, y solo se lanzará el microservicio Transacciones.
 
 ```
 $ invoke start [-h/--host <host>] [-m/--micro <puerto>] [--puerto <puerto>] [--puerto_2 <puerto_2>]
@@ -144,7 +144,7 @@ Se puede ver en la siguiente captura de pantalla:
 
 ![](docs/img/terminal_mongo.png)
 
-Se acede a la administración de la base de datos a través de la misma terminal donde podremos ver las bases de datos disponibles, sus colecciones internas (lo que en una base de datos SQL serían tablas), insertar, modificar o eliminar datos, entre otras funcionalidades. En la siguiente captura de pantalla se puede ver:
+Se acede a la administración de la base de datos a través de la misma terminal donde podremos ver las bases de datos disponibles, sus colecciones internas (lo que en una base de datos SQL serían tablas), insertar, modificar o eliminar datos, entre otras funcionalidades.
 
 
 
@@ -157,7 +157,7 @@ Para utilizar MongoBD de forma remota, se valoraron varias opciones, para finalm
 * Tiene un buen rendimiento.
 
 
-Una vez seleccionada esta tecnología, nos dirigimos al dominio web de MongoAtlas, el cual es el siguiente: dominio
+Una vez seleccionada esta tecnología, nos dirigimos al dominio web de MongoAtlas, el cual es el siguiente: [dominio](https://www.mongodb.com/cloud/atlas).
 
 El primer paso a realizar en esta web es registrarnos (se puede realizar de forma muy rápida usando la cuenta de *gmail*). Seguidamente tendremos que seleccionar un plan, se escogerá el plan gratuito:
 
@@ -167,7 +167,7 @@ Posteriormente debemos de crear un cluster, para ello seleccionamos como base un
 
 ![](docs/img/provedor_region.png)
 
-Posteriormente el usuario selecciona la opción de *Crear base de datos*, para allí crear la base de datos tan solo introduciendo el nombre de la misma, así como la colección (es lo que sería una tabla en una base de datos SQL), se puede ver en la siguiente imagen:
+Posteriormente el usuario selecciona la opción de *Crear base de datos*, para allí crear la base de datos tan solo introduciendo el nombre de la misma, así como el nombre de la colección (es lo que sería una tabla en una base de datos SQL), se puede ver en la siguiente imagen:
 
 ![](docs/img/crear_bd.png)
 
@@ -178,7 +178,7 @@ Por ultimo se ha conseguido ver como se conecta la base de datos con cualquier a
 
 
 
-*Destacar que para cambiar entre usar MongoDB en local o en remoto es suficiente con modificar las variables de entorno*
+*Destacar que en nuestro proyecto para cambiar entre usar MongoDB en local o en remoto es suficiente con modificar las variables de entorno*
 
 
 ## Data Manager: MongoDM.py
@@ -186,7 +186,7 @@ Por ultimo se ha conseguido ver como se conecta la base de datos con cualquier a
 
 Para la incrustación de la base de datos de MongoDB a los microservicios implementados se ha utilizado como anteriormente he mencionado la librería **pymongo**.
 
-Utilizando la librería anteriormente comentada se ha creado el fichero MongoDM.py, el cuáĺ es mi *data manager* (o *controlador de datos*), el cual implementa una serie de funciones definidas por mi que utilizan las funciones proporcionadas por pytest, estas funciones son:
+Utilizando la librería anteriormente comentada se ha creado el fichero [MongoDM.py](https://github.com/NSInductus/CC_Proyecto/blob/master/src/MongoDM.py), el cuáĺ es mi *data manager* (o *controlador de datos*), el cual implementa una serie de funciones definidas por mi que utilizan las funciones proporcionadas por pytest, estas funciones son:
 
 * **obtener_elemento:** se encarga de introducir un elemento en la colección de la base de datos.
 * **obtener_conjunto_elementos:** se encarga de obtener un conjunto de elementos de la colección de la base de datos que cumplan una determinada característica.
@@ -201,23 +201,23 @@ Esta fichero será incrustado a los diferentes microservicios a través de la t�
 
 ### Modificaciones en otros ficheros
 
-Se han tenido que realizar una serie de modificaciones sobre algunos ficheros para adaptarlos a la incorporación del data_manager (MongoDM.py).
+Se han tenido que realizar una serie de modificaciones sobre algunos ficheros para adaptarlos a la incorporación del data_manager, es decir, del fichero [MongoDM.py](https://github.com/NSInductus/CC_Proyecto/blob/master/src/MongoDM.py).
 
-1. En primer lugar se han tenido que modificar los ficheros correspondientes al primer microservicio que se había implementado anteriormente, es decir, el microservicio de Portatiles. Porque este trabajaba con una lista interna, que se ha sustituido por un data_manager al cuál se le introduce el data_manager que se ha creado anteriormente, es decir, MongoDM.py.
-Pero tenido en cuenta que se puede cambiar en cualquier momento, si se decide cambiar la base de datos, teniendo solo que cambiar el fichero data_manager. Destacar que hay que cambiar tanto los ficheros de código propiamente dicho, es decir, Portatiles.py y Portatiles_rest.py, como los ficheros de test (aunque los cambios sean más insignificativos comparados con los de los ficheros anteriores), es decir, test_Portatiles.py y test_Portatiles_rest.py.
+1. En primer lugar se han tenido que modificar los ficheros correspondientes al primer microservicio que se había implementado anteriormente, es decir, el microservicio de Portatiles. Porque este trabajaba con una lista interna, que se ha sustituido por un data_manager, por eso al constructor de esta clase se le introduce un objeto que actuará como data_manager, en este caso, un objeto de tipo MongoDM.
+Destacar que hay que cambiar tanto los ficheros de código propiamente dicho, es decir, [Portatiles.py](https://github.com/NSInductus/CC_Proyecto/blob/master/src/Portatiles.py) y [Portatiles_rest.py](https://github.com/NSInductus/CC_Proyecto/blob/master/src/Portatiles_rest.py), como los ficheros de test (aunque los cambios sean más insignificativos comparados con los de los ficheros anteriores), es decir, [test_Portatiles.py](https://github.com/NSInductus/CC_Proyecto/blob/master/test/test_Portatiles.py) y [test_Portatiles_rest.py](https://github.com/NSInductus/CC_Proyecto/blob/master/test/test_Portatiles_rest.py).
 
 2. En segundo lugar, los sistemas de integración continua se ha tenido que realizar los siguientes cambios:
 
-* *En TravisCi:* Se ha añadido las variables de entorno y se ha agregado de servicio, el servicio de mongoDB.
+  * *En TravisCi:* Se ha añadido las variables de entorno y se ha agregado de servicio, el servicio de mongoDB.
 
-* *En CircleCi:* Se ha agregago las variables de entorno y se ha agregado una imagen de docke.
+  * *En CircleCi:* Se ha agregago las variables de entorno y se ha agregado una imagen de docker (correspondiente a MongoDB).
 
-3. En tercer lugar, se ha creado un Dockerfile nuevo, así como se ha creado una nueva regla, se puede ver con más detalle [aquí](docs/docker.md).
-
-
+3. En tercer lugar, se ha creado un Dockerfile nuevo, así como se ha creado una nueva regla de construcción automática, se puede ver con más detalle [aquí](docs/docker.md).
 
 
-*Destacar que en las nuevas clases implementadas, ya se tiene en cuenta que utilicen el data_manager desde el primer momento*
+
+
+*Destacar que en las nuevas clases implementadas, ya se tiene en cuenta que utilicen el data_manager desde el primer momento.*
 
 
 
@@ -225,14 +225,14 @@ Pero tenido en cuenta que se puede cambiar en cualquier momento, si se decide ca
 
 Prestaciones: performance_test.yml
 
-Las prestaciones se han evaluado usando **Taurus**. Se han realizado varias pruebas:
+Las prestaciones se han evaluado usando **Taurus**. Se han realizado sobre varios escenarios:
 
 1. Prueba de prestaciones **sobre el microservicio Portatiles**.
 2. Prueba de prestaciones **sobre el microservicio Transaciones**, utilizando solo rutas que no interactúan sobre el otro microservicio.
 3. Prueba de prestaciones sobre el microservicio Transaciones, utilizando entre las rutas una que envía peticiones al otro microservicio (Portatiles), es decir, es una prueba conjunta **sobre los dos microservicios**.
 
 
-Toda esta batería de pruebas se han realizado en varias circunstancias:
+Toda esta batería de pruebas (o diferentes escenarios) se han realizado en varias circunstancias:
 * En local utilizando una base de datos mongoDB de forma local
 * En local utilizando una base de datos mongoDB de forma remota, concretamente utilizando MongoAtlas.
 
@@ -254,9 +254,9 @@ execution:
 ```
 
 En primer lugar se definen:
-* **concurrency:** número de hilos que participarán de forma simultánea.
-* **ramp-up:** tiempo en segundos que tardará en llegar a los hilos definidos anteriormente .
-* **hold-for:** tiempo que se mantienen los hilos.
+* **concurrency:** número de usuarios que participarán de forma simultánea.
+* **ramp-up:** tiempo en segundos que tardará en llegar a los usuarios definidos anteriormente .
+* **hold-for:** tiempo que se mantienen los usuarios.
 * **scenario:** escenario a ejecutar en el test entre los posibles.
 
 ```
@@ -395,7 +395,8 @@ El resumen de todas estas pruebas se puede ver en la siguiente tabla:
 
 Las conclusiones obtenidas de la ejecución de estas pruebas son:
 
-* Funciona bastante mejor con la base de datos en local que utilizando una base de datos remota, sobretodo en el último escenario (combinado)
+* Funciona bastante mejor con la base de datos en local que utilizando una base de datos remota, se puede ver tanto en el primer escenario (Portatiles) como en el último escenario (combinado).
+* En el segundo escenario no se nota tanto el cambio de la base de datos de local a remoto porque la operación que actúa sobre la misma esta ligada a *once* y por lo tanto solo se ejecuta una vez por hebra.
 * Los 3 microservicios han superado las pruebas de prestaciones en local con una base de datos MongoDB en local.
 * Los POST tardan bastante más que los GET, por ello en el primer escenario acabe ejecutando un solo POST por hebra si no era imposible Los resultados de esta prueba que realice se pueden ver a continuación:
 
@@ -403,9 +404,10 @@ Las conclusiones obtenidas de la ejecución de estas pruebas son:
 
 
 
-También por merá curiosidad se decidió, probar a realizar la prueba del primer escenario, con una base de datos Local, en una máquina virtual, los resultados han sido los siguientes:
+También comentare, que se comenzó ejecutando las pruebas sobre una máquina virtual instalada en mi ordenador portátil, los resultados de lanzar la prueba del primer escenario, con una base de datos Local, en una máquina virtual, fueron los siguientes:
 
 ![](docs/img/taurus/test_maquina.png)
 
+Por lo tanto se decidió cambiar la máquina virtual por mi ordenador de sobremesa que tiene instalado Ubuntu 19, y los resultados comenzaron a ser satisfactorios (resultados expuestos anteriormente).
 
-Como se puede ver los resultados son peores que los obtenidos anteriormente, por lo que se concluye que la máquina donde se realiza el test no es lo más importante pero es influyente.
+Por lo que se concluye que la máquina donde se realiza el test de prestaciones también es importante.
