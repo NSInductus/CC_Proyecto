@@ -4,10 +4,11 @@ Como se comento en la sección anterior se ha utilizado el método de la *inyecc
 
 Para la incrustación de la misma, se importara en los ficheros que implementan la lógica de negocio de cada uno de los microservicos, es decir, Portatiles.py y Transaciones.py, para posteriormente crear un objeto de la clase MongoDM. Los campos existentes en el constructor de la clase son:
 
-* **URI BASE:** Esta variable corresponde a la dirección base, de la base de datos, en caso de que este lanzando en local tendremos que poner: *localhost:5000*, como se ha podido ver el formando de esta dirección base es el siguiente: *host:puerto*
-* **NOMBRE BD:** Esta variable se refiere al nombre de la base de datos con la que se trabajará.
-* **NOMBRE CO:** Esta variable se refiere al nombre de la colección con la que se trabajará.
+* **uri:** Este parámetro contiene la dirección base, de la base de datos, en el caso de que se este lanzando en local tendremos que poner: *localhost:5000*. Como se ha podido ver: el formato de esta dirección base es el siguiente: *host:puerto*
+* **basedatos:** Este parámetro contiene el nombre de la base de datos con la que se trabajará.
+* **coleccion:** Esta parámetro contiene el nombre de la colección con la que se trabajará.
 
+Para la introducción de estos parámetros se utilizarán variables de entorno.
 
 El *objetivo o fin* de este proceso es que la lógica de negocio de un microservicio y la base de datos sean totalmente independientes, de tal forma que si en el futuro se desea cambiar de base de datos tan solo sea necesario cambiar el *data_manager*.
 
