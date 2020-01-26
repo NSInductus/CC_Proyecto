@@ -14,7 +14,7 @@ A continuación se va a describir especificamente la arquitectura de los dos mic
 
 La Arquitectura de este servicio se puede comprender fácilmente observando la siguiente imagen:
 
-![](docs/img/arquitectura_microservicio_portatiles.png)
+![](img/a_capas_portatiles.png)
 
 
 ## Arquitectura del microservicio: Transaciones
@@ -30,4 +30,4 @@ La Arquitectura de este servicio se puede comprender fácilmente observando la s
 
 La Arquitectura de este servicio se puede comprender fácilmente observando la siguiente imagen:
 
-![](docs/img/arquitectura_microservicio_portatiles.png)
+![](img/a_capas_transacciones.png)
