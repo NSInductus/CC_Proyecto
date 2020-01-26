@@ -1,8 +1,8 @@
 # Inyección de dependencias
 
-Como se comento en la sección anterior se ha utilizado el método de la *inyección de dependencias* para incrustar la base de datos de MongoDB en nuestros microservicios, para ello se ha creado la clase MongoDM.py, descrita en la sección anterior.
+Como se comento en la sección anterior se ha utilizado el método de la *inyección de dependencias* para incrustar la base de datos de MongoDB en nuestros microservicios, para ello se ha creado la clase [MongoDM.py](https://github.com/NSInductus/CC_Proyecto/blob/master/src/MongoDM.py), descrita en la sección anterior.
 
-Para la incrustación de la misma, se importara en los ficheros que implementan la lógica de negocio de cada uno de los microservicos, es decir, Portatiles.py y Transaciones.py, para posteriormente crear un objeto de la clase MongoDM. Los campos existentes en el constructor de la clase son:
+Para la incrustación de la misma, se importara en los ficheros que implementan la lógica de negocio de cada uno de los microservicos, es decir, [Portatiles.py](https://github.com/NSInductus/CC_Proyecto/blob/master/src/Portatiles.py) y [Transacciones.py](https://github.com/NSInductus/CC_Proyecto/blob/master/src/Transacciones.py), para posteriormente crear un objeto de la clase [MongoDM.py](https://github.com/NSInductus/CC_Proyecto/blob/master/src/MongoDM.py). Los campos existentes en el constructor de la clase son:
 
 * **uri:** Este parámetro contiene la dirección base, de la base de datos, en el caso de que se este lanzando en local tendremos que poner: *localhost:5000*. Como se ha podido ver: el formato de esta dirección base es el siguiente: *host:puerto*
 * **basedatos:** Este parámetro contiene el nombre de la base de datos con la que se trabajará.
