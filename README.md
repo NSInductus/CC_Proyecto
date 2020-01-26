@@ -215,3 +215,104 @@ Pero tenido en cuenta que se puede cambiar en cualquier momento, si se decide ca
 
 
 *Destacar que en las nuevas clases implementadas, ya se tiene en cuenta que utilicen el data_manager desde el primer momento*
+
+
+
+## Estudio de prestaciones
+
+Prestaciones: performance_test.yml
+
+Las prestaciones se han evaluado usando **Taurus**. Se han realizado varias pruebas:
+
+1. Prueba de prestaciones **sobre el microservicio Portatiles**.
+2. Prueba de prestaciones **sobre el microservicio Transaciones**, utilizando solo rutas que no interactúan sobre el otro microservicio.
+3. Prueba de prestaciones sobre el microservicio Transaciones, utilizando entre las rutas una que envía peticiones al otro microservicio (Portatiles), es decir, es una prueba conjunta **sobre los dos microservicios**.
+
+
+Toda esta batería de pruebas se han realizado en varias circunstancias:
+* En local utilizando una base de datos mongoDB de forma local
+* En local utilizando una base de datos mongoDB de forma remota, concretamente utilizando MongoAtlas.
+
+
+Las pruebas de prestaciones debían de superar o igualar *1000 peticiones por segundo* utilizando 10 usuarios concurrentes sin tener ningún error durante el proceso.
+
+El código del fichero donde se definen las pruebas se comentará a continuación:
+
+
+
+```
+# EVALUACION DE PRESTACIONES CON TAURUS
+execution:
+    - concurrency: 10   
+      ramp-up: 10s      
+      hold-for: 50s     
+      scenario: portatiles-test   #
+
+```
+
+En primer lugar se definen:
+* **concurrency:** número de hilos que participarán de forma simultánea.
+* **ramp-up:** tiempo en segundos que tardará en llegar a los hilos definidos anteriormente .
+* **hold-for:** tiempo que se mantienen los hilos.
+* **scenario:** escenario a ejecutar en el test entre los posibles.
+
+```
+#Posibles escenarios
+scenarios
+
+    portatiles-test:
+        requests:
+        - once:
+          - url: http://localhost:8080/portatiles/agregarPortatil/msi/gl62/333X/2500
+            method: POST
+        - url: http://localhost:8080/portatiles/seleccionarPortatil/5e2cfeefd46dbb22740a0d96
+          method: GET
+        - url: http://localhost:8080/portatiles/seleccionarPortatil/wqwqdqwfqfefewq
+          method: GET
+        - once:
+          - url: http://localhost:8080/portatiles/eliminarPortatilPorIdVenta/5e2cff09d46dbb22740a0d97
+            method: DELETE
+
+```
+
+Primero de los escenarios (portatiles-test) que tiene las siguientes peticiones:
+
+* Una petición *POST* que agrega un portátil a la base de datos, esta al estar dentro de *once* solo se ejecutará una vez por hebra.
+* Una petición *GET* para seleccionar un determinado portátil que existe en la base de datos.
+* Una petición *GET* que intentar seleccionar otro portatil de la base de datos pero en esta ocasión no lo encontrará, puesto que no eciste.
+* Una petición *DELETE* que elimina un portátil de la base de datos, al igual que la primera petición esta también se ejecuta solo una vez por hebra, el portátil que intenta borrar existe y por lo tanto podrá borrarlo la primera vez que lo intente, después ya no existirá.
+
+
+```
+transacciones-test:
+    requests:
+
+    - url: http://localhost:8000/transacciones/
+      method: GET
+    - once:
+      - url: http://localhost:8000/transacciones/verEstadisticas/339X
+        method: GET
+
+```
+
+Segundo de los escenarios (transacciones-test) que tiene las siguientes peticiones:
+
+* Una petición *GET* que simplemente es la petición de bienvenida de este microservicio
+* Una petición *GET* que recoge todas las estadisticas de un usuario, es decir, todas sus transaciones para ello las cogerá todas y se quedará con las del usuario, como la base de datos esta bastante llena solo se realizará este proceso una vez por hebra.
+
+
+```
+combinada-test:
+    requests:
+
+    - url: http://localhost:8000/transacciones/
+      method: GET
+    - url: http://localhost:8000/transacciones/devolverPortatil/5e2d0c1baa15ba4dcb7f8176/333X
+      method: POST
+
+```
+
+Tercer de los escenarios (combinada-test) que tiene las siguientes peticiones:
+
+* Una petición *GET* que simplemente es la petición de bienvenida de este microservicio
+* Una petición *POST* que mete una transacción en la base de datos y además con el mismo id del portátil, se dirige ha realizar un *PUT* en el otro microservicio, el cual consiste en cambiar el atributo *vendido* del portátil que coincida con el id proporcionado por el otro microservicio.
