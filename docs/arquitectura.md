@@ -2,7 +2,7 @@
 
 La arquitectura será una arquitectura basada en microservicios, contaremos con microservicios que se conectarán entre sí para cumplir con las funcionalidades que ofrece la aplicación. Para resumir la arquitectura de nuestro proyecto se ha realizado el siguiente diagrama, donde se puede ver como están conectados los diferentes servicios, microservicios y bases de datos:
 
-![](img/CC_proyecto_diagrama_v3.png)
+![](img/nuevo_diagrama_arquitectura.png)
 
 ## Servicios
 
