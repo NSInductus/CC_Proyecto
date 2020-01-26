@@ -91,7 +91,7 @@ $ invoke stop
 $ invoke clear
 ```
 
-
+*Tener en cuenta el uso de las variables de entorno, necesarias para que el proyecto funcione si se ejecuta en local, se puede ver más información [aquí](docs/variables_de_entorno.md)*
 
 
 ## Integración continua
