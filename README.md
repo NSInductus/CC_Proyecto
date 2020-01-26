@@ -20,8 +20,8 @@ A continuación se muestra en forma de índice el acceso a más información ref
 * [Historias de usuario](docs/historias_de_usuario.md).
 * [Test](docs/test.md).
 * [APIs REST](docs/apis_rest.md).
-* [Docker](docs/docker.md)
-* [Heroku](docs/heroku.md)
+* [Docker](docs/docker.md).
+* [Heroku](docs/heroku.md).
 * [Licencia](docs/licencia.md).
 
 
