@@ -51,14 +51,11 @@
   * Quiero especificar las causas por las que no quiero quedarme con el ordenador portátil después de testearlo durante el periodo de prueba.
 
 
-## Microservicio de estadísticas
-
 * [Consultar estadísticas:](https://github.com/NSInductus/CC_Proyecto/issues/19) Como usuario quiero poder consultar las estadísticas de compra/venta/devolución de ordenadores durante un periodo determinado de tiempo (elegido por el usuario).
 
+  * Estadísticas de compras en la aplicación.
   * Estadísticas de ventas en la aplicación.
   * Estadísticas de devoluciones en la aplicación
-  * Estadísticas de marcas más vendidas.
-  * Estadísticas de sistemas operativos vendidos.
 
 
 * [Imprimir estadísticas:](https://github.com/NSInductus/CC_Proyecto/issues/20) Como usuario quiero poder generar un fichero PDF con las estadísticas consultadas anteriormente.
