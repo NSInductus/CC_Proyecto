@@ -91,6 +91,9 @@ $ invoke stop
 $ invoke clear
 ```
 
+
+
+
 ## Integración continua
 
 Como herramientas para la integración continua se ha utilizado: **TravisCi** & **CircleCI**. Para más información acerca de la integración continua, ver [aquí](docs/integracion_continua.md).
@@ -175,7 +178,7 @@ Por ultimo se ha conseguido ver como se conecta la base de datos con cualquier a
 
 
 
-
+*Destacar que para cambiar entre usar MongoDB en local o en remoto es suficiente con modificar las variables de entorno*
 
 
 ## Data Manager: MongoDM.py
@@ -316,3 +319,93 @@ Tercer de los escenarios (combinada-test) que tiene las siguientes peticiones:
 
 * Una petición *GET* que simplemente es la petición de bienvenida de este microservicio
 * Una petición *POST* que mete una transacción en la base de datos y además con el mismo id del portátil, se dirige ha realizar un *PUT* en el otro microservicio, el cual consiste en cambiar el atributo *vendido* del portátil que coincida con el id proporcionado por el otro microservicio.
+
+
+
+Una vez creado este fichero para ejecutarlo hay que poner en terminal el siguiente comando:
+
+
+
+```
+$ bzt performance_test.yml -report
+```
+
+### Resultados de prestaciones
+
+
+La primera batería de pruebas se realizó en local utilizando una base de datos MongoDB también de forma local. Los resultados son los que se muestran en las siguientes capturas de pantalla:
+
+* Primer escenario, Local con BD local
+
+![](docs/img/taurus/ll1.png)
+![](docs/img/taurus/ll1-2.png)
+
+En este primer escenario se puede ver como cumple con las prestaciones, consiguiendo llegar a unas **1297 peticiones por segundo**, teniendo un tiempo de respuesta medio de 6ms.
+
+
+* Segundo escenario, Local con BD local
+
+![](docs/img/taurus/ll2.png)
+![](docs/img/taurus/ll2-2.png)
+
+En el segundo escenario conseguimos unas prestaciones más altas que en el primer microservicio, de tal forma que doblamos el mínimo de prestaciones exigido, obteniendo unas **2110 peticiones por segundo** , con un tiempo de respuesta medio de 4 ms.
+
+
+* Tercer escenario, Local con BD local
+
+![](docs/img/taurus/ll3.png)
+![](docs/img/taurus/ll3-2.png)
+
+En el tercer escenario también logramos unos número sorprendentes, llegando a **1804 peticiones por segundo**, con un tiempo de respuesta medio de 4 ms.
+
+
+La segunda batería de pruebas se realizó en local utilizando una base de datos MongoDB también de forma local. Los resultados son los que se muestran en las siguientes capturas de pantalla:
+
+* Primer escenario, Local con BD remota (MongoAtlas)
+
+![](docs/img/taurus/lr1.png)
+![](docs/img/taurus/lr1-2.png)
+
+En este primer caso con la base de datos no conseguimos superar las prestaciones mínimas, llegando a tener tan solo **60 peticiones por segundo**.
+
+* Segundo escenario, Local con BD remota (MongoAtlas)
+
+![](docs/img/taurus/lr2.png)
+![](docs/img/taurus/lr2-2.png)
+
+En este segundo escenario parece no afectar mucho la base de datos remota obteniendo casi las mismas peticiones que anteriormente.
+
+* Tercer escenario, Local con BD remota (MongoAtlas)
+
+![](docs/img/taurus/lr3.png)
+![](docs/img/taurus/lr3-2.png)
+
+En el último escenario solo conseguimos **157 peticiones por segundo**, con un tiempo medio de respuesta de 58 ms.
+
+El resumen de todas estas pruebas se puede ver en la siguiente tabla:
+
+| Condiciones | Escenario | Avg. Throughput | Avg. Response Time |
+|--------|--------|---------|---------|
+| Local, BD Local | 1 | 1297 | 6 |
+| Local, BD Local | 2 | 2110 | 4 |
+| Local, BD Local | 3 | 1804 | 4 |
+| Local, BD Remota | 1 | 60 | 152 |
+| Local, BD Remota | 2 | 2060 | 4 |
+| Local, BD Remota | 3 | 157 | 58 |
+
+Las conclusiones obtenidas de la ejecución de estas pruebas son:
+
+* Funciona bastante mejor con la base de datos en local que utilizando una base de datos remota, sobretodo en el último escenario (combinado)
+* Los 3 microservicios han superado las pruebas de prestaciones en local con una base de datos MongoDB en local.
+* Los POST tardan bastante más que los GET, por ello en el primer escenario acabe ejecutando un solo POST por hebra si no era imposible Los resultados de esta prueba que realice se pueden ver a continuación:
+
+![](docs/img/taurus/test_post.png)
+
+
+
+También por merá curiosidad se decidió, probar a realizar la prueba del primer escenario, con una base de datos Local, en una máquina virtual, los resultados han sido los siguientes:
+
+![](docs/img/taurus/test_maquina.png)
+
+
+Como se puede ver los resultados son peores que los obtenidos anteriormente, por lo que se concluye que la máquina donde se realiza el test no es lo más importante pero es influyente.
