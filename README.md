@@ -10,7 +10,7 @@ Proyecto para desarrollar en la asignatura de **Cloud Computing** correspondient
 
 ## Descripción
 
-El proyecto consistirá en un bakc-end para la compra/venta de portátiles. Para una Descripción más detallada del proyecto, ver [aquí](docs/descripcion.md).
+El proyecto consistirá en un *bakc-end* para la compra/venta de portátiles. Para una Descripción más detallada del proyecto, ver [aquí](docs/descripcion.md).
 
 ## Más información sobre el proyecto
 
