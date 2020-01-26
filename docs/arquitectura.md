@@ -6,11 +6,10 @@ La arquitectura será una arquitectura basada en microservicios, contaremos con 
 
 ## Servicios
 
-Nuestro sistema tendrá los siguientes servicios: servicio de gestión de usuarios, servicio LOG y servicio ETCD.
+Nuestro sistema tendrá los siguientes servicios: servicio LOG y servicio ETCD.
 
-### Servicio de gestión de usuarios
+*Destacar que el servicio de gestión de usuarios es externo a nuestro problema, por lo que no lo menciono en ningún momento al no pertenecer al dominio de nuestro problema.*
 
-Este servicio servirá para la administración de los usuarios de nuestro servicio, deberá de tener funcionalidad para agregar usuarios, borrar usuarios, actualizar usuarios, modificar usuarios, cargar saldo de usuarios, gastar saldo de usuarios y logear a los usuarios. Esto será algo externo a nuestro problema.
 
 ### Servicio LOG
 
@@ -31,20 +30,11 @@ Este microservicio servirá para la administración de los ordenadores portátil
 
 ### Microservicio de transacciones de compra/venta/devolución
 
-Este microservicio se encarga de las transacciones necesarias del servicio, tendrá la funcionalidad de vender ordenador portátil, comprar ordenador portátil y devolver ordenador portátil.
-
-### Microservicio de estadísticas
-
-Microservicio que se encargara de mostrar y recolectar las estadísticas de las transacciones producidas.
+Este microservicio se encarga de las transacciones necesarias del servicio, tendrá la funcionalidad de vender ordenador portátil, comprar ordenador portátil y devolver ordenador portátil. También se encargará de mostrar las estadísticas de las transacciones que realicen los usuarios.
 
 ## Bases de datos
 
 Se utilizarán en nuestro sistema las siguientes bases de datos: base de datos de usuario, base de datos de ordenadores portátiles y base de datos de transacciones.
-
-### Base de datos de usuarios
-
-Base de datos utilizada para almacenar los datos de usuario.
-
 
 ### Base de datos de ordenadores portátiles
 
@@ -53,3 +43,11 @@ Base de datos utilizada para guardar los ordenadores portátiles que los usuario
 ### Base de datos de transacciones
 
 Base de datos para almacenar todas las transacciones producidas en el sistema.
+
+# Justificaciones de las modificaciones
+
+La arquitectura a sufrido una serie de modificaciones desde el inicio del proyecto hasta el estado que se encuentra.
+
+* Después de reflexionar y pensar se ha llegado a la conclusión de que el microservicio de Estadísticas era innecesario, puesto que lo único que pretendía era traer datos correspondientes al servicio de transacciones y por lo tanto se ha eliminado este microservicio.
+
+* Las historias de usuario correspondientes a este microservicio se han ligado al microservicio de transacciones, puesto que se consideran que pertenecen al mismo. Por lo que ver estadísticas y imprimir estadísticas pasaron a pertenecer al microservicio de Transacciones.
