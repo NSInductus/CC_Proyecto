@@ -8,7 +8,7 @@ La imagen residente en el contenedor anteriormente linkado se ha construido sobr
 
 ## Dockerfile
 
-Como se ha mencionado anteriormente la imagen se ha construido utilizando el archivo archivo [Dockerfile](Dockerfile).
+Como se ha mencionado anteriormente la imagen se ha construido utilizando el archivo archivo [Dockerfile](https://github.com/NSInductus/CC_Proyecto/blob/master/Dockerfile).
 
 Este archivo cuenta con varias partes:
 
@@ -78,7 +78,7 @@ En segundo lugar he creado un repositorio en DockerHub y he linkado mi repositor
 ![](img/dockerhub.png)
 
 
-Después he probado en local ha construir mi microservicio sobre varias imágenes base, para eso he ido modificando el [Dockerfile](Dockerfile) y utilizando el siguiente comando para crear cada una de las imagenes:
+Después he probado en local ha construir mi microservicio sobre varias imágenes base, para eso he ido modificando el [Dockerfile](https://github.com/NSInductus/CC_Proyecto/blob/master/Dockerfile) y utilizando el siguiente comando para crear cada una de las imágenes:
 
 ```
 & docker build -t nombre_imagen ruta
@@ -91,7 +91,7 @@ Para posteriormente arrancar el contenedor en local utilizando cada una de las i
 ```
 Y después he seguido el proceso explicado en la sección: [Comparación de imágenes base](comparacion_imagenes.md).
 
-Posteriormente se creado el archivo [Dockerfile](Dockerfile) definitivo, rellenado como se ha explicado en la sección anterior  y he realizado un *push* a la rama master de mi proyecto de GitHub.
+Posteriormente se creado el archivo [Dockerfile](https://github.com/NSInductus/CC_Proyecto/blob/master/Dockerfile) definitivo, rellenado como se ha explicado en la sección anterior  y he realizado un *push* a la rama master de mi proyecto de GitHub.
 
 
 Después de realizar el *push*, DockerHub automaticamente localiza el Dockerfile en mi repositorio de GitHub y lo utiliza para crear la imagen, la cual se quedará disponible en la web por si alguien la quiere descargar y utilizar, para realizar este proceso simplemente tendría que utilizar los siguientes 2 comandos:
@@ -115,7 +115,7 @@ Este segundo comando para arrancar el contenedor en local.
 
 ## Creación de Dockerfile para microservicio Transacciones_rest
 
-Una vez concluida la implementación del nuevo microservicio, se creó el Dockerfile para este microservicio, el cual es: [Dockerfile.Transacciones](Dockerfile.Transacciones).
+Una vez concluida la implementación del nuevo microservicio, se creó el Dockerfile para este microservicio, el cual es: [Dockerfile.Transacciones](https://github.com/NSInductus/CC_Proyecto/blob/master/Dockerfile.Transacciones).
 
 Se mantuvo la base del anterior, puesto que seguimos manteniendo el criterio que fijo el estudio de la [Comparación de imágenes base](comparacion_imagenes.md).
 
