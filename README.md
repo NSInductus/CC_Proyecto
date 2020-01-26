@@ -33,7 +33,7 @@ La arquitectura será una arquitectura basada en microservicios. Para más infor
 
 Los microservicios implementados o que se implementarán tendrán una arquitectura por capas, la cuál se basa en separar la funcionalidad del microservicio en diferentes capas, con el fin de seguir los principios de: *abstracción, encapsulamiento, funcionalidad, alta cohesión, reutilizable y desacople.*
 
-Para información más concreta acerca de la arquitectura de cada microservicio, ver [aquí](docs/arquitectura_miicroservicios.md).
+Para información más concreta acerca de la arquitectura de cada microservicio, ver [aquí](docs/arquitectura_microservicios.md).
 
 
 ## Herramienta de construcción
@@ -93,4 +93,4 @@ $ invoke clear
 
 ## Integración continua
 
-Como herramientas para la integración continua se ha utilizado: **TravisCi** & **CircleCI**. Para más información acerca de la integración continua, ver [aquí](docs/integración_continua.md).
+Como herramientas para la integración continua se ha utilizado: **TravisCi** & **CircleCI**. Para más información acerca de la integración continua, ver [aquí](docs/integracion_continua.md).
