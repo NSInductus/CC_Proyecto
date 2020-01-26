@@ -33,16 +33,16 @@ def index():
 @app.route('/transacciones/venderPortatil/<id_portatil>/<DNIcomprador>', methods=['POST'])
 @app.route('/transacciones/venderPortatil/<id_portatil>/<DNIcomprador>/<comentario>', methods=['POST'])
 def venderPortatil(id_portatil, DNIcomprador, comentario=""):
+    ids = []
     _id = False
-    cadena = "http://" + os.environ['HOST'] + ":" + os.environ['PORT'] + "/portatiles/seleccionarPortatil/" + id_portatil
-    respuesta = requests.get(url = cadena)
+    #cadena = "http://" + os.environ['HOST'] + ":" + os.environ['PORT'] + "/portatiles/seleccionarPortatil/" + id_portatil
+    respuesta = requests.get(url = "http://" + os.environ['HOST'] + ":" + os.environ['PORT'] + "/portatiles/seleccionarPortatil/" + id_portatil)
     respuesta = json_util.loads(respuesta.content)
     if respuesta != False:
-        cadena = "http://" + os.environ['HOST'] + ":" + os.environ['PORT'] + "/portatiles/cambiarStockPortatil/" + id_portatil + "/1"
-        respuesta2 = requests.put(url = cadena)
+        #cadena = "http://" + os.environ['HOST'] + ":" + os.environ['PORT'] + "/portatiles/cambiarStockPortatil/" + id_portatil + "/1"
+        respuesta2 = requests.put(url = "http://" + os.environ['HOST'] + ":" + os.environ['PORT'] + "/portatiles/cambiarStockPortatil/" + id_portatil + "/1")
         _id1 = transacciones.agregarTransacion(id_portatil, DNIcomprador, 1, comentario)
         _id2 = transacciones.agregarTransacion(id_portatil, respuesta.get("DNIvendedor"), 2, comentario)
-        ids = []
         ids.append(_id1)
         ids.append(_id2)
     return Response(json_util.dumps(ids), status=200, mimetype="application/json")
@@ -54,21 +54,26 @@ def venderPortatil(id_portatil, DNIcomprador, comentario=""):
 @app.route('/transacciones/devolverPortatil/<id_portatil>/<DNIcomprador>/<comentario>', methods=['POST'])
 def devolverPortatil(id_portatil, DNIcomprador, comentario=""):
     _id = False
-    cadena = "http://" + os.environ['HOST'] + ":" + os.environ['PORT'] + "/portatiles/seleccionarPortatil/" + id_portatil
-    respuesta = requests.get(url = cadena)
+    #cadena = "http://" + os.environ['HOST'] + ":" + os.environ['PORT'] + "/portatiles/seleccionarPortatil/" + id_portatil
+    respuesta = requests.get(url = "http://" + os.environ['HOST'] + ":" + os.environ['PORT'] + "/portatiles/seleccionarPortatil/" + id_portatil)
     respuesta = json_util.loads(respuesta.content)
     if respuesta != False:
-        cadena = "http://" + os.environ['HOST'] + ":" + os.environ['PORT'] + "/portatiles/cambiarStockPortatil/" + id_portatil + "/0"
-        respuesta2 = requests.put(url = cadena)
+        #cadena = "http://" + os.environ['HOST'] + ":" + os.environ['PORT'] + "/portatiles/cambiarStockPortatil/" + id_portatil + "/0"
+        respuesta2 = requests.put(url = "http://" + os.environ['HOST'] + ":" + os.environ['PORT'] + "/portatiles/cambiarStockPortatil/" + id_portatil + "/0")
         _id = transacciones.agregarTransacion(id_portatil, DNIcomprador, 3, comentario)
     return Response(json_util.dumps(_id), status=200, mimetype="application/json")
 
+#Para mostrar las estadisticas
+#De todas las transacciones de un usuario
+#De un tipo de transacciones de un usuario
 @app.route('/transacciones/verEstadisticas/<DNIusuario>', methods=['GET'])
 @app.route('/transacciones/verEstadisticas/<DNIusuario>/<int:tipo>', methods=['GET'])
 def verEstadisticas(DNIusuario, tipo=0):
     if tipo != 0:
         mis_transacciones = transacciones.verEstadisticasFiltradasTipo(DNIusuario,tipo)
-        return Response(json_util.dumps(mis_transacciones), status=200, mimetype="application/json")
+        respuesta_json = json_util.dumps(mis_transacciones)
+        return Response(respuesta_json, status=200, mimetype="application/json")
     else:
         mis_transacciones = transacciones.verEstadisticas(DNIusuario)
-        return Response(json_util.dumps(mis_transacciones), status=200, mimetype="application/json")
+        respuesta_json = json_util.dumps(mis_transacciones)
+        return Response(respuesta_json, status=200, mimetype="application/json")
