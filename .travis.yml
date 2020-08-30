@@ -17,6 +17,7 @@ services:
 #Instalar todo lo necesario
 before_install:
     - pip install -r requirements.txt
+    - pip install codecov 
 
 #Ejecución de test unitarios y de covertura
 script:
