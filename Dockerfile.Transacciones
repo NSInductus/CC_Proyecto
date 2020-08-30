@@ -4,19 +4,26 @@ FROM debian:unstable-slim
 # Nombre y correo de la persona que mantiene el contenedor
 LABEL maintainer="Angel Murcia Diaz <angelmd96@correo.ugr.es>"
 
-# Puerto como Argumento para pasar a la hora de construir
-#Por defecto sera el puerto 8080
-ARG PORT=8080
+# Se definen las variables a utilizar
+ARG URI_BD_T
+ARG BD_T
+ARG CO_T
+ARG PORT_2
 
-# Establecemos las variables de entorno para el contenedor
-# Definimos el puerto
-ENV PORT=${PORT}
+# Se asigna el valor de la variable de entorno a la variable
+ENV URI_BD_T=${URI_BD_T}
+ENV BD_T=${BD_T}
+ENV CO_T=${CO_T}
+ENV PORT_2=${PORT_2}
 
 # Establecer el directorio de trabajo
 WORKDIR /
 
+# Se actualizna los repositorios de debian y se instala el paquete de utilidades
+RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -yq apt-utils
+
 # Instalamos python3 y pip3
-RUN apt-get update && apt-get install -y python python3-pip
+RUN apt-get install -y python3 python3-pip
 
 # Copiamos el archivo requirements
 COPY requirements.txt /tmp/
@@ -28,10 +35,10 @@ RUN pip3 install --no-cache-dir -r ./tmp/requirements.txt
 COPY src /src/
 
 # Puerto donde va a escuchar el servidor
-EXPOSE ${PORT}
+EXPOSE ${PORT_2}
 
 # Cambiar el directorio de trabajo
 WORKDIR /src/
 
 # Lanzar el servidor
-CMD gunicorn -b 0.0.0.0:${PORT} Transacciones_rest:app
+CMD gunicorn -b 0.0.0.0:${PORT_2} Transacciones_rest:app
