@@ -26,7 +26,7 @@ def cliente_test():
     cliente_test_portatil = Portatiles_rest.app.test_client()
     yield cliente_test, cliente_test_portatil
 
-
+#Primer test
 def test_transacciones_rest_prueba(cliente_test):
     respuesta = cliente_test[0].get('/transacciones/')
     if (respuesta.status_code == 200):
@@ -41,11 +41,13 @@ def test_transacciones_rest_prueba(cliente_test):
     else:
         assert (respuesta.status_code == 412)
 
+#Test ruta desconocida
 def test_transacciones_rest_ruta_desconocida(cliente_test):
     respuesta = cliente_test[0].get('/transacciones/kokoko')
     if (respuesta.status_code == 204):
         assert (respuesta.status_code == 204)
 
+#Test vender portatil
 def test_transacciones_rest_prueba_vender_portatil(cliente_test):
     #Seleccionar portatil
     cadena = '/portatiles/agregarPortatil/msi/gl62/333X/600'
@@ -84,6 +86,10 @@ def test_transacciones_rest_prueba_vender_portatil(cliente_test):
     cadena = '/transacciones/venderPortatil/' + indice + '/' + DNIcomprador
     respuesta = cliente_test[0].post(cadena)
 
+    cadena = '/portatiles/eliminarPortatilPorIdVenta/' + indice
+    respuesta = cliente_test[1].delete(cadena)
+
+#Test devolver portatil
 def test_transacciones_rest_prueba_devolver_portatil(cliente_test):
     #Seleccionar portatil
     cadena = '/portatiles/agregarPortatil/msi/gl62/333X/600'
@@ -100,7 +106,7 @@ def test_transacciones_rest_prueba_devolver_portatil(cliente_test):
         assert (respuesta.status_code == 429)
     else:
         assert (respuesta.status_code == 412)
-    #
+    #Seleccionar portatil
     cadena = 'portatiles/seleccionarPortatil/' + indice
     respuesta = cliente_test[1].get(cadena)
     portatil = {"_id":{"$oid": indice}, "marca":"msi", "modelo":"gl62", "DNIvendedor":"333X", "precio":600, "pantalla":"", "procesador":"", "RAM":"", "almacenamiento":"", "grafica":"", "bateria":"", "SO":"",  "comentario":"", "vendido":0}
@@ -121,8 +127,11 @@ def test_transacciones_rest_prueba_devolver_portatil(cliente_test):
     DNIcomprador = "555X"
     cadena = '/transacciones/devolverPortatil/' + indice + '/' + DNIcomprador
     respuesta = cliente_test[0].post(cadena)
+        
+    cadena = '/portatiles/eliminarPortatilPorIdVenta/' + indice
+    respuesta = cliente_test[1].delete(cadena)
 
-#Funciones de ver estadisticas del API
+#Test ver estadisticas
 def test_transacciones_rest_ver_estadisticas(cliente_test):
     lista = []
     respuesta = cliente_test[0].get('/transacciones/verEstadisticas/666X')
@@ -138,6 +147,7 @@ def test_transacciones_rest_ver_estadisticas(cliente_test):
     else:
         assert (respuesta.status_code == 412)
 
+#Test ver estadisticas tipo
 def test_transacciones_rest_ver_estadisticas_tipo(cliente_test):
     lista = []
     respuesta = cliente_test[0].get('/transacciones/verEstadisticas/666X/1')
