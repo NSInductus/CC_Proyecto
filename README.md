@@ -41,6 +41,30 @@ Contenedor: https://hub.docker.com/repository/docker/nsinductus/cc_proyecto
 
 Para más información, ver [aquí](docs/docker.md).
 
+## Creación de nuevo microservicio: Transacciones
+
+Se ha implementado el nuevo microservicio: Transacciones, su API REST, así como sus respectivos tests para comprobar su correcto funcionamiento.
+
+Tanto la [API REST](https://github.com/NSInductus/CC_Proyecto/blob/master/src/Transacciones_rest.py) como los tests: [test del microservicio](https://github.com/NSInductus/CC_Proyecto/blob/master/tests/test_Transacciones.py) y [test de la API REST](https://github.com/NSInductus/CC_Proyecto/blob/master/tests/test_Transacciones_rest.py) se han realizado con las mismas tecnologías que se utilizaron para el primer microservicio, es decir, flask para la API REST y pytest para los tests.
+
+Este microservicio se encarga de las transacciones necesarias del servicio, en estas transacciones se registrarán compras y devoluciones de ordenadores portátiles. También se encargará de mostrar las estadísticas de las transacciones que realicen los usuarios.
+
+### Arquitectura del microservicio: Transaciones
+
+
+* **Primera capa:** la primera capa de este microservicio contiene la API REST, es decir, el archivo [Transaciones_rest.py](https://github.com/NSInductus/CC_Proyecto/blob/master/src/Transacciones_rest.py), este contendrá las rutas que se utilizarán para utilizar el microservicio, es decir, para realizar peticiones referentes a las transaciones de compra/venta/devolución. Estas rutas se pueden ver [aquí](doc/apis_rest.md).
+
+
+* **Segunda capa:**  la segunda capa de este microservicio se encarga de administrar la lógica del microservicio, esta contiene el archivo [Transaciones.py](https://github.com/NSInductus/CC_Proyecto/blob/master/src/Transacciones.py), el cuál está repleto de funciones que son de utilidad para poder cumplir con las historias de usuario.
+
+
+* **Tercera capa:** la tercera capa de este microservicio se encarga de administrar la base de datos donde se guardan y administran todas las transaciones, esta capa contiene el archivo [MongoDM.py](https://github.com/NSInductus/CC_Proyecto/blob/master/src/MongoDM.py) (se explicará posteriormente).
+
+La Arquitectura de este servicio se puede comprender fácilmente observando la siguiente imagen:
+
+![](docs/img/a_capas_transacciones.png)
+
+
 ## Almacén de datos
 
 Confirmando lo expuesto en la sección de tecnologías, se ha utilizado **MongoDB** como base de datos para nuestro proyecto, las
