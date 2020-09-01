@@ -204,20 +204,25 @@ Prestaciones: performance_test.yml
 Las prestaciones se han evaluado usando **Taurus**. Se han realizado sobre varios escenarios:
 
 1. Prueba de prestaciones **sobre el microservicio Portatiles**.
-2. Prueba de prestaciones **sobre el microservicio Transaciones**, utilizando solo rutas que no interactúan sobre el otro microservicio.
-3. Prueba de prestaciones sobre el microservicio Transaciones, utilizando entre las rutas una que envía peticiones al otro microservicio (Portatiles), es decir, es una prueba conjunta **sobre los dos microservicios**.
+2. Prueba de prestaciones **sobre el microservicio Transaciones**.
 
+Estos diferentes escenarios se han probado con dos tipos de bases de datos:
 
-Toda esta batería de pruebas (o diferentes escenarios) se han realizado en varias circunstancias:
-* En local utilizando una base de datos mongoDB de forma local
-* En local utilizando una base de datos mongoDB de forma remota, concretamente utilizando MongoAtlas.
+* Una base de datos mongoDB de forma local.
+* Una base de datos mongoDB de forma remota, concretamente utilizando MongoAtlas.
 
+Estos diferentes escenarios se han probado levantando el servicio de formas diferentes:
+
+* De forma local, utilizando *gunicorn* con 1 worker.
+* De forma local, utilizando *gunicorn* con 2 worker.
+* De forma local, utilizando *gunicorn* con 8 worker.
+* Levantando un Contenedor(*Docker*).
+
+Mezclando las diferentes posibilidades conseguimos realizar 8 pruebas de prestaciones por microservicio.
 
 Las pruebas de prestaciones debían de superar o igualar *1000 peticiones por segundo* utilizando 10 usuarios concurrentes sin tener ningún error durante el proceso.
 
 El código del fichero donde se definen las pruebas se comentará a continuación:
-
-
 
 ```
 # EVALUACION DE PRESTACIONES CON TAURUS
@@ -225,10 +230,9 @@ execution:
     - concurrency: 10   
       ramp-up: 10s      
       hold-for: 50s     
-      scenario: portatiles-test   #
+      scenario: portatiles-test  
 
 ```
-
 En primer lugar se definen:
 * **concurrency:** número de usuarios que participarán de forma simultánea.
 * **ramp-up:** tiempo en segundos que tardará en llegar a los usuarios definidos anteriormente .
@@ -237,70 +241,52 @@ En primer lugar se definen:
 
 ```
 #Posibles escenarios
-scenarios
-
+scenarios:
+    #Escenario microservicio PORTATILES
     portatiles-test:
-        requests:
-        - once:
-          - url: http://localhost:8080/portatiles/agregarPortatil/msi/gl62/333X/2500
-            method: POST
-        - url: http://localhost:8080/portatiles/seleccionarPortatil/5e2cfeefd46dbb22740a0d96
-          method: GET
-        - url: http://localhost:8080/portatiles/seleccionarPortatil/wqwqdqwfqfefewq
-          method: GET
-        - once:
-          - url: http://localhost:8080/portatiles/eliminarPortatilPorIdVenta/5e2cff09d46dbb22740a0d97
-            method: DELETE
-
-```
-
-Primero de los escenarios (portatiles-test) que tiene las siguientes peticiones:
-
-* Una petición *POST* que agrega un portátil a la base de datos, esta al estar dentro de *once* solo se ejecutará una vez por hebra.
-* Una petición *GET* para seleccionar un determinado portátil que existe en la base de datos.
-* Una petición *GET* que intentar seleccionar otro portatil de la base de datos pero en esta ocasión no lo encontrará, puesto que no eciste.
-* Una petición *DELETE* que elimina un portátil de la base de datos, al igual que la primera petición esta también se ejecuta solo una vez por hebra, el portátil que intenta borrar existe y por lo tanto podrá borrarlo la primera vez que lo intente, después ya no existirá.
-
-
-```
-transacciones-test:
-    requests:
-
-    - url: http://localhost:8000/transacciones/
-      method: GET
-    - once:
-      - url: http://localhost:8000/transacciones/verEstadisticas/339X
+      requests:
+      #Prueba basica: REST DE TRANSACIONES
+      - url: http://localhost:8080/portatiles/
         method: GET
-
+      #Numero de portatiles en la BD
+      - url: http://localhost:8080/portatiles/numeroPortatilesEnBD
+        method: GET
+      #Seleccionar un portatil en concreto
+      - url: http://localhost:8080/portatiles/seleccionarPortatil/5e2cfeefd46dbb220a0d96
+        method: GET
+      #Ver portatiles que vende un usuario
+      - url: http://localhost:8080/portatiles/verPortatilesEnVentaDeUsuario/358D
+        method: GET
 ```
 
-Segundo de los escenarios (transacciones-test) que tiene las siguientes peticiones:
+**El primer escenario: (portatiles-test)**, tiene las siguientes peticiones:
+
+* Una petición *GET* que simplemente es la petición de bienvenida de este microservicio.
+* Una petición *GET* para comprobar el numero de portatiles que existen en la base de datos.
+* Una petición *GET* que selecciona un determinado portatil de la base de datos con un identificador en concreto.
+* Una petición *GET* para encontrar los diferentes portátiles que tiene en venta un usuario, buscando por el DNI del usuario.
+
+
+```
+    #Escenenario microservicio TRANSACCIONES
+    transacciones-test:
+        requests:
+        #Prueba basica: REST DE TRANSACIONES
+        - url: http://localhost:8000/transacciones/
+          method: GET
+        #Algun portatil en la base de datos con ese usuario introducido
+        - once:
+          - url: http://localhost:8000/transacciones/verEstadisticas/339X
+            method: GET
+          
+```
+
+**El segundo escenario: transacciones-test**, tiene las siguientes peticiones:
 
 * Una petición *GET* que simplemente es la petición de bienvenida de este microservicio
 * Una petición *GET* que recoge todas las estadisticas de un usuario, es decir, todas sus transaciones para ello las cogerá todas y se quedará con las del usuario, como la base de datos esta bastante llena solo se realizará este proceso una vez por hebra.
 
-
-```
-combinada-test:
-    requests:
-
-    - url: http://localhost:8000/transacciones/
-      method: GET
-    - url: http://localhost:8000/transacciones/devolverPortatil/5e2d0c1baa15ba4dcb7f8176/333X
-      method: POST
-
-```
-
-Tercer de los escenarios (combinada-test) que tiene las siguientes peticiones:
-
-* Una petición *GET* que simplemente es la petición de bienvenida de este microservicio
-* Una petición *POST* que mete una transacción en la base de datos y además con el mismo id del portátil, se dirige ha realizar un *PUT* en el otro microservicio, el cual consiste en cambiar el atributo *vendido* del portátil que coincida con el id proporcionado por el otro microservicio.
-
-
-
 Una vez creado este fichero para ejecutarlo hay que poner en terminal el siguiente comando:
-
-
 
 ```
 $ bzt performance_test.yml -report
