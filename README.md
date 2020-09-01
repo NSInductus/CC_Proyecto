@@ -4,13 +4,13 @@
 [![Build Status](https://travis-ci.com/NSInductus/CC_Proyecto.svg?branch=master)](https://travis-ci.com/NSInductus/CC_Proyecto)
 [![CircleCI](https://circleci.com/gh/NSInductus/CC_Proyecto.svg?style=svg)](https://circleci.com/gh/NSInductus/CC_Proyecto)
 [![codecov](https://codecov.io/gh/NSInductus/CC_Proyecto/branch/master/graph/badge.svg)](https://codecov.io/gh/NSInductus/CC_Proyecto)
-[![Heroku](https://www.herokucdn.com/deploy/button.svg)](https://cc-proyecto.herokuapp.com/)
+[![Heroku](https://www.herokucdn.com/deploy/button.svg)](https://cc-proyecto.herokuapp.com/portatiles/)
 
 Proyecto para desarrollar en la asignatura de **Cloud Computing** correspondiente al Máster de Ingeniería Informática.
 
 ## Descripción
 
-El proyecto consistirá en un *bakc-end* para la compra/venta de portátiles. Para una Descripción más detallada del proyecto, ver [aquí](docs/descripcion.md).
+El proyecto consistirá en un *back-end* para la compra/venta de portátiles. Para una Descripción más detallada del proyecto, ver [aquí](docs/descripcion.md).
 
 ## Más información sobre el proyecto
 
@@ -18,23 +18,13 @@ A continuación se muestra en forma de índice el acceso a más información ref
 
 * [Tecnologías utilizadas](docs/tecnologias.md).
 * [Historias de usuario](docs/historias_de_usuario.md).
+* [Arquitectura](docs/arquitectura.md).
 * [Test](docs/test.md).
 * [APIs REST](docs/apis_rest.md).
+* [Integración continua](docs/integracion_continua.md).
 * [Docker](docs/docker.md).
 * [Heroku](docs/heroku.md).
 * [Licencia](docs/licencia.md).
-
-
-## Arquitectura
-
-La arquitectura será una arquitectura basada en microservicios. Para más información acerca de la arquitectura del proyecto, ver [aquí](docs/arquitectura.md).
-
-### Arquitectura de los Microservicios
-
-Los microservicios implementados o que se implementarán tendrán una arquitectura por capas, la cuál se basa en separar la funcionalidad del microservicio en diferentes capas, con el fin de seguir los principios de: *abstracción, encapsulamiento, funcionalidad, alta cohesión, reutilizable y desacople.*
-
-Para información más concreta acerca de la arquitectura de cada microservicio, ver [aquí](docs/arquitectura_microservicios.md).
-
 
 ## Herramienta de construcción
 
@@ -93,15 +83,7 @@ $ invoke clear
 
 *Tener en cuenta el uso de las variables de entorno, necesarias para que el proyecto funcione si se ejecuta en local, se puede ver más información [aquí](docs/variables_de_entorno.md)*
 
-
-## Integración continua
-
-Como herramientas para la integración continua se ha utilizado: **TravisCi** & **CircleCI**. Para más información acerca de la integración continua, ver [aquí](docs/integracion_continua.md).
-
-
 ## Docker
-
-En primer lugar decir que se ha utilizado DockerHub. La creación de la imagen de mi proyecto se ha realizado utilizando un archivo Dockerfile.
 
 Contenedor: https://hub.docker.com/repository/docker/nsinductus/cc_proyecto
 
