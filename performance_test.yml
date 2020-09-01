@@ -3,42 +3,32 @@ execution:
     - concurrency: 10   # 10 usuarios de forma simultanea
       ramp-up: 10s      # llegar a 10 usuarios en 10 segundos
       hold-for: 50s     # tiempo que un usuario esta conectado
-      scenario: portatiles-test   # ¿Cual escenario se slecciona?
+      scenario: portatiles-test  # ¿Cual escenario se selecciona?
 
 #Posibles escenarios
 scenarios:
-    #Escenario microservicio Portatiles
+    #Escenario microservicio PORTATILES
     portatiles-test:
-        requests:
-        #Se ejecuta una vez por hebra
-        - once:
-          - url: http://localhost:8080/portatiles/agregarPortatil/msi/gl62/333X/2500
-            method: POST
-        #Portatil introducido previamente, correcta
-        - url: http://localhost:8080/portatiles/seleccionarPortatil/5e2cfeefd46dbb22740a0d96
-          method: GET
-        - url: http://localhost:8080/portatiles/seleccionarPortatil/wqwqdqwfqfefewq
-          method: GET
-        #Se ejecuta una vez por hebra, el portatil existes, asi que 1 correcta solo
-        - once:
-          - url: http://localhost:8080/portatiles/eliminarPortatilPorIdVenta/5e2cff09d46dbb22740a0d97
-            method: DELETE
-    #Escenenario microservicio Transacciones
+      requests:
+      #Prueba basica: REST DE TRANSACIONES
+      - url: http://localhost:8080/portatiles/
+        method: GET
+      #Numero de portatiles en la BD
+      - url: http://localhost:8080/portatiles/numeroPortatilesEnBD
+        method: GET
+      #Seleccionar un portatil en concreto
+      - url: http://localhost:8080/portatiles/seleccionarPortatil/5e2cfeefd46dbb220a0d96
+        method: GET
+      #Ver portatiles que vende un usuario
+      - url: http://localhost:8080/portatiles/verPortatilesEnVentaDeUsuario/358D
+        method: GET
+    #Escenenario microservicio TRANSACCIONES
     transacciones-test:
         requests:
-        #REST DE TRANSACIONES
+        #Prueba basica: REST DE TRANSACIONES
         - url: http://localhost:8000/transacciones/
           method: GET
         #Algun portatil en la base de datos con ese usuario introducido
         - once:
           - url: http://localhost:8000/transacciones/verEstadisticas/339X
             method: GET
-    #Escenario microservicios juntos
-    combinada-test:
-        requests:
-        #Igual que antes la primera
-        - url: http://localhost:8000/transacciones/
-          method: GET
-        #Se conectan los dos microservicios
-        - url: http://localhost:8000/transacciones/devolverPortatil/5e2d0c1baa15ba4dcb7f8176/333X
-          method: POST
