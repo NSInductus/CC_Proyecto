@@ -17,7 +17,6 @@ services:
 #Instalar todo lo necesario
 before_install:
     - pip install -r requirements.txt
-    - pip install codecov 
 
 #Ejecución de test unitarios y de covertura
 script:
@@ -27,15 +26,3 @@ script:
 #Pasa los resultados a codecov
 after_success:
     - codecov
-
-env:
-  global:
-    - URI_BD_P=localhost:27017
-    - BD_P=BDPruebaPortatiles
-    - CO_P=COPruebaPortatiles
-    - URI_BD_T=localhost:27017
-    - BD_T=BDPruebaTransaciones
-    - CO_T=COPruebaTransaciones
-    - HOST=localhost
-    - PORT=8080
-    - PORT_2=8000
