@@ -25,10 +25,10 @@ def funcion_fin():
 def cliente_test():
     funcion_inicio()
     cliente_test = Portatiles_rest.app.test_client()
-    Portatiles_rest.app.config['TESTING'] = test_prueba
     yield cliente_test
     funcion_fin()
 
+#Primera prueba
 def test_prueba(cliente_test):
     respuesta = cliente_test.get('/portatiles/')
     if (respuesta.status_code == 200):
@@ -43,12 +43,13 @@ def test_prueba(cliente_test):
     else:
         assert (respuesta.status_code == 412)
 
+#Test ruta desconocida
 def test_rest_ruta_desconocida(cliente_test):
     respuesta = cliente_test.get('/portatiles/kokoko')
     if (respuesta.status_code == 204):
         assert (respuesta.status_code == 204)
 
-#modificar
+#Numero de portatiles
 def test_rest_numero_portatiles(cliente_test):
     respuesta = cliente_test.get('/portatiles/numeroPortatilesEnBD')
     if (respuesta.status_code == 200):
@@ -63,7 +64,7 @@ def test_rest_numero_portatiles(cliente_test):
     else:
         assert (respuesta.status_code == 412)
 
-
+#Test agrefar portatil y selecciopnar version corta
 def test_rest_agregar_portatil_y_seleccionar_version_corta(cliente_test):
     #Agregar portatil
     respuesta = cliente_test.post('/portatiles/agregarPortatil/msi/gl62/333X/600')
@@ -95,6 +96,7 @@ def test_rest_agregar_portatil_y_seleccionar_version_corta(cliente_test):
     else:
         assert (respuesta.status_code == 412)
 
+#Test agregar portatil y seleccionar version larga
 def test_rest_agregar_portatil_y_seleccionar_version_larga(cliente_test):
     #Agregar portatil
     respuesta = cliente_test.post('/portatiles/agregarPortatil/msi/gl62/333X/600/Muy%20bueno/15/i7/GB%20DDR4/1gb/GTX/2H/Linux')
@@ -169,6 +171,7 @@ def test_rest_modificar_portatil_solo_precio_y_seleccionar(cliente_test):
     else:
         assert (respuesta.status_code == 412)
 
+#Test eliminar portatil y seleccionar
 def test_rest_eliminar_portatil_y_seleccionar(cliente_test):
     respuesta = cliente_test.post('/portatiles/agregarPortatil/msi/gl62/333X/600')
     if (respuesta.status_code == 200):
@@ -211,6 +214,7 @@ def test_rest_eliminar_portatil_y_seleccionar(cliente_test):
     else:
         assert (respuesta.status_code == 412)
 
+#Test buscar por DNI
 def test_rest_buscar_portatil_dnivendedor(cliente_test):
     #Agregar portatil
     respuesta = cliente_test.post('/portatiles/agregarPortatil/msi/gl62/666X/600')
@@ -257,6 +261,7 @@ def test_rest_buscar_portatil_dnivendedor(cliente_test):
     else:
         assert (respuesta.status_code == 412)
 
+#Test buscar portatil por precio
 def test_rest_buscar_portatil_precio(cliente_test):
     #Agregar portatil
     respuesta = cliente_test.post('/portatiles/agregarPortatil/msi/gl62/333X/100000')
@@ -303,7 +308,7 @@ def test_rest_buscar_portatil_precio(cliente_test):
     else:
         assert (respuesta.status_code == 412)
 
-
+#Test buscar portatil por modelo marca
 def test_rest_buscar_portatil_modelo_marca(cliente_test):
     #Agregar portatil
     respuesta = cliente_test.post('/portatiles/agregarPortatil/marca_especial/modelo_especial/333X/600')
@@ -350,6 +355,7 @@ def test_rest_buscar_portatil_modelo_marca(cliente_test):
     else:
         assert (respuesta.status_code == 412)
 
+#test comparar portatiles
 def test_rest_comparar_portatiles(cliente_test):
     #Diferencia con el test anterior es el orden de los elementos puesto que los ordena por precio
     #Agregar portatil
@@ -397,7 +403,7 @@ def test_rest_comparar_portatiles(cliente_test):
     else:
         assert (respuesta.status_code == 412)
 
-
+#Test modificar stock y seleccionar
 def test_rest_modificar_stock_portatil_y_seleccionar(cliente_test):
     #Agregar Portatil para posteriormente modificarlo
     respuesta = cliente_test.post('/portatiles/agregarPortatil/msi/gl62/333PRUEBAX/600')
@@ -471,7 +477,6 @@ def test_rest_modificar_stock_portatil_y_seleccionar(cliente_test):
         assert (respuesta.status_code == 429)
     else:
         assert (respuesta.status_code == 412)
-
 
 #Borra todos los registros introducidos durante las pruebas, puesto que => DNIvendedor XXXPRUEBAX
 def test_limpiar_bd_y_comprobar_vacia(cliente_test):
