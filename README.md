@@ -143,7 +143,7 @@ Por ultimo se ha conseguido ver como se conecta la base de datos con cualquier a
 
 
 
-*Destacar que en nuestro proyecto para cambiar entre usar MongoDB en local o en remoto es suficiente con modificar las variables de entorno*
+*Destacar que en nuestro proyecto para cambiar entre usar MongoDB en local o en remoto es suficiente con modificar las variables de entorno, para más información acerca de estas, clicar [aqui](docs/variables_de_entorno.md)*.
 
 
 ## Data Manager: MongoDM.py
