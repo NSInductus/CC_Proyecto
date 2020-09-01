@@ -148,7 +148,6 @@ Por ultimo se ha conseguido ver como se conecta la base de datos con cualquier a
 
 ## Data Manager: MongoDM.py
 
-
 Para la incrustación de la base de datos de MongoDB a los microservicios implementados se ha utilizado como anteriormente he mencionado la librería **pymongo**.
 
 Utilizando la librería anteriormente comentada se ha creado el fichero [MongoDM.py](https://github.com/NSInductus/CC_Proyecto/blob/master/src/MongoDM.py), el cuáĺ es mi *data manager* (o *controlador de datos*), el cual implementa una serie de funciones definidas por mi que utilizan las funciones proporcionadas por pytest, estas funciones son:
@@ -162,7 +161,23 @@ Utilizando la librería anteriormente comentada se ha creado el fichero [MongoDM
 * **numero_elementos:** se encarga de proporcionar el numero de elementos existentes en la colección de la base de datos.
 * **borrar_conjunto:** se encarga de borrar todos los elementos existentes en la colección de la base de datos.
 
-Esta fichero será incrustado a los diferentes microservicios a través de la técnica de la inyección de dependencias, que se explicará con más detalle en otra apartado, concretamente en [este](docs/inyeccion_de_dependencias.md).
+Para utilizar este Data Manager se recurrirá a la técnica de la inyección de dependencias.
+
+### Inyección de dependencias
+
+Como se ha comentado anteriormente se ha utilizado la técnica de la *inyección de dependencias* para incrustar la base de datos de MongoDB en nuestros microservicios, para ello se ha creado la clase [MongoDM.py](https://github.com/NSInductus/CC_Proyecto/blob/master/src/MongoDM.py), descrita en la sección anterior.
+
+Para la incrustación de la misma, se importara en los ficheros que implementan la lógica de negocio de cada uno de los microservicos, es decir, [Portatiles.py](https://github.com/NSInductus/CC_Proyecto/blob/master/src/Portatiles.py) y [Transacciones.py](https://github.com/NSInductus/CC_Proyecto/blob/master/src/Transacciones.py), para posteriormente crear un objeto de la clase [MongoDM.py](https://github.com/NSInductus/CC_Proyecto/blob/master/src/MongoDM.py). Los campos existentes en el constructor de la clase son:
+
+* **uri:** Este parámetro contiene la dirección base, de la base de datos, en el caso de que se este lanzando en local tendremos que poner: *localhost:5000*. Como se ha podido ver: el formato de esta dirección base es el siguiente: *host:puerto*
+* **basedatos:** Este parámetro contiene el nombre de la base de datos con la que se trabajará.
+* **coleccion:** Esta parámetro contiene el nombre de la colección con la que se trabajará.
+
+*Para la introducción de estos parámetros se utilizarán variables de entorno, para más información acerca de estas, clicar [aqui](docs/variables_de_entorno.md)*
+
+El *objetivo o fin* de este proceso es que la lógica de negocio de un microservicio y la base de datos sean totalmente independientes, de tal forma que si en el futuro se desea cambiar de base de datos tan solo sea necesario cambiar el *data_manager*.
+
+De tal forma que la *API REST* realizará llamadas a las funciones de la lógica de negocio del microservicio y esta utilizará el *Data Manager* para gestionar los datos. Cumpliendo con la arquitectura por capas, la cual es la arquitectura que poseen todos mis microservicios implementados
 
 ### Modificaciones en otros ficheros
 
