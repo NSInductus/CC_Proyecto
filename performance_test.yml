@@ -28,7 +28,5 @@ scenarios:
         #Prueba basica: REST DE TRANSACIONES
         - url: http://localhost:8000/transacciones/
           method: GET
-        #Algun portatil en la base de datos con ese usuario introducido
-        - once:
-          - url: http://localhost:8000/transacciones/verEstadisticas/339X
-            method: GET
+        - url: http://localhost:8000/transacciones/verEstadisticas/339X
+          method: GET
