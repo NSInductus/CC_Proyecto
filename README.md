@@ -51,19 +51,14 @@ Este microservicio se encarga de las transacciones necesarias del servicio, en e
 
 ### Arquitectura del microservicio: Transaciones
 
-
-* **Primera capa:** la primera capa de este microservicio contiene la API REST, es decir, el archivo [Transaciones_rest.py](https://github.com/NSInductus/CC_Proyecto/blob/master/src/Transacciones_rest.py), este contendrá las rutas que se utilizarán para utilizar el microservicio, es decir, para realizar peticiones referentes a las transaciones de compra/venta/devolución. Estas rutas se pueden ver [aquí](doc/apis_rest.md).
-
-
+* **Primera capa:** la primera capa de este microservicio contiene la API REST, es decir, el archivo [Transaciones_rest.py](https://github.com/NSInductus/CC_Proyecto/blob/master/src/Transacciones_rest.py), este contendrá las rutas que se utilizarán para utilizar el mic
 * **Segunda capa:**  la segunda capa de este microservicio se encarga de administrar la lógica del microservicio, esta contiene el archivo [Transaciones.py](https://github.com/NSInductus/CC_Proyecto/blob/master/src/Transacciones.py), el cuál está repleto de funciones que son de utilidad para poder cumplir con las historias de usuario.
-
 
 * **Tercera capa:** la tercera capa de este microservicio se encarga de administrar la base de datos donde se guardan y administran todas las transaciones, esta capa contiene el archivo [MongoDM.py](https://github.com/NSInductus/CC_Proyecto/blob/master/src/MongoDM.py) (se explicará posteriormente).
 
 La Arquitectura de este servicio se puede comprender fácilmente observando la siguiente imagen:
 
 ![](docs/img/a_capas_transacciones.png)
-
 
 ## Almacén de datos
 
@@ -74,7 +69,6 @@ razones son las siguientes:
 * Capaz de almacenar grandes cantidades de datos sin inconveniente.
 * Es variable en el sentido de que no fuerza que todos los registros de una colección se guarden con los mismos atributos.
 
-
 También apuntar que las manipulaciones sobre la base de datos se realizarán concretamente con la librería *pymongo*, que cuenta con una serie de funciones que realizan las operaciones básicas (aunque también más avanzadas) que cualquier tipo de base de datos tiene como búsqueda, inserción, eliminación o actualización de elementos
 
 Se ha utilizado MongoDB de dos formas diferentes:
@@ -82,7 +76,6 @@ Se ha utilizado MongoDB de dos formas diferentes:
 * De forma **local**
 
 * De forma **Remoto**
-
 
 *Destacar que hay una base de datos por microservicio.*
 
@@ -111,8 +104,6 @@ Se puede ver en la siguiente captura de pantalla:
 
 Se acede a la administración de la base de datos a través de la misma terminal donde podremos ver las bases de datos disponibles, sus colecciones internas (lo que en una base de datos SQL serían tablas), insertar, modificar o eliminar datos, entre otras funcionalidades.
 
-
-
 ### En remoto
 
 Para utilizar MongoBD de forma remota, se valoraron varias opciones, para finalmente acabar quedándonos con **MongoAtlas**, por los siguientes motivos:
@@ -120,7 +111,6 @@ Para utilizar MongoBD de forma remota, se valoraron varias opciones, para finalm
 * Tiene opciones gratuitas.
 * Cuenta con automatización, de tal forma que el usuario puede programar actividades sobre la base de datos MongoDB en la nube.
 * Tiene un buen rendimiento.
-
 
 Una vez seleccionada esta tecnología, nos dirigimos al dominio web de MongoAtlas, el cual es el siguiente: [dominio](https://www.mongodb.com/cloud/atlas).
 
@@ -138,13 +128,9 @@ Posteriormente el usuario selecciona la opción de *Crear base de datos*, para a
 
 Por ultimo se ha conseguido ver como se conecta la base de datos con cualquier aplicación para utilizarla, es a través de una ruta proporcionada que sustituirá a nuestro *URI*, es decir, a nuestra ruta base. En la siguiente captura de pantalla se puede observar:
 
-
 ![](docs/img/conectar_atlas.png)
 
-
-
 *Destacar que en nuestro proyecto para cambiar entre usar MongoDB en local o en remoto es suficiente con modificar las variables de entorno, para más información acerca de estas, clicar [aqui](docs/variables_de_entorno.md)*.
-
 
 ## Data Manager: MongoDM.py
 
@@ -195,7 +181,6 @@ Destacar que hay que cambiar tanto los ficheros de código propiamente dicho, es
 3. En tercer lugar, se ha creado un Dockerfile nuevo, así como se ha creado una nueva regla de construcción automática, se puede ver con más detalle [aquí](docs/docker.md).
 
 *Destacar que en el nuevo microservicio implementado, ya se tiene en cuenta que se utilice el Data Manager desde el primer momento.*
-
 
 ## Estudio de prestaciones
 
@@ -266,7 +251,6 @@ scenarios:
 * Una petición *GET* que selecciona un determinado portatil de la base de datos con un identificador en concreto.
 * Una petición *GET* para encontrar los diferentes portátiles que tiene en venta un usuario, buscando por el DNI del usuario.
 
-
 ```
     #Escenenario microservicio TRANSACCIONES
     transacciones-test:
@@ -275,12 +259,10 @@ scenarios:
         - url: http://localhost:8000/transacciones/
           method: GET
         #Algun portatil en la base de datos con ese usuario introducido
-        - once:
-          - url: http://localhost:8000/transacciones/verEstadisticas/339X
-            method: GET
+        - url: http://localhost:8000/transacciones/verEstadisticas/339X
+          method: GET
           
 ```
-
 **El segundo escenario: transacciones-test**, tiene las siguientes peticiones:
 
 * Una petición *GET* que simplemente es la petición de bienvenida de este microservicio
@@ -294,82 +276,161 @@ $ bzt performance_test.yml -report
 
 ### Resultados de prestaciones
 
+Para comenzar se levantó el servicio en local utilizando *gunicorn* con 1 solo worker, los resultados se pueden ver a continuación:
 
-La primera batería de pruebas se realizó en local utilizando una base de datos MongoDB también de forma local. Los resultados son los que se muestran en las siguientes capturas de pantalla:
+* Primer escenario, utilizando 1 Worker y MongoDB de forma local:
 
-* Primer escenario, Local con BD local
+![](docs/img/taurus/portatiles/1wk/1wk-local-terminal.png)
+![](docs/img/taurus/portatiles/1wk/1wk-local-final.png)
 
-![](docs/img/taurus/ll1.png)
-![](docs/img/taurus/ll1-2.png)
+En esta prueba se consiguen **1387.9 peticiones por segundo**, teniendo un tiempo de respuesta medio de 6ms.
 
-En este primer escenario se puede ver como cumple con las prestaciones, consiguiendo llegar a unas **1297 peticiones por segundo**, teniendo un tiempo de respuesta medio de 6ms.
+* Segundo escenario, utilizando 1 Worker y MongoDB de forma local:
 
+![](docs/img/taurus/transacciones/1wk/1wk-local-terminal.png)
+![](docs/img/taurus/transacciones/1wk/1wk-local-final.png)
 
-* Segundo escenario, Local con BD local
+En esta prueba se consiguen **1570.8 peticiones por segundo**, teniendo un tiempo de respuesta medio de 8ms.
 
-![](docs/img/taurus/ll2.png)
-![](docs/img/taurus/ll2-2.png)
+* Primer escenario, utilizando 1 Worker y una BD remota (MongoAtlas):
 
-En el segundo escenario conseguimos unas prestaciones más altas que en el primer microservicio, de tal forma que doblamos el mínimo de prestaciones exigido, obteniendo unas **2110 peticiones por segundo** , con un tiempo de respuesta medio de 4 ms.
+![](docs/img/taurus/portatiles/1wk/1wk-remoto-terminal.png)
+![](docs/img/taurus/portatiles/1wk/1wk-remoto-final.png)
 
+En esta prueba se consiguen **66.24 peticiones por segundo**, teniendo un tiempo de respuesta medio de 141ms. Por lo que en estas condiciones no se supera el mínimo de peticiones (1000).
 
-* Tercer escenario, Local con BD local
+* Segundo escenario, utilizando 1 Worker y una BD remota (MongoAtlas):
 
-![](docs/img/taurus/ll3.png)
-![](docs/img/taurus/ll3-2.png)
+![](docs/img/taurus/transacciones/1wk/1wk-remoto-terminal.png)
+![](docs/img/taurus/transacciones/1wk/1wk-remoto-final.png)
 
-En el tercer escenario también logramos unos número sorprendentes, llegando a **1804 peticiones por segundo**, con un tiempo de respuesta medio de 4 ms.
+En esta prueba se consiguen **64.62 peticiones por segundo**, teniendo un tiempo de respuesta medio de 142ms. Por lo que en estas condiciones no se supera el mínimo de peticiones (1000).
 
+A continuación se subio el número de workers a 2, los resultados se pueden ver a continuación:
 
-La segunda batería de pruebas se realizó en local utilizando una base de datos MongoDB también de forma local. Los resultados son los que se muestran en las siguientes capturas de pantalla:
+* Primer escenario, utilizando 2 Worker y MongoDB de forma local:
 
-* Primer escenario, Local con BD remota (MongoAtlas)
+![](docs/img/taurus/portatiles/2wk/2wk-local-terminal.png)
+![](docs/img/taurus/portatiles/2wk/2wk-local-final.png)
 
-![](docs/img/taurus/lr1.png)
-![](docs/img/taurus/lr1-2.png)
+En esta prueba se consiguen **2134.23 peticiones por segundo**, teniendo un tiempo de respuesta medio de 4ms.
 
-En este primer caso con la base de datos no conseguimos superar las prestaciones mínimas, llegando a tener tan solo **60 peticiones por segundo**.
+* Segundo escenario, utilizando 2 Worker y MongoDB de forma local:
 
-* Segundo escenario, Local con BD remota (MongoAtlas)
+![](docs/img/taurus/transacciones/2wk/2wk-local-terminal.png)
+![](docs/img/taurus/transacciones/2wk/2wk-local-final.png)
 
-![](docs/img/taurus/lr2.png)
-![](docs/img/taurus/lr2-2.png)
+En esta prueba se consiguen **1661.38 peticiones por segundo**, teniendo un tiempo de respuesta medio de 5ms.
 
-En este segundo escenario parece no afectar mucho la base de datos remota obteniendo casi las mismas peticiones que anteriormente.
+* Primer escenario, utilizando 2 Worker y una BD remota (MongoAtlas):
 
-* Tercer escenario, Local con BD remota (MongoAtlas)
+![](docs/img/taurus/portatiles/2wk/2wk-remoto-terminal.png)
+![](docs/img/taurus/portatiles/2wk/2wk-remoto-final.png)
 
-![](docs/img/taurus/lr3.png)
-![](docs/img/taurus/lr3-2.png)
+En esta prueba se consiguen **130.07 peticiones por segundo**, teniendo un tiempo de respuesta medio de 70ms.
 
-En el último escenario solo conseguimos **157 peticiones por segundo**, con un tiempo medio de respuesta de 58 ms.
+* Segundo escenario, utilizando 2 Worker y una BD remota (MongoAtlas):
 
-El resumen de todas estas pruebas se puede ver en la siguiente tabla:
+![](docs/img/taurus/transacciones/2wk/2wk-remoto-terminal.png)
+![](docs/img/taurus/transacciones/2wk/2wk-remoto-final.png)
 
-| Condiciones | Escenario | Avg. Throughput | Avg. Response Time |
-|--------|--------|---------|---------|
-| Local, BD Local | 1 | 1297 | 6 |
-| Local, BD Local | 2 | 2110 | 4 |
-| Local, BD Local | 3 | 1804 | 4 |
-| Local, BD Remota | 1 | 60 | 152 |
-| Local, BD Remota | 2 | 2060 | 4 |
-| Local, BD Remota | 3 | 157 | 58 |
+En esta prueba se consiguen **131.42 peticiones por segundo**, teniendo un tiempo de respuesta medio de 71ms. Por lo que en estas condiciones no se supera el mínimo de peticiones (1000).
+
+A continuación se subio el número de workers a 8 (cercano al número másximo de workers que puede soportar mi ordenador), los resultados se pueden ver a continuación:
+
+* Primer escenario, utilizando 8 Worker y MongoDB de forma local:
+
+![](docs/img/taurus/portatiles/8wk/8wk-local-terminal.png)
+![](docs/img/taurus/portatiles/8wk/8wk-local-final.png)
+
+En esta prueba se consiguen **2763.8 peticiones por segundo**, teniendo un tiempo de respuesta medio de 3ms.
+
+* Segundo escenario, utilizando 8 Worker y MongoDB de forma local:
+
+![](docs/img/taurus/transacciones/8wk/8wk-local-terminal.png)
+![](docs/img/taurus/transacciones/8wk/8wk-local-final.png)
+
+En esta prueba se consiguen **2399.85 peticiones por segundo**, teniendo un tiempo de respuesta medio de 3ms.
+
+* Primer escenario, utilizando 8 Worker y una BD remota (MongoAtlas):
+
+![](docs/img/taurus/portatiles/8wk/8wk-remoto-terminal.png)
+![](docs/img/taurus/portatiles/8wk/8wk-remoto-final.png)
+
+En esta prueba se consiguen **198.64 peticiones por segundo**, teniendo un tiempo de respuesta medio de 47ms. Por lo que en estas condiciones no se supera el mínimo de peticiones (1000).
+
+* Segundo escenario, utilizando 8 Worker y una BD remota (MongoAtlas):
+
+![](docs/img/taurus/transacciones/8wk/8wk-remoto-terminal.png)
+![](docs/img/taurus/transacciones/8wk/8wk-remoto-final.png)
+
+En esta prueba se consiguen **194.1 peticiones por segundo**, teniendo un tiempo de respuesta medio de 47ms. Por lo que en estas condiciones no se supera el mínimo de peticiones (1000).
+
+Por último se realizaron las pruebas utilizando un Docker local para levantar el microservicio, los resultados se pueden ver a continuación:
+
+* Primer escenario, utilizando un Docker y MongoDB de forma local:
+
+![](docs/img/taurus/portatiles/docker/docker-local-terminal.png)
+![](docs/img/taurus/portatiles/docker/docker-local-final.png)
+
+En esta prueba se consiguen **1057.7 peticiones por segundo**, teniendo un tiempo de respuesta medio de 8ms. 
+
+* Segundo escenario, utilizando un Docker y MongoDB de forma local:
+
+![](docs/img/taurus/transacciones/docker/docker-local-terminal.png)
+![](docs/img/taurus/transacciones/docker/docker-local-final.png)
+
+En esta prueba se consiguen **1309.88 peticiones por segundo**, teniendo un tiempo de respuesta medio de 6ms.
+
+* Primer escenario, utilizando un Docker y una BD remota (MongoAtlas):
+
+![](docs/img/taurus/portatiles/docker/docker-remoto-terminal.png)
+![](docs/img/taurus/portatiles/docker/docker-remoto-final.png)
+
+En esta prueba se consiguen **65.17 peticiones por segundo**, teniendo un tiempo de respuesta medio de 141ms. Por lo que en estas condiciones no se supera el mínimo de peticiones (1000).
+
+* Segundo escenario, utilizando un Docker y una BD remota (MongoAtlas):
+
+![](docs/img/taurus/transacciones/docker/docker-remoto-terminal.png)
+![](docs/img/taurus/transacciones/docker/docker-remoto-final.png)
+
+En esta prueba se consiguen **64.77 peticiones por segundo**, teniendo un tiempo de respuesta medio de 142ms. Por lo que en estas condiciones no se supera el mínimo de peticiones (1000).
+
+#### Resumen de resultados
+
+El resumen de todas de las pruebas realizadas sobre ambos escenarios se muestran a continuación:
+
+| Servicio | BD | Escenario | Avg. Throughput | Avg. Response Time |
+|--------|--------|---------|---------|---------|
+| Gunicorn 1 Worker | BD Local | 1 | 1059.7 | 6 |
+| Gunicorn 1 Worker | BD Local | 2 | 1570.8 | 8 |
+| Gunicorn 1 Worker | BD Remota | 1 | 65.17 | 141 |
+| Gunicorn 1 Worker | BD Remota | 2 | 64.62| 142 |
+| Gunicorn 2 Workers | BD Local | 1 | 1307.9 | 4 |
+| Gunicorn 2 Workers | BD Local | 2 | 1661.38 | 5 |
+| Gunicorn 2 Workers | BD Remota | 1 | 66.24 | 70 |
+| Gunicorn 2 Workers | BD Remota | 2 | 131.42 | 71 |
+| Gunicorn 8 Workers | BD Local | 1 | 2139.23 | 3 |
+| Gunicorn 8 Workers | BD Local | 2 | 2399.85 | 3 |
+| Gunicorn 8 Workers | BD Remota | 1 | 130.07 | 47 |
+| Gunicorn 8 Workers | BD Remota | 2 | 194.1 | 47 |
+| Docker | BD Local | 1 | 2763.8 | 8 |
+| Docker | BD Local | 2 | 1309.88 | 6 |
+| Docker | BD Remota | 1 | 198.64 | 141 |
+| Docker | BD Remota | 2 | 64.77 | 142 |
+
+#### Conclusiones de los resultados
 
 Las conclusiones obtenidas de la ejecución de estas pruebas son:
 
-* Funciona bastante mejor con la base de datos en local que utilizando una base de datos remota, se puede ver tanto en el primer escenario (Portatiles) como en el último escenario (combinado).
-* En el segundo escenario no se nota tanto el cambio de la base de datos de local a remoto porque la operación que actúa sobre la misma esta ligada a *once* y por lo tanto solo se ejecuta una vez por hebra.
-* Los 3 microservicios han superado las pruebas de prestaciones en local con una base de datos MongoDB en local.
-* Los POST tardan bastante más que los GET, por ello en el primer escenario acabe ejecutando un solo POST por hebra si no era imposible Los resultados de esta prueba que realice se pueden ver a continuación:
+* **Ambos microservicios (Portatiles & Transacciones)** han superado todas las prueba utilizando una base de datos local puesto que se ha conseguido que superen las 1000 peticiones por segundo, en algunos casos las han multiplicado. En las pruebas que se utiliza una base de datos remota se nota mucho la diferencia en las peticiones debido a la latencia que se produce al conectar con la base de datos remota.
+* Como más peticiones se conseguen es levantando el servicio con 8 Worker utilizando guricorn o levantando un Docker local.
+* Conforme más workers utiliza guricorn mejores resultados se consiguen.
 
-![](docs/img/taurus/test_post.png)
-
-
-
-También comentare, que se comenzó ejecutando las pruebas sobre una máquina virtual instalada en mi ordenador portátil, los resultados de lanzar la prueba del primer escenario, con una base de datos Local, en una máquina virtual, fueron los siguientes:
+También documento, que se comenzó ejecutando las pruebas sobre una máquina virtual instalada en mi ordenador portátil, los resultados de lanzar la prueba del primer escenario (1 Worker con MongoDB local) en la máquina virtual, fueron los siguientes:
 
 ![](docs/img/taurus/test_maquina.png)
 
 Por lo tanto se decidió cambiar la máquina virtual por mi ordenador de sobremesa que tiene instalado Ubuntu 19, y los resultados comenzaron a ser satisfactorios (resultados expuestos anteriormente).
 
-Por lo que se concluye que la máquina donde se realiza el test de prestaciones también es importante.
+Por lo que se concluye que la máquina donde se realiza el test de prestaciones también es importante y realizarlas en una máquina virtual no es una buena idea.
