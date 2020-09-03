@@ -49,12 +49,12 @@ Tanto la [API REST](https://github.com/NSInductus/CC_Proyecto/blob/master/src/Tr
 
 Este microservicio se encarga de las transacciones necesarias del servicio, en estas transacciones se registrarán compras y devoluciones de ordenadores portátiles. También se encargará de mostrar las estadísticas de las transacciones que realicen los usuarios.
 
-### Arquitectura del microservicio: Transaciones
+### Arquitectura del microservicio: Transacciones
 
-* **Primera capa:** la primera capa de este microservicio contiene la API REST, es decir, el archivo [Transaciones_rest.py](https://github.com/NSInductus/CC_Proyecto/blob/master/src/Transacciones_rest.py), este contendrá las rutas que se utilizarán para utilizar el mic
-* **Segunda capa:**  la segunda capa de este microservicio se encarga de administrar la lógica del microservicio, esta contiene el archivo [Transaciones.py](https://github.com/NSInductus/CC_Proyecto/blob/master/src/Transacciones.py), el cuál está repleto de funciones que son de utilidad para poder cumplir con las historias de usuario.
+* **Primera capa:** la primera capa de este microservicio contiene la API REST, es decir, el archivo [Transacciones_rest.py](https://github.com/NSInductus/CC_Proyecto/blob/master/src/Transacciones_rest.py), este contendrá las rutas que se utilizarán para utilizar el mic
+* **Segunda capa:**  la segunda capa de este microservicio se encarga de administrar la lógica del microservicio, esta contiene el archivo [Transacciones.py](https://github.com/NSInductus/CC_Proyecto/blob/master/src/Transacciones.py), el cuál está repleto de funciones que son de utilidad para poder cumplir con las historias de usuario.
 
-* **Tercera capa:** la tercera capa de este microservicio se encarga de administrar la base de datos donde se guardan y administran todas las transaciones, esta capa contiene el archivo [MongoDM.py](https://github.com/NSInductus/CC_Proyecto/blob/master/src/MongoDM.py) (se explicará posteriormente).
+* **Tercera capa:** la tercera capa de este microservicio se encarga de administrar la base de datos donde se guardan y administran todas las transacciones, esta capa contiene el archivo [MongoDM.py](https://github.com/NSInductus/CC_Proyecto/blob/master/src/MongoDM.py) (se explicará posteriormente).
 
 La Arquitectura de este servicio se puede comprender fácilmente observando la siguiente imagen:
 
@@ -69,7 +69,7 @@ razones son las siguientes:
 * Capaz de almacenar grandes cantidades de datos sin inconveniente.
 * Es variable en el sentido de que no fuerza que todos los registros de una colección se guarden con los mismos atributos.
 
-También apuntar que las manipulaciones sobre la base de datos se realizarán concretamente con la librería *pymongo*, que cuenta con una serie de funciones que realizan las operaciones básicas (aunque también más avanzadas) que cualquier tipo de base de datos tiene como búsqueda, inserción, eliminación o actualización de elementos
+También apuntar que las manipulaciones sobre la base de datos se realizarán concretamente con la librería *pymongo*, que cuenta con una serie de funciones que realizan las operaciones básicas (aunque también más avanzadas) que cualquier tipo de base de datos tiene como búsqueda, inserción, eliminación o actualización de elementos.
 
 Se ha utilizado MongoDB de dos formas diferentes:
 
@@ -136,7 +136,7 @@ Por ultimo se ha conseguido ver como se conecta la base de datos con cualquier a
 
 Para la incrustación de la base de datos de MongoDB a los microservicios implementados se ha utilizado como anteriormente he mencionado la librería **pymongo**.
 
-Utilizando la librería anteriormente comentada se ha creado el fichero [MongoDM.py](https://github.com/NSInductus/CC_Proyecto/blob/master/src/MongoDM.py), el cuáĺ es mi *data manager* (o *controlador de datos*), el cual implementa una serie de funciones definidas por mi que utilizan las funciones proporcionadas por pytest, estas funciones son:
+Utilizando la librería anteriormente comentada se ha creado el fichero [MongoDM.py](https://github.com/NSInductus/CC_Proyecto/blob/master/src/MongoDM.py), el cual es mi *data manager* (o *controlador de datos*), el cual implementa una serie de funciones definidas por mi que utilizan las funciones proporcionadas por pytest, estas funciones son:
 
 * **obtener_elemento:** se encarga de introducir un elemento en la colección de la base de datos.
 * **obtener_conjunto_elementos:** se encarga de obtener un conjunto de elementos de la colección de la base de datos que cumplan una determinada característica.
@@ -151,25 +151,25 @@ Para utilizar este Data Manager se recurrirá a la técnica de la inyección de 
 
 ### Inyección de dependencias
 
-Como se ha comentado anteriormente se ha utilizado la técnica de la *inyección de dependencias* para incrustar la base de datos de MongoDB en nuestros microservicios, para ello se ha creado la clase [MongoDM.py](https://github.com/NSInductus/CC_Proyecto/blob/master/src/MongoDM.py), descrita en la sección anterior.
+Como se ha comentado anteriormente se ha utilizado la técnica de la *inyección de dependencias* para conseguir que los microservicios de nuestro proyecto utilicen de forma abstracta la base de datos, para ello se ha creado la clase [MongoDM.py](https://github.com/NSInductus/CC_Proyecto/blob/master/src/MongoDM.py).
 
-Para la incrustación de la misma, se importara en los ficheros que implementan la lógica de negocio de cada uno de los microservicos, es decir, [Portatiles.py](https://github.com/NSInductus/CC_Proyecto/blob/master/src/Portatiles.py) y [Transacciones.py](https://github.com/NSInductus/CC_Proyecto/blob/master/src/Transacciones.py), para posteriormente crear un objeto de la clase [MongoDM.py](https://github.com/NSInductus/CC_Proyecto/blob/master/src/MongoDM.py). Los campos existentes en el constructor de la clase son:
+Para la inyección de esta clase, se importará en los ficheros que implementan la lógica de negocio de cada uno de los microservicos, es decir, [Portatiles.py](https://github.com/NSInductus/CC_Proyecto/blob/master/src/Portatiles.py) y [Transacciones.py](https://github.com/NSInductus/CC_Proyecto/blob/master/src/Transacciones.py), para posteriormente crear un objeto de la clase [MongoDM.py](https://github.com/NSInductus/CC_Proyecto/blob/master/src/MongoDM.py). Los campos existentes en el constructor de la clase son:
 
 * **uri:** Este parámetro contiene la dirección base, de la base de datos, en el caso de que se este lanzando en local tendremos que poner: *localhost:5000*. Como se ha podido ver: el formato de esta dirección base es el siguiente: *host:puerto*
 * **basedatos:** Este parámetro contiene el nombre de la base de datos con la que se trabajará.
 * **coleccion:** Esta parámetro contiene el nombre de la colección con la que se trabajará.
 
-*Para la introducción de estos parámetros se utilizarán variables de entorno, para más información acerca de estas, clicar [aqui](docs/variables_de_entorno.md)*
+*Para la introducción de estos parámetros se utilizarán variables de entorno, para más información acerca de éstas, clicar [aqui](docs/variables_de_entorno.md).*
 
-El *objetivo o fin* de este proceso es que la lógica de negocio de un microservicio y la base de datos sean totalmente independientes, de tal forma que si en el futuro se desea cambiar de base de datos tan solo sea necesario cambiar el *data_manager*.
+El *objetivo o fin* de este proceso es que la lógica de negocio de un microservicio y la base de datos sean totalmente independientes, de tal forma que si en el futuro se desea cambiar de base de datos tan solo sea necesario cambiar el *Data Manager*.
 
-De tal forma que la *API REST* realizará llamadas a las funciones de la lógica de negocio del microservicio y esta utilizará el *Data Manager* para gestionar los datos. Cumpliendo con la arquitectura por capas, la cual es la arquitectura que poseen todos mis microservicios implementados
+De tal forma que la *API REST* realizará llamadas a las funciones de la lógica de negocio del microservicio y esta utilizará el *Data Manager* para gestionar los datos. Cumpliendo con la arquitectura por capas, la cual es la arquitectura que poseen todos mis microservicios implementados.
 
 ### Modificaciones en otros ficheros
 
 Se han tenido que realizar una serie de modificaciones sobre algunos ficheros para adaptarlos a la incorporación del *Data Manager*, es decir, del fichero [MongoDM.py](https://github.com/NSInductus/CC_Proyecto/blob/master/src/MongoDM.py).
 
-1. En primer lugar se han tenido que modificar los ficheros correspondientes al primer microservicio que se había implementado anteriormente, es decir, el microservicio de Portatiles. Porque este trabajaba con una lista interna, que se ha sustituido por un data_manager, por eso al constructor de esta clase se le introduce un objeto que actuará como data_manager, en este caso, un objeto de tipo MongoDM.
+1. En primer lugar, se han tenido que modificar los ficheros correspondientes al primer microservicio que se había implementado anteriormente, es decir, el microservicio de Portatiles. Porque éste trabajaba con una lista interna, que se ha sustituido por un data_manager, por eso al constructor de esta clase se le introduce un objeto que actuará como data_manager, en este caso, un objeto de tipo MongoDM.
 Destacar que hay que cambiar tanto los ficheros de código propiamente dicho, es decir, [Portatiles.py](https://github.com/NSInductus/CC_Proyecto/blob/master/src/Portatiles.py) y [Portatiles_rest.py](https://github.com/NSInductus/CC_Proyecto/blob/master/src/Portatiles_rest.py), como los ficheros de test (aunque los cambios sean más insignificativos comparados con los de los ficheros anteriores), es decir, [test_Portatiles.py](https://github.com/NSInductus/CC_Proyecto/blob/master/test/test_Portatiles.py) y [test_Portatiles_rest.py](https://github.com/NSInductus/CC_Proyecto/blob/master/test/test_Portatiles_rest.py).
 
 2. En segundo lugar, los sistemas de integración continua se ha tenido que realizar los siguientes cambios:
@@ -252,7 +252,7 @@ scenarios:
 * Una petición *GET* para encontrar los diferentes portátiles que tiene en venta un usuario, buscando por el DNI del usuario.
 
 ```
-    #Escenenario microservicio TRANSACCIONES
+    #Escenario microservicio TRANSACCIONES
     transacciones-test:
         requests:
         #Prueba basica: REST DE TRANSACIONES
@@ -266,7 +266,7 @@ scenarios:
 **El segundo escenario: transacciones-test**, tiene las siguientes peticiones:
 
 * Una petición *GET* que simplemente es la petición de bienvenida de este microservicio
-* Una petición *GET* que recoge todas las estadisticas de un usuario, es decir, todas sus transaciones para ello las cogerá todas y se quedará con las del usuario, como la base de datos esta bastante llena solo se realizará este proceso una vez por hebra.
+* Una petición *GET* que recoge todas las estadisticas de un usuario, es decir, todas sus transacciones, para ello las cogerá todas y se quedará con las del usuario.
 
 Una vez creado este fichero para ejecutarlo hay que poner en terminal el siguiente comando:
 
@@ -306,7 +306,7 @@ En esta prueba se consiguen **66.24 peticiones por segundo**, teniendo un tiempo
 
 En esta prueba se consiguen **64.62 peticiones por segundo**, teniendo un tiempo de respuesta medio de 142ms. Por lo que en estas condiciones no se supera el mínimo de peticiones (1000).
 
-A continuación se subio el número de workers a 2, los resultados se pueden ver a continuación:
+A continuación se subió el número de workers a 2, los resultados se pueden ver a continuación:
 
 * Primer escenario, utilizando 2 Worker y MongoDB de forma local:
 
@@ -336,7 +336,7 @@ En esta prueba se consiguen **130.07 peticiones por segundo**, teniendo un tiemp
 
 En esta prueba se consiguen **131.42 peticiones por segundo**, teniendo un tiempo de respuesta medio de 71ms. Por lo que en estas condiciones no se supera el mínimo de peticiones (1000).
 
-A continuación se subio el número de workers a 8 (cercano al número másximo de workers que puede soportar mi ordenador), los resultados se pueden ver a continuación:
+A continuación se subió el número de workers a 8 (cercano al número máximo de workers que puede soportar mi ordenador), los resultados se pueden ver a continuación:
 
 * Primer escenario, utilizando 8 Worker y MongoDB de forma local:
 
@@ -423,9 +423,9 @@ El resumen de todas de las pruebas realizadas sobre ambos escenarios se muestran
 
 Las conclusiones obtenidas de la ejecución de estas pruebas son:
 
-* **Ambos microservicios (Portatiles & Transacciones)** han superado todas las prueba utilizando una base de datos local puesto que se ha conseguido que superen las 1000 peticiones por segundo, en algunos casos las han multiplicado. En las pruebas que se utiliza una base de datos remota se nota mucho la diferencia en las peticiones debido a la latencia que se produce al conectar con la base de datos remota.
-* Como más peticiones se conseguen es levantando el servicio con 8 Worker utilizando guricorn o levantando un Docker local.
-* Conforme más workers utiliza guricorn mejores resultados se consiguen.
+* **Ambos microservicios (Portatiles & Transacciones)** han superado todas las prueba utilizando una base de datos local, puesto que se ha conseguido que superen las 1000 peticiones por segundo, en algunos casos las han multiplicado. En las pruebas que se utiliza una base de datos remota se nota mucho la diferencia en las peticiones, debido a la latencia que se produce al conectar con la base de datos remota.
+* Como más peticiones se consiguen es levantando el servicio con 8 Workers utilizando guricorn o levantando un Docker local.
+* Conforme más Workers utiliza guricorn mejores resultados se consiguen.
 
 También documento, que se comenzó ejecutando las pruebas sobre una máquina virtual instalada en mi ordenador portátil, los resultados de lanzar la prueba del primer escenario (1 Worker con MongoDB local) en la máquina virtual, fueron los siguientes:
 
