@@ -41,7 +41,6 @@ Contenedor: https://hub.docker.com/repository/docker/nsinductus/cc_proyecto
 
 Para más información, ver [aquí](docs/docker.md).
 
-# Hito 4 Reenvío
 
 ## Creación de nuevo microservicio: Transacciones
 
