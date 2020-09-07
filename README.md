@@ -664,7 +664,7 @@ Para el microservicio de transacciones los resultados son:
 La tabla que resume los resultados mostrados anteriormente es la siguiente:
 
 | Despliegue local/remoto | Microservicio | Avg. Throughput | Avg. Response Time |
-|--------|--------|---------|---------|---------|
+|--------|--------|---------|---------|
 | Local | portatiles | 465.08 | 19 | 
 | Local | transacciones | 419.73 | 21 | 
 | Remoto | portatiles | 31.73 | 291 | 
