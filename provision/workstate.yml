@@ -1,0 +1,82 @@
+#Referencia: https://docs.ansible.com/ansible/latest/modules/docker_container_module.html
+#Referencia: https://docs.ansible.com/ansible/latest/network/getting_started/first_playbook.html
+#Playbook para provisionar la maquina levantada con Vagrant en local
+---
+#Host
+- hosts: hostlocal
+  #Activa root
+  become: yes
+  #Roles que se ejecutan antes de las tareas
+  roles:
+    - enix.mongodb
+    - geerlingguy.docker
+  #Fichero de variables de entorno
+  vars_files:
+    - ./env/env-file.yml
+  #Tareas
+  tasks:
+    #Tarea para iniciar el servio de MongoDB
+    - name: Arrancar el servicio de MongoDB
+      service: 
+        name: mongod
+        state: started
+    #Tarea para actualizar el sistema con update
+    - name: Actualizar sistema
+      command: apt update
+    #Tarea para instalar Python3 y pip3
+    - name: Instalar Python3 y Pip3
+      apt:
+        pkg: ["python3","python3-pip"]
+        state: present 
+    #Tarea para instalar Docker
+    - name: Instalar Docker
+      pip:
+        name: docker
+    #Tarea para descargar la imagen del microservicio Portatiles de dockerhub
+    - name: Descargar imagen del microservicio portatiles
+      docker_image:
+        name: nsinductus/cc_proyecto:latest
+        source: pull
+    #Tarea para descargar la imagen del microservicio Portatiles de dockerhub
+    - name: Descargar imagen del microservicio transacciones
+      docker_image:
+        name: nsinductus/cc_proyecto:latest_transaciones
+        source: pull
+    #Tarea para crear el contenedor del microservicio Portatiles
+    - name: Arrancar contenedor del microservicio portatiles
+      docker_container:
+        name: portatiles
+        image: nsinductus/cc_proyecto:latest
+        auto_remove: yes
+        detach: yes
+        published_ports: 8080:8080
+        network_mode: host
+        env:
+          URI_BD_T: "{{ URI_BD_T }}"
+          BD_T: "{{ BD_T }}"
+          CO_T: "{{ CO_T }}"
+          PORT_2: "{{ PORT_2 }}"
+          URI_BD_P: "{{ URI_BD_P }}"
+          BD_P: "{{ BD_P }}"
+          CO_P: "{{ CO_P }}"
+          PORT: "{{ PORT }}"
+          HOST: "{{ HOST }}"
+    #Tarea para crear el contenedor del microservicio Transacciones
+    - name: Arrancar contenedor del microservicio transacciones
+      docker_container:
+        name: transaciones
+        image: nsinductus/cc_proyecto:latest_transaciones
+        auto_remove: yes
+        detach: yes
+        published_ports: 8000:8000
+        network_mode: host
+        env:
+          URI_BD_T: "{{ URI_BD_T }}"
+          BD_T: "{{ BD_T }}"
+          CO_T: "{{ CO_T }}"
+          PORT_2: "{{ PORT_2 }}"
+          URI_BD_P: "{{ URI_BD_P }}"
+          BD_P: "{{ BD_P }}"
+          CO_P: "{{ CO_P }}"
+          PORT: "{{ PORT }}"
+          HOST: "{{ HOST }}"
