@@ -9,3 +9,13 @@ despliegue_local ansible_ssh_host=127.0.0.1
 ansible_ssh_port=2222
 ansible_ssh_private_key_file='.vagrant/machines/default/virtualbox/private_key'
 ansible_user='vagrant'
+
+# Host para despliegue remoto en Azure
+[hostazure]
+despliegue_azure ansible_host=proyectoccazure.westus.cloudapp.azure.com
+
+# Variables para Host remoto
+[hostazure:vars]
+ansible_port=22 
+ansible_ssh_private_key_file='/home/inductus/.ssh/id_rsa'
+ansible_user='vagrant' 
