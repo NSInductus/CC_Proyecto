@@ -534,3 +534,75 @@ Para parar la máquina virtual en marcha se utiliza el siguiente comando:
 ```
 $ vagrant destroy
 ```
+### Despliegue y provisionamiento: Remoto
+
+Para el despliegue y provisionamiento de forma remota y puesto que se ha utilizado *Azure*, el primer paso será instalarlo (azure) de forma local en nuestra máquina, para eso se utilizarán los siguientes comandos:
+
+```
+$ sudo apt-get update
+$ sudo apt-get install ca-certificates curl apt-transport-https lsb-release gnupg
+$ curl -sL https://packages.microsoft.com/keys/microsoft.asc |
+    gpg --dearmor |
+    sudo tee /etc/apt/trusted.gpg.d/microsoft.gpg > /dev/null
+$ AZ_REPO=$(lsb_release -cs)
+echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $AZ_REPO main" |
+    sudo tee /etc/apt/sources.list.d/azure-cli.list
+$ sudo apt-get update
+$ sudo apt-get install azure-cli
+```
+
+También es necesario instalar:
+  * Un plugin de *Vagrant* para que pueda trabajar con *Azure*.
+  ```
+  $ vagrant plugin install vagrant-azure
+  ```
+  * Una box que *Vagrant* pueda utilizar.
+  ```
+  $ vagrant box add azure https://github.com/azure/vagrant-azure/raw/v2.0/dummy.box --provider azure
+  ```
+
+Posteriormente se crea una cuenta en: [azure.microsoft.com](https://azure.microsoft.com/es-es/free/search/?&ef_id=EAIaIQobChMIsdzHwtfV6wIV2evtCh3JHgpUEAAYASAAEgJAoPD_BwE:G:s&OCID=AID2100112_SEM_EAIaIQobChMIsdzHwtfV6wIV2evtCh3JHgpUEAAYASAAEgJAoPD_BwE:G:s&dclid=CPOIsMPX1esCFY3OGwodd6YGyg), en mi caso concreto he aprobechado la versión de 30 días de prueba, para conseguirlo tan solo es necesario introducir una serie de datos personales.
+
+Una vez tengamos nuestra cuenta de *Azure*, tenemos que acceder a la misma desde nuestro ordenador, para eso introducimos en la terminal lo siguiente:
+
+```
+$ az login
+```
+Después es necesario registrar la aplicación en *Azure*, de este modo se conseguirán una serie de claves. Para esto se utiliza el siguiente comando:
+
+```
+$ az ad sp create-for-rbac
+```
+
+Posteriormente necesitaremos la id de suscripción de *Azure*, para esto usamos:
+
+```
+$ $ az account list --query "[?isDefault].id" -o tsv
+```
+
+Con estos dos últimos comandos conseguiremos la información necesaria para rellenar las variables de entorno del nuevo *Vagrantfile* que se ha creado para el despliegue y provisionamiento de la aplicación de forma remota.
+
+Las variables de entorno necesarias son:
+  * AZURE_TENANT_ID = que corresponde al valor que tiene *tenant*.
+  * AZURE_CLIENT_ID = que corresponde al valor que tiene *appId*.
+  * AZURE_CLIENT_SECRET = que corresponde al valor que tiene *password*.
+  * AZURE_SUBSCRIPTION_ID = que corresponde al valor que proporciona el último comando ejecutado.
+
+El nuevo [*Vagrantfile*](https://github.com/NSInductus/CC_Proyecto/blob/master/Vagrantfile) creado para esta parte se detalla [aquí](docs/vagrantfile.md). En resumen, configura la creación de una máquina virtual en tu cuenta de *Azure* con las caracteristicas indicadas (en este caso se ha utilizado un tamaño de "Standard_B2s" (máquina con 2 cores y 4 GiB de memoria)) utilizando una imagen de UbuntuServer:16.04-LTS, así como configura el aprovisionamiento utilizando el mismo playbook que anteriormente ([workstate.yml](https://github.com/NSInductus/CC_Proyecto/blob/master/provision/workstate.yml)).
+
+Finalmente para lanzar el proceso de despliegue y provisión de la máquina virtual remota se ejecuta el siguiente comando:
+
+```bash
+$ vagrant up --provider=azure
+```
+Para comprobar que la máquina virtual ha sido creada en *Azure* correctamente podemos ir a la página web de *Azure*, entrar en nuestra cuenta, entrar posteriormente en "consola" y finalmente en la sección de "máquinas virtuales", de esta forma se puede comprobar si se han creado nuevas máquinas virtuales, como se puede ver en la siguiente captura de pantalla:
+
+![](./docs/img/despliegue_remoto.png)
+
+*Destacar que estos pasos se han ido siguiendo desde el propio README del proyecto de github del plugin de *Azure* para *Vagrant* (vagrant-azure), el enlace se puede consultar al final en las referencias.*
+
+Para realizar las peticiones se utiliza la siguiente URL.
+
+URL: http://proyectoccazure.westus.cloudapp.azure.com/
+
+A través de esa URL, utilizando los puertos y rutas adecuadas se pueden realizar todas las peticiones que se deseen.
