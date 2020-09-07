@@ -3,7 +3,8 @@
 #Playbook para provisionar la maquina levantada con Vagrant en local
 ---
 #Host
-- hosts: hostlocal
+#- hosts: hostlocal
+- hosts: hostazure
   #Activa root
   become: yes
   #Roles que se ejecutan antes de las tareas
