@@ -606,3 +606,16 @@ Para realizar las peticiones se utiliza la siguiente URL.
 URL: http://proyectoccazure.westus.cloudapp.azure.com/
 
 A través de esa URL, utilizando los puertos y rutas adecuadas se pueden realizar todas las peticiones que se deseen.
+
+
+
+
+
+## Referencias
+
+* https://www.softeng.es/es-es/productos/microsoft-azure/beneficios-de-azure-para-tu-empresa.html
+* https://www.conasa.es/blog/vagrant-la-herramienta-para-crear-entornos-de-desarrollo-reproducibles/
+* https://www.ochobitshacenunbyte.com/2019/01/30/que-es-ansible-para-que-sirve/
+* https://blogvirtualizado.com/includes-y-roles-en-ansible/
+* https://github.com/Azure/vagrant-azure
+* https://www.returngis.net/2015/11/usa-vagrant-con-microsoft-azure/
