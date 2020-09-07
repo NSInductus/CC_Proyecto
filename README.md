@@ -607,9 +607,29 @@ URL: http://proyectoccazure.westus.cloudapp.azure.com/
 
 A través de esa URL, utilizando los puertos y rutas adecuadas se pueden realizar todas las peticiones que se deseen.
 
+### Tests de Prestaciones para nuestros servivios desplegados
 
+Todos los tests de prestaciones se han realizado con Taurus. Las pruebas se dividen en dos: pruebas iniciales y pruebas sobre servicios desplegados.
 
+#### Pruebas iniciales
 
+Las primeras pruebas se realizaron para seleccionar la imagen base, las candidatas eran: *ubuntu/bionic16, centos/7 y debian/jessie64*
+
+Para comprobar cuál era la que mejores resultados ofrecía se recurrió a realizar *Tests de Prestaciones* con Taurus, para poder hacer una comprobación justa todas las pruebas se han realizado sobre el microservio portátiles y con un despliegue y provisionamiento local.
+
+Los resultados han sido resumidos en la siguiente tabla:
+
+| Imagen base | Avg. Throughput | Avg. Response Time |
+|--------|--------|---------|
+| ubuntu/bionic64 | 465.08 | 19 |  
+| centos/7 | 425.13 | 21 |  
+| debian/jessie64 | 459.98 | 19 |  
+
+*Por esto se ha seleccionado Ubuntu para ambos despliegues utilizando la imagen base de "ubuntu/bionic64" como imagen base en el despliegue local y "Canonical:UbuntuServer:16.04-LTS:latest" en el despliegue remoto.*
+
+No se realizaron pruebas para probar diferentes tamaños puesto que mi ordenador no soportaba mucho más de lo que se le asigno a la máquina virtual local, y puesto que se deseaban unas comparaciones justas entre el despliegue local y el despliegue remoto, se intentó buscar unas características similares para la máquina virtual remota, por esto se selecciono de tamaño "Standard_B2s".
+
+#### Pruebas sobre servicios desplegados
 
 ## Referencias
 
