@@ -91,6 +91,7 @@ env.bak/
 venv.bak/
 env-file
 env-file2
+./provision/env
 
 # Spyder project settings
 .spyderproject
