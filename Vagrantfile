@@ -66,7 +66,7 @@ Vagrant.configure('2') do |config|
     config.vm.provision "ansible" do |ansible|
         #ansible.verbose="vvv"
         ansible.inventory_path = "./provision/ansible_hosts"
-        ansible.limit="azure"
+        ansible.limit="hostazure"
         ansible.playbook = "./provision/workstate.yml"
     end
 end
