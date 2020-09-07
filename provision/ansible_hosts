@@ -1,0 +1,11 @@
+# Referencia: Temario CC: http://jj.github.io/CC/documentos/temas/Provision.html
+
+# Host para despliegue local en Virtualbox
+[hostlocal]
+despliegue_local ansible_ssh_host=127.0.0.1  
+
+# Variables para Host local
+[hostlocal:vars]
+ansible_ssh_port=2222
+ansible_ssh_private_key_file='.vagrant/machines/default/virtualbox/private_key'
+ansible_user='vagrant'
