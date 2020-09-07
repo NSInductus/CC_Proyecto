@@ -435,3 +435,21 @@ También documento, que se comenzó ejecutando las pruebas sobre una máquina vi
 Por lo tanto se decidió cambiar la máquina virtual por mi ordenador de sobremesa que tiene instalado Ubuntu 19, y los resultados comenzaron a ser satisfactorios (resultados expuestos anteriormente).
 
 Por lo que se concluye que la máquina donde se realiza el test de prestaciones también es importante y realizarlas en una máquina virtual no es una buena idea.
+
+## Despliegue y provisionamiento
+
+Para terminar con el proyecto se ha realizado el despliegue y provisionamiento de los dos mircroservicios: *Portatiles y Transacciones*. 
+
+* Estos microservicios han sido desplegados en máquinas virtuales, tanto de forma local como de forma remota, para ambos casos se utiliza *Vagrant* (herramienta que permite crear entornos de desarrollo reproducibles y compartibles). Se ha seleccionado esta herramienta por los siguientes motivos:
+  * Es una herramienta gratuita.
+  * Es una herramienta muy fácil de usar, permite crear y configurar máquinas virtuales a partir de simples ficheros de configuración.
+
+* Para el provisionamiento se ha utilizado *Ansible*. Se ha seleccionado esta herramienta por los siguientes motivos:
+  * Su instalación es muy sencilla.
+  * Tiene gran compatibilidad con elementos de la infraestructura.
+  Soporta la mayoría de distribuciones.
+
+* Para crear la máquina virtual de forma remota se ha utilizado el servicio de computación en la nube creado por Microsoft: *Azure*. Los motivos por los que se ha seleccionado *Azure* en lugar de otros como *Google Cloud* son los siguientes:
+  * Se puede recurrir a una prueba gratuita de 30 días.
+  * Tiene una alta disponibilidad por lo que asegura la continuidad del servicio y disponibilidad de tus datos.
+  * Tiene una altas medidas de seguridad
