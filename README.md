@@ -452,4 +452,85 @@ Para terminar con el proyecto se ha realizado el despliegue y provisionamiento d
 * Para crear la máquina virtual de forma remota se ha utilizado el servicio de computación en la nube creado por Microsoft: *Azure*. Los motivos por los que se ha seleccionado *Azure* en lugar de otros como *Google Cloud* son los siguientes:
   * Se puede recurrir a una prueba gratuita de 30 días.
   * Tiene una alta disponibilidad por lo que asegura la continuidad del servicio y disponibilidad de tus datos.
-  * Tiene una altas medidas de seguridad
+  * Tiene una altas medidas de seguridad.
+
+### Despliegue y provisionamiento: Local
+
+Además de lo comentado anteriormente, destacar que se utilizará *Virtualbox* como herramienta de virtualización, la razón principal es que es una herramienta totalmente gratuita.
+
+En primer lugar, se ha instalado *Virtualbox* a través del siguiente comando:
+
+```
+$ sudo apt install virtualbox
+```
+En segundo lugar, se ha instalado *Vagrant* a través de los siguientes comandos:
+
+```
+$ curl -O https://releases.hashicorp.com/vagrant/2.2.6/vagrant_2.2.6_x86_64.deb
+$ sudo apt-get update
+$ sudo apt install ./vagrant_2.2.6_x86_64.deb
+
+```
+En tercer lugar, se ha instalado *Ansible* a través de los siguientes comandos:
+
+```
+$ sudo apt-add-repository ppa:ansible/ansible
+$ sudo apt-get install ansible
+
+```
+También utilizando el plugin de ansible-galaxy, se han instalado roles creados por la comunidad (con los roles podemos crear una estructura de ficheros y directorio para separar los elementos y así poder reutilizarlos fácilmente), para poder utilizarlos directamente en nuestro fichero que describe configuraciones, despliegue y orquestación en *Ansible* comúnmente llamado playbook, en este caso se han descargado los siguientes roles:
+  * enix.mongodb
+  * geerlingguy.docker
+
+Para instalar estos roles se utilizan los siguientes comandos:
+
+```
+$ ansible-galaxy install enix.mongodb
+$ ansible-galaxy install geerlingguy.docker
+```
+Para levantar la máquina virtual utilizando la herramienta *Vagrant* se creará a priori un archivo de configuración llamado *Vagrantfile*, en él se centraliza toda la configuración de la máquina virtual que se desea levantar. El punto fuerte de *Vagrant* es que se puede crear exactamente la misma máquina virtual todas las veces que se desee utilizando el *Vagrantfile*.
+
+El archivo [*Vagrantfile*](https://github.com/NSInductus/CC_Proyecto/blob/master/Vagrantfile) creado para el proyecto se puede ver totalmente documentado [aquí](). En resumen es el archivo que se encarga de configurar la creación de una máquina virtual de 2048 de memoria y 2 cpus que utiliza como imagen base Ubuntu/bionic64 (*justificación de la elección de estas características e imagen base más adelante*), que se provisiona utilizando un playbook de *Ansible*, en mi caso es el fichero [workstate.yml](https://github.com/NSInductus/CC_Proyecto/blob/master/provision/workstate.yml).
+		
+El fichero [workstate.yml](https://github.com/NSInductus/CC_Proyecto/blob/master/provision/workstate.yml) se puede ver totalmente documentado [aquí](). En resumen configura las tareas necesarias para descargar de DockerHub las imágenes de los dos microservicios de este proyecto y arrancar estos microservicios.
+
+Para el correcto funcionamiento de *Ansible* también es necesario la creación de los siguientes ficheros:
+  * [ansible.cfg](): Fichero de configuración general de *Ansible*. 
+  * [ansible_hosts](): Fichero que define el inventario utilizado por *Ansible*.
+
+Destacar que como las imágenes descargadas hacían uso de variables de entorno, estas serán inyectadas en [workstate.yml](https://github.com/NSInductus/CC_Proyecto/blob/master/provision/workstate.yml)  de la siguiente forma: vars_files: *ruta_variables*, en *ruta_variables* debemos de introducir la ruta de un archivo con extensión (*yml*) que tenga el siguiente formato:
+
+```yml
+URI_BD_P: localhost:27017
+BD_P: BDPruebaPortatiles
+CO_P: COPruebaPortatiles
+URI_BD_T: localhost:27017
+BD_T: BDPruebaTransacciones
+CO_T: COPruebaTransacciones
+HOST: localhost
+PORT: "8080"
+PORT_2: "8000"
+```
+Una vez creados todos los ficheros comentados anteriormente pondremos en la terminal el siguiente comando:
+
+```
+$ vagrant up --provision
+```
+Este comando se encargará de crear la máquina virtual utilizando como herramienta de virtualización *Virtualbox* y de provisionarla utilizando *Ansible*.
+
+Para comprobar que los microservicios están correctamente desplegados podemos hacer una petición utilizando exactamente las mismas rutas que anteriormente (*localhost*), puesto que los puertos de la máquina virtual están conectados a los puertos del ordenador.
+
+También es posible acceder a la máquina virtual a través de *SSH*, esto puede ser útil si hay algún tipo de fallo o se desea comprobar los paquetes que estan instalados en la máquina, las imágenes de docker descargas o los contenedores que están arrancados. Para esto se utiliza el siguiente comando:
+
+```
+$ vagrant ssh
+```
+Otra forma de comprobar que la máquina ha sido correctamente creada es abrir la aplicación de escritorio de *Virtualbox* y comprobar como aparece una nueva máquina, como muestra la siguiente captura de pantalla:
+
+![](./docs/img/despliegue_local.png)
+
+Para parar la máquina virtual en marcha se utiliza el siguiente comando:
+
+```
+$ vagrant destroy
+```
