@@ -609,7 +609,7 @@ A través de esa URL, utilizando los puertos y rutas adecuadas se pueden realiza
 
 ### Tests de Prestaciones para nuestros servivios desplegados
 
-Todos los tests de prestaciones se han realizado con Taurus. Las pruebas se dividen en dos: pruebas iniciales y pruebas sobre servicios desplegados.
+Todos los tests de prestaciones se han realizado con Taurus. Las pruebas se dividen en dos: pruebas iniciales y pruebas sobre microservicios desplegados.
 
 #### Pruebas iniciales
 
@@ -629,7 +629,52 @@ Los resultados han sido resumidos en la siguiente tabla:
 
 No se realizaron pruebas para probar diferentes tamaños puesto que mi ordenador no soportaba mucho más de lo que se le asigno a la máquina virtual local, y puesto que se deseaban unas comparaciones justas entre el despliegue local y el despliegue remoto, se intentó buscar unas características similares para la máquina virtual remota, por esto se selecciono de tamaño "Standard_B2s".
 
-#### Pruebas sobre servicios desplegados
+#### Pruebas sobre microservicios desplegados
+
+Por último, se han realizado *Tests de Prestaciones* a nuestros dos microservicios (*portatiles y transacciones*) sobre los distintos despliegues, es decir, Local y Remoto.
+
+*Destacar que para realizar las pruebas, en el fichero de configuración de las mismas al despliegue remoto se le cambia "localhost" por la URL de nuestro proyecto en Azure. Para esto se han definido dos nuevos escenarios (portatiles-test-azure & transaciones-test-azure) que son iguales que los anteriores escenarios definidos (portatiles-test & transaciones-test), con la unica exepción del cambio comentado anteriormente.*
+
+Podemos esperar que no consigan llegar al número de peticiones al minuto que llegaba antes (cuando se desplegaban los servicios de forma local), es más, ni siquiera podemos esperar que llegue a la mitad y aún menos si pensamos en el despliegue en *Azure". Por lo que 400 peticiones por minuto creo que es el objetivo idoneo a superar en el despliegue en máquinas virtuales locales y 20 en el despliegue en *Azure*.
+
+En primer lugar, se realizarán las pruebas sobre el servicio desplegado en una máquina virtual local.
+
+Para el microservicio de portatiles los resultados son:
+
+![](./docs/img/taurus/despliegue/des-por-local-terminal.png)
+![](./docs/img/taurus/despliegue/des-por-local-final.png)
+
+Para el microservicio de transacciones los resultados son:
+
+![](./docs/img/taurus/despliegue/des-tran-local-terminal.png)
+![](./docs/img/taurus/despliegue/des-tran-local-final.png)
+
+En segundo lugar, se realizarán las pruebas sobre el servicio desplegado en *Azure*o de forma remota.
+
+Para el microservicio de portatiles los resultados son:
+
+![](./docs/img/taurus/despliegue/des-por-remoto-terminal.png)
+![](./docs/img/taurus/despliegue/des-por-remoto-final.png)
+
+Para el microservicio de transacciones los resultados son:
+
+![](./docs/img/taurus/despliegue/des-tran-remoto-terminal.png)
+![](./docs/img/taurus/despliegue/des-tran-remoto-final.png)
+
+La tabla que resume los resultados mostrados anteriormente es la siguiente:
+
+| Despliegue local/remoto | Microservicio | Avg. Throughput | Avg. Response Time |
+|--------|--------|---------|---------|---------|
+| Local | portatiles | 465.08 | 19 | 
+| Local | transacciones | 419.73 | 21 | 
+| Remoto | portatiles | 31.73 | 291 | 
+| Remoto | transacciones | 28.08 | 291 | 
+
+Las conclusiones que se puede sacar de estos resultados son las siguientes:
+  * Los resultados en términos de velocidad son muy malos, sobretodo si los comparamos con los conseguidos anteriormente cuando lanzabamos los servicios desde nuestro ordenador y se utilizaba una base de datos MongoDB Local, esto es debido a que en estos tests el servicio está siendo desplegado en una máquina virtual utilizando Docker, por lo que la latencia aumenta de manera considerable.
+  * Si nos ceñimos a comparar únicamente los resultados de estas 4 pruebas finales se puede decir que el microservicio más rápido según los escenarios que tenemos es el microservicio portatiles.
+  * El servicio desplegado en una máquina virtual de forma local es bastante más rápido que el despleguedo de forma remota en *Azure* esto seguramente es debido al retardo lógico al tener el servidor en la nube.
+  * Se puede decir que ambos microservicios cumplen con las espectativas (en ambos despliegues) creadas antes de realizar las pruebas.
 
 ## Referencias
 
