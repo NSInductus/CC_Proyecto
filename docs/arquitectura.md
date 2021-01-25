@@ -30,7 +30,7 @@ Este microservicio servirá para la administración de los ordenadores portátil
 
 ### Microservicio de transacciones de compra/venta/devolución
 
-Este microservicio se encarga de las transacciones necesarias del servicio, tendrá la funcionalidad de vender ordenador portátil, comprar ordenador portátil y devolver ordenador portátil. También se encargará de mostrar las estadísticas de las transacciones que realicen los usuarios.
+Este microservicio se encarga de las transacciones necesarias del servicio, en estas transacciones se registrarán compras y devoluciones de ordenadores portátiles. También se encargará de mostrar las estadísticas de las transacciones que realicen los usuarios.
 
 ## Bases de datos
 
